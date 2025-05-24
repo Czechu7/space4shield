@@ -15,6 +15,26 @@
     </div>
   </div>
 
+  <div class="filter-status">
+    <h4>{{ 'SENSORS.FILTERS.STATUS' | translate }}</h4>
+    <div class="status-options">
+      <label class="radio-container">
+        <input type="radio" name="statusFilter" value="all" [(ngModel)]="filter.status" (change)="applyFilters()">
+        <span class="radio-mark"></span>
+        <span>{{ 'SENSORS.FILTERS.STATUS_ALL' | translate }}</span>
+      </label>
+      <label class="radio-container">
+        <input type="radio" name="statusFilter" value="active" [(ngModel)]="filter.status" (change)="applyFilters()">
+        <span class="radio-mark"></span>
+        <span>{{ 'SENSORS.FILTERS.STATUS_ACTIVE' | translate }}</span>
+      </label>
+      <label class="radio-container">
+        <input type="radio" name="statusFilter" value="inactive" [(ngModel)]="filter.status" (change)="applyFilters()">
+        <span class="radio-mark"></span>
+        <span>{{ 'SENSORS.FILTERS.STATUS_INACTIVE' | translate }}</span>
+      </label>
+    </div>
+  </div>
 
   <div class="filter-actions">
     <app-button [label]="'SENSORS.FILTERS.APPLY' | translate" (onClick)="applyFilters()" severity="primary">

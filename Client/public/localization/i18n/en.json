@@ -178,49 +178,55 @@
       }
     }
   },
-    "SENSORS": {
-      "MANAGE": {
-        "TITLE": "Sensors",
-        "EDIT": "Edit",
-        "DELETE": "Delete",
-        "ADD_NEW": "Add new",
-        "NO_SENSORS": "No sensors to display",
-        "ADD_NEW_FORM": "Add new sensor",
-        "FORM_DESCRIPTION": "Enter sensor description",
-        "SERIAL_NUMBER": "Serial number",
-        "SENSOR_NAME": "Sensor name",
-        "STREET": "Street",
-        "CITY": "City",
-        "POSTAL_CODE": "Postal code",
-        "POSTAL_CODE_FORMAT": "Postal code format: XX-XXX",
-        "ADD": "Add"
-      },
+  "SENSORS": {
+    "MANAGE": {
+      "TITLE": "Sensors",
+      "EDIT": "Edit",
+      "DELETE": "Delete",
+      "ADD_NEW": "Add new",
+      "NO_SENSORS": "No sensors to display",
+      "ADD_NEW_FORM": "Add new sensor",
+      "FORM_DESCRIPTION": "Enter sensor description",
+      "SERIAL_NUMBER": "Serial number",
+      "SENSOR_NAME": "Sensor name",
+      "STREET": "Street",
+      "CITY": "City",
+      "POSTAL_CODE": "Postal code",
+      "POSTAL_CODE_FORMAT": "Postal code format: XX-XXX",
+      "ADD": "Add"
+    },
 
-      "FILTERS": {
-        "TITLE": "Sensor Filters",
-        "APPLY": "Apply Filters",
-        "RESET": "Reset",
-        "USE_MY_LOCATION": "Use My Location"
-      },
-      "METRICS": {
-        "TEMPERATURE": "Temperature",
-        "HUMIDITY": "Humidity",
-        "PRESSURE": "Pressure",
-        "WIND_SPEED": "Wind Speed",
-        "AIR_QUALITY": "Air Quality",
-        "RADIATION": "Radiation Level",
-        "LIGHT": "Light",
-        "SOIL_MOISTURE": "Soil Moisture"
-      }
+    "FILTERS": {
+      "TITLE": "Sensor Filters",
+      "APPLY": "Apply Filters",
+      "RESET": "Reset",
+      "USE_MY_LOCATION": "Use My Location",
+      "STATUS": "Sensor Status",
+      "STATUS_ALL": "All",
+      "STATUS_ACTIVE": "Active",
+      "STATUS_INACTIVE": "Inactive"
     },
-    "THEME": {
-      "SWITCH_TO_DARK": "Dark Mode",
-      "SWITCH_TO_LIGHT": "Light Mode"
-    },
-    "MAP": {
-      "ZOOM_IN": "Zoom In",
-      "ZOOM_OUT": "Zoom Out",
-      "RECENTER": "Center Map"
+    "METRICS": {
+      "TEMPERATURE": "Temperature",
+      "HUMIDITY": "Humidity",
+      "AIR_PRESSURE": "Air Pressure",
+      "PM2_5": "Particulate Matter PM2.5",
+      "PM10": "Particulate Matter PM10",
+      "PRESSURE": "Pressure",
+      "WIND_SPEED": "Wind Speed",
+      "AIR_QUALITY": "Air Quality",
+      "RADIATION": "Radiation Level",
+      "LIGHT": "Light",
+      "SOIL_MOISTURE": "Soil Moisture"
     }
-  
+  },
+  "THEME": {
+    "SWITCH_TO_DARK": "Dark Mode",
+    "SWITCH_TO_LIGHT": "Light Mode"
+  },
+  "MAP": {
+    "ZOOM_IN": "Zoom In",
+    "ZOOM_OUT": "Zoom Out",
+    "RECENTER": "Center Map"
+  }
 }

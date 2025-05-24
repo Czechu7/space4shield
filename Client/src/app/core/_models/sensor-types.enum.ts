@@ -1,12 +1,9 @@
 export enum SensorMetricType {
   TEMPERATURE = 'temperature',
   HUMIDITY = 'humidity',
-  PRESSURE = 'pressure',
-  WIND_SPEED = 'windSpeed',
-  AIR_QUALITY = 'airQuality',
-  RADIATION = 'radiation',
-  LIGHT = 'light',
-  SOIL_MOISTURE = 'soilMoisture',
+  AIR_PRESSURE = 'airPressure',
+  PM2_5 = 'pM2_5',
+  PM10 = 'pM10',
 }
 
 export interface SensorMetricConfig {
@@ -32,46 +29,25 @@ export const SENSOR_METRICS_CONFIG: Record<SensorMetricType, SensorMetricConfig>
     maxValue: 100,
     icon: 'pi pi-cloud',
   },
-  [SensorMetricType.PRESSURE]: {
-    label: 'SENSORS.METRICS.PRESSURE',
+  [SensorMetricType.AIR_PRESSURE]: {
+    label: 'SENSORS.METRICS.AIR_PRESSURE',
     unit: 'hPa',
     minValue: 900,
     maxValue: 1100,
     icon: 'pi pi-compass',
   },
-  [SensorMetricType.WIND_SPEED]: {
-    label: 'SENSORS.METRICS.WIND_SPEED',
-    unit: 'km/h',
-    minValue: 0,
-    maxValue: 200,
-    icon: 'pi pi-wind',
-  },
-  [SensorMetricType.AIR_QUALITY]: {
-    label: 'SENSORS.METRICS.AIR_QUALITY',
-    unit: 'AQI',
-    minValue: 0,
-    maxValue: 500,
-    icon: 'pi pi-cloud',
-  },
-  [SensorMetricType.RADIATION]: {
-    label: 'SENSORS.METRICS.RADIATION',
-    unit: 'μSv/h',
+  [SensorMetricType.PM2_5]: {
+    label: 'SENSORS.METRICS.PM2_5',
+    unit: 'μg/m³',
     minValue: 0,
     maxValue: 100,
-    icon: 'pi pi-exclamation-triangle',
+    icon: 'pi pi-globe',
   },
-  [SensorMetricType.LIGHT]: {
-    label: 'SENSORS.METRICS.LIGHT',
-    unit: 'lux',
+  [SensorMetricType.PM10]: {
+    label: 'SENSORS.METRICS.PM10',
+    unit: 'μg/m³',
     minValue: 0,
-    maxValue: 100000,
-    icon: 'pi pi-sun',
-  },
-  [SensorMetricType.SOIL_MOISTURE]: {
-    label: 'SENSORS.METRICS.SOIL_MOISTURE',
-    unit: '%',
-    minValue: 0,
-    maxValue: 100,
-    icon: 'pi pi-water',
+    maxValue: 150,
+    icon: 'pi pi-globe',
   },
 };

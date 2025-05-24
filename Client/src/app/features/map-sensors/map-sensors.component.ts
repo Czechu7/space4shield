@@ -69,24 +69,31 @@ export class MapSensorsComponent implements OnInit {
   }
 
   updateMapElements(sensors: Sensor[]): void {
-    // Konwersja danych sensorów na elementy mapy (markery)
+    // Convert sensor data to map markers
     this.markerOptions = sensors.map(sensor => {
-      // Tworzymy opis sensora na podstawie dostępnych metryk
+      // Create description based on available metrics
       const tooltipParts: string[] = [];
 
-      // Dodajemy informacje o każdej dostępnej metryce
+      // Add information for each available metric
       this.sensorFilter.enabledMetrics.forEach(metricType => {
-        if (sensor.metrics[metricType] !== undefined) {
+        const value = sensor[metricType as keyof Sensor];
+        if (value !== undefined && typeof value === 'number') {
           const config = SENSOR_METRICS_CONFIG[metricType];
-          tooltipParts.push(`${config.label}: ${sensor.metrics[metricType]}${config.unit}`);
+          tooltipParts.push(`${config.label}: ${value}${config.unit}`);
         }
       });
 
+      // Add status and last measurement time
+      tooltipParts.push(`Status: ${sensor.status}`);
+      const lastMeasurementDate = new Date(sensor.lastMeasurement);
+      tooltipParts.push(`Last updated: ${lastMeasurementDate.toLocaleString()}`);
+
       const tooltipContent = tooltipParts.join(', ');
+      const displayName = sensor.serialNumber || `Sensor ${sensor.id}`;
 
       return {
         position: [sensor.latitude, sensor.longitude],
-        title: `${sensor.name}: ${tooltipContent}`,
+        title: `${displayName}: ${tooltipContent}`,
         onClick: () => this.handleSensorClick(sensor),
       };
     });
@@ -94,7 +101,6 @@ export class MapSensorsComponent implements OnInit {
 
   handleSensorClick(sensor: Sensor): void {
     console.log('Sensor clicked:', sensor);
-    // Tutaj możesz dodać kod do wyświetlania szczegółów sensora
   }
 
   onFilterChange(filter: SensorFilter): void {

@@ -198,11 +198,18 @@
       "TITLE": "Filtry sensorów",
       "APPLY": "Zastosuj filtry",
       "RESET": "Resetuj",
-      "USE_MY_LOCATION": "Użyj mojej lokalizacji"
+      "USE_MY_LOCATION": "Użyj mojej lokalizacji",
+      "STATUS": "Status sensora",
+      "STATUS_ALL": "Wszystkie",
+      "STATUS_ACTIVE": "Aktywne",
+      "STATUS_INACTIVE": "Nieaktywne"
     },
     "METRICS": {
       "TEMPERATURE": "Temperatura",
       "HUMIDITY": "Wilgotność",
+      "AIR_PRESSURE": "Ciśnienie powietrza",
+      "PM2_5": "Pył zawieszony PM2.5",
+      "PM10": "Pył zawieszony PM10",
       "PRESSURE": "Ciśnienie",
       "WIND_SPEED": "Prędkość wiatru",
       "AIR_QUALITY": "Jakość powietrza",
