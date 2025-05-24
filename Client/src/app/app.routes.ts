@@ -13,6 +13,7 @@ import { roleGuard } from './core/_guards/role.guard';
 import { RolesEnum } from './enums/roles.enum';
 import { ExampleCrudViewComponent } from './features/example-crud-view/example-crud-view.component';
 import { AdminUsersEditComponent } from './features/admin/admin-users-edit/admin-users-edit.component';
+import { UserWeatherAlertsComponent } from './features/user-weather-alerts/user-weather-alerts.component';
 
 export const routes: Routes = [
   {
@@ -48,6 +49,7 @@ export const routes: Routes = [
     canActivate: [unAuthGuard],
   },
   { path: RouterEnum.karmelki, component: ExampleCrudViewComponent },
+  { path: RouterEnum.weatherLogs, component: UserWeatherAlertsComponent },
   {
     path: RouterEnum.notFound,
     component: NotFoundComponent,

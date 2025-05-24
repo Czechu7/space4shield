@@ -160,5 +160,19 @@
   "FOOTER": {
     "TITLE": "Karmelki",
     "COPYRIGHT": "All rights reserved."
+  },
+  "USER": {
+    "WEATHER": {
+      "GENERAL_ALERTS": "General Alerts",
+      "USER_ALERTS": "My Alerts",
+      "SHOW_MORE": "Show more",
+      "NO_ALERTS_FOUND": "No weather alerts found",
+      "LOADING_ALERTS": "Loading weather alerts...",
+      "SEVERITY": {
+        "LOW": "Low",
+        "MEDIUM": "Medium",
+        "HIGH": "High"
+      }
+    }
   }
 }

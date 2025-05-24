@@ -159,5 +159,19 @@
   "FOOTER": {
     "TITLE": "Karmelki",
     "COPYRIGHT": "Wszelkie prawa zastrzeżone."
+  },
+  "USER": {
+    "WEATHER": {
+      "GENERAL_ALERTS": "Alerty ogólne",
+      "USER_ALERTS": "Moje alerty",
+      "SHOW_MORE": "Pokaż więcej",
+      "NO_ALERTS_FOUND": "Brak alertów pogodowych do wyświetlenia",
+      "LOADING_ALERTS": "Ładowanie alertów pogodowych...",
+      "SEVERITY": {
+        "LOW": "Niski",
+        "MEDIUM": "Średni",
+        "HIGH": "Wysoki"
+      }
+    }
   }
 }
