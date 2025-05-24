@@ -1,5 +1,5 @@
 <div class="sensor-filters">
-  <h3>{{ 'SENSORS.FILTERS.TITLE' | translate }}</h3>
+  <h3>{{ 'USER.SENSORS.FILTERS.TITLE' | translate }}</h3>
 
   <div class="filter-metrics">
     <div class="filter-metric-item" *ngFor="let metricType of sensorMetricTypes">
@@ -16,34 +16,34 @@
   </div>
 
   <div class="filter-status">
-    <h4>{{ 'SENSORS.FILTERS.STATUS' | translate }}</h4>
+    <h4>{{ 'USER.SENSORS.FILTERS.STATUS' | translate }}</h4>
     <div class="status-options">
       <label class="radio-container">
         <input type="radio" name="statusFilter" value="all" [(ngModel)]="filter.status" (change)="applyFilters()">
         <span class="radio-mark"></span>
-        <span>{{ 'SENSORS.FILTERS.STATUS_ALL' | translate }}</span>
+        <span>{{ 'USER.SENSORS.FILTERS.STATUS_ALL' | translate }}</span>
       </label>
       <label class="radio-container">
         <input type="radio" name="statusFilter" value="active" [(ngModel)]="filter.status" (change)="applyFilters()">
         <span class="radio-mark"></span>
-        <span>{{ 'SENSORS.FILTERS.STATUS_ACTIVE' | translate }}</span>
+        <span>{{ 'USER.SENSORS.FILTERS.STATUS_ACTIVE' | translate }}</span>
       </label>
       <label class="radio-container">
         <input type="radio" name="statusFilter" value="inactive" [(ngModel)]="filter.status" (change)="applyFilters()">
         <span class="radio-mark"></span>
-        <span>{{ 'SENSORS.FILTERS.STATUS_INACTIVE' | translate }}</span>
+        <span>{{ 'USER.SENSORS.FILTERS.STATUS_INACTIVE' | translate }}</span>
       </label>
     </div>
   </div>
 
   <div class="filter-actions">
-    <app-button [label]="'SENSORS.FILTERS.APPLY' | translate" (onClick)="applyFilters()" severity="primary">
+    <app-button [label]="'USER.SENSORS.FILTERS.APPLY' | translate" (onClick)="applyFilters()" severity="primary">
     </app-button>
 
-    <app-button [label]="'SENSORS.FILTERS.RESET' | translate" (onClick)="onResetFilters()" severity="secondary">
+    <app-button [label]="'USER.SENSORS.FILTERS.RESET' | translate" (onClick)="onResetFilters()" severity="secondary">
     </app-button>
 
-    <app-button [label]="'SENSORS.FILTERS.USE_MY_LOCATION' | translate" (onClick)="onUseCurrentLocation()"
+    <app-button [label]="'USER.SENSORS.FILTERS.USE_MY_LOCATION' | translate" (onClick)="onUseCurrentLocation()"
       severity="success" icon="pi pi-map-marker"></app-button>
   </div>
 </div>

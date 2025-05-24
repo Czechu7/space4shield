@@ -3,12 +3,10 @@ import { Observable, of } from 'rxjs';
 import { WeatherLog } from '../../_models/weather-log.model';
 import { ILogResponse } from '../../_models/log-response.model';
 
-
 @Injectable({
   providedIn: 'root',
 })
 export class WeatherLogsService {
-
   private generalAlerts: WeatherLog[] = [
     {
       id: '1',
@@ -70,12 +68,18 @@ export class WeatherLogsService {
   ];
 
   getGeneralWeatherAlerts(limit: number, offset: number): Observable<ILogResponse<WeatherLog[]>> {
-    const data = this.generalAlerts.slice(offset, offset + limit);
+    console.log(`Service: Getting general alerts with offset=${offset}, limit=${limit}`);
+
+    const data = this.generalAlerts;
+    console.log(`Returning ${data.length} general alerts`);
     return of({ data, success: true });
   }
 
   getUserWeatherAlerts(limit: number, offset: number): Observable<ILogResponse<WeatherLog[]>> {
-    const data = this.userAlerts.slice(offset, offset + limit);
+    console.log(`Service: Getting user alerts with offset=${offset}, limit=${limit}`);
+
+    const data = this.userAlerts;
+    console.log(`Returning ${data.length} user alerts`);
     return of({ data, success: true });
   }
 }

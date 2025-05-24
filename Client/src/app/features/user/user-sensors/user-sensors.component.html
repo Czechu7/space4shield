@@ -15,12 +15,10 @@
           <i [class]="getSensorIcon(sensor.type)" class="text-xl"></i>
         </div>
         <div class="flex items-center">
-          <ng-container
-            *ngIf="
+          <ng-container *ngIf="
               sensor.temperature !== null && sensor.temperature !== undefined;
               else noMainReadingTemplate
-            "
-          >
+            ">
             <div class="text-3xl font-bold">{{ sensor.temperature | number: '1.1-1' }}</div>
             <div class="ml-2 text-gray-500">°C</div>
           </ng-container>
@@ -39,112 +37,86 @@
           Ostatnia aktualizacja: {{ sensor.lastMeasurement | date: 'dd.MM.yyyy HH:mm' }}
         </div>
         <div class="mt-3 flex justify-end">
-          <app-button
-            [icon]="'pi pi-pencil'"
-            [severity]="'secondary'"
-            class="mr-2"
-            (click)="editSensor(sensor.id)"
-            pTooltip="{{ 'USER.SENSORS.MANAGE.EDIT' | translate }}"
-            tooltipPosition="top"
-          />
-          <app-button
-            [icon]="'pi pi-trash'"
-            [severity]="'danger'"
-            (click)="deleteSensor(sensor.id)"
-            pTooltip="{{ 'USER.SENSORS.MANAGE.DELETE' | translate }}"
-            tooltipPosition="top"
-          />
+          <app-button [icon]="'pi pi-pencil'" [severity]="'secondary'" class="mr-2" (click)="editSensor(sensor.id)"
+            pTooltip="{{ 'USER.SENSORS.MANAGE.EDIT' | translate }}" tooltipPosition="top" />
+          <app-button [icon]="'pi pi-trash'" [severity]="'danger'" (click)="deleteSensor(sensor.id)"
+            pTooltip="{{ 'USER.SENSORS.MANAGE.DELETE' | translate }}" tooltipPosition="top" />
         </div>
 
         <div class="mt-2 border-t pt-2">
           <button type="button" (click)="toggleDetails(sensor.id)" class="text-sm text-blue-600">
-            {{ showDetailsMap[sensor.id] ? 'Ukryj szczegóły' : 'Pokaż szczegóły' }}
+            {{ showDetailsMap[sensor.id] ? ('USER.SENSORS.DETAILS.HIDE_DETAILS' | translate) : ('USER.SENSORS.DETAILS.SHOW_DETAILS' | translate) }}
           </button>
 
           <div *ngIf="showDetailsMap[sensor.id]" class="mt-3 text-sm">
             <div *ngIf="sensor.street || sensor.city" class="mb-2">
-              <div class="font-semibold">Adres:</div>
+              <div class="font-semibold">{{ 'USER.SENSORS.DETAILS.ADDRESS' | translate }}:</div>
               <div>{{ sensor.street }}</div>
               <div>{{ sensor.city }}, {{ sensor.postalCode }}</div>
             </div>
 
             <div *ngIf="sensor.latitude && sensor.longitude" class="mb-2">
-              <div class="font-semibold">Współrzędne:</div>
+              <div class="font-semibold">{{ 'USER.SENSORS.DETAILS.COORDINATES' | translate }}:</div>
               <div>
                 {{ sensor.latitude | number: '1.6-6' }}°N,
                 {{ sensor.longitude | number: '1.6-6' }}°E
               </div>
+
+              <div class="mt-2 h-32 border rounded overflow-hidden sensor-map-container">
+                <app-map [options]="getSensorMapOptions(sensor)"></app-map>
+                <ng-container *ngIf="getSensorMarkerOptions(sensor) as markerOptions">
+                  <app-map-marker [options]="markerOptions"></app-map-marker>
+                </ng-container>
+              </div>
             </div>
 
-            <div class="font-semibold mt-3">Odczyty:</div>
+            <div class="font-semibold mt-3">{{ 'USER.SENSORS.DETAILS.READINGS' | translate }}:</div>
             <div class="grid grid-cols-2 gap-2">
               <ng-container *ngIf="hasAnyReadings(sensor); else noReadingsTemplate">
-                <div
-                  *ngIf="sensor.temperature !== null && sensor.temperature !== undefined"
-                  class="flex justify-between"
-                >
-                  <span>Temperatura:</span>
+                <div *ngIf="sensor.temperature !== null && sensor.temperature !== undefined"
+                  class="flex justify-between">
+                  <span>{{ 'USER.SENSORS.METRICS.TEMPERATURE' | translate }}:</span>
                   <span>{{ sensor.temperature | number: '1.1-1' }} °C</span>
                 </div>
-                <div
-                  *ngIf="sensor.humidity !== null && sensor.humidity !== undefined"
-                  class="flex justify-between"
-                >
-                  <span>Wilgotność:</span>
+                <div *ngIf="sensor.humidity !== null && sensor.humidity !== undefined" class="flex justify-between">
+                  <span>{{ 'USER.SENSORS.METRICS.HUMIDITY' | translate }}:</span>
                   <span>{{ sensor.humidity }}%</span>
                 </div>
-                <div
-                  *ngIf="sensor.airPressure !== null && sensor.airPressure !== undefined"
-                  class="flex justify-between"
-                >
-                  <span>Ciśnienie:</span>
+                <div *ngIf="sensor.airPressure !== null && sensor.airPressure !== undefined"
+                  class="flex justify-between">
+                  <span>{{ 'USER.SENSORS.METRICS.AIR_PRESSURE' | translate }}:</span>
                   <span>{{ sensor.airPressure }} hPa</span>
                 </div>
-                <div
-                  *ngIf="sensor.pM1_0 !== null && sensor.pM1_0 !== undefined"
-                  class="flex justify-between"
-                >
-                  <span>PM 1.0:</span>
+                <div *ngIf="sensor.pM1_0 !== null && sensor.pM1_0 !== undefined" class="flex justify-between">
+                  <span>{{ 'USER.SENSORS.METRICS.PM1_0' | translate }}:</span>
                   <span>{{ sensor.pM1_0 }} μg/m³</span>
                 </div>
-                <div
-                  *ngIf="sensor.pM2_5 !== null && sensor.pM2_5 !== undefined"
-                  class="flex justify-between"
-                >
-                  <span>PM 2.5:</span>
+                <div *ngIf="sensor.pM2_5 !== null && sensor.pM2_5 !== undefined" class="flex justify-between">
+                  <span>{{ 'USER.SENSORS.METRICS.PM2_5' | translate }}:</span>
                   <span>{{ sensor.pM2_5 }} μg/m³</span>
                 </div>
-                <div
-                  *ngIf="sensor.pM10 !== null && sensor.pM10 !== undefined"
-                  class="flex justify-between"
-                >
-                  <span>PM 10:</span>
+                <div *ngIf="sensor.pM10 !== null && sensor.pM10 !== undefined" class="flex justify-between">
+                  <span>{{ 'USER.SENSORS.METRICS.PM10' | translate }}:</span>
                   <span>{{ sensor.pM10 }} μg/m³</span>
                 </div>
-                <div
-                  *ngIf="sensor.waterLevel !== null && sensor.waterLevel !== undefined"
-                  class="flex justify-between"
-                >
-                  <span>Poziom wody:</span>
+                <div *ngIf="sensor.waterLevel !== null && sensor.waterLevel !== undefined" class="flex justify-between">
+                  <span>{{ 'USER.SENSORS.METRICS.WATER_LEVEL' | translate }}:</span>
                   <span>{{ sensor.waterLevel }} mm</span>
                 </div>
-                <div
-                  *ngIf="sensor.precipitation !== null && sensor.precipitation !== undefined"
-                  class="flex justify-between"
-                >
-                  <span>Opady:</span>
+                <div *ngIf="sensor.precipitation !== null && sensor.precipitation !== undefined"
+                  class="flex justify-between">
+                  <span>{{ 'USER.SENSORS.METRICS.PRECIPITATION' | translate }}:</span>
                   <span>{{ sensor.precipitation }} mm</span>
                 </div>
-                <div
-                  *ngIf="sensor.uvRadiation !== null && sensor.uvRadiation !== undefined"
-                  class="flex justify-between"
-                >
-                  <span>Indeks UV:</span>
+                <div *ngIf="sensor.uvRadiation !== null && sensor.uvRadiation !== undefined"
+                  class="flex justify-between">
+                  <span>{{ 'USER.SENSORS.METRICS.UV_RADIATION' | translate }}:</span>
                   <span>{{ sensor.uvRadiation }}</span>
                 </div>
               </ng-container>
               <ng-template #noReadingsTemplate>
-                <div class="col-span-2 py-2 text-center text-gray-500">Brak odczytów</div>
+                <div class="col-span-2 py-2 text-center text-gray-500">
+                  {{ 'USER.SENSORS.DETAILS.NO_READINGS' | translate }}</div>
               </ng-template>
             </div>
           </div>
@@ -153,9 +125,7 @@
 
       <div
         class="p-card p-4 shadow-md rounded-lg border-dashed border-2 border-gray-300 flex flex-col items-center justify-center cursor-pointer"
-        (click)="showAddSensorForm()"
-        *ngIf="!showForm"
-      >
+        (click)="showAddSensorForm()" *ngIf="!showForm">
         <i class="pi pi-plus-circle text-3xl text-gray-400 mb-2"></i>
         <span>{{ 'USER.SENSORS.MANAGE.ADD_NEW' | translate }}</span>
       </div>
@@ -165,12 +135,8 @@
   <div *ngIf="!isLoading && sensors.length === 0" class="text-center my-8">
     <i class="pi pi-info-circle text-3xl text-gray-400 mb-4"></i>
     <p class="text-lg text-gray-600">{{ 'USER.SENSORS.MANAGE.NO_SENSORS' | translate }}</p>
-    <app-button
-      (onClick)="showAddSensorForm()"
-      [label]="'USER.SENSORS.MANAGE.ADD_NEW' | translate"
-      [icon]="'pi pi-plus'"
-      class="mt-4"
-    />
+    <app-button (onClick)="showAddSensorForm()" [label]="'USER.SENSORS.MANAGE.ADD_NEW' | translate"
+      [icon]="'pi pi-plus'" class="mt-4" />
   </div>
 
   <div class="card p-4 mt-4 border border-gray-200 rounded-lg" *ngIf="showForm">
@@ -182,77 +148,46 @@
 
     <form [formGroup]="userSensorsForm" class="grid grid-cols-1 gap-4">
       <div class="mb-3">
-        <app-input
-          [formControl]="controls.sensorNumber"
-          formControlName="sensorNumber"
+        <app-input [formControl]="controls.sensorNumber" formControlName="sensorNumber"
           [placeholder]="'USER.SENSORS.MANAGE.SERIAL_NUMBER' | translate"
           [errorMessage]="getErrorMessage(controls.sensorNumber)"
-          [invalid]="controls.sensorNumber.invalid && controls.sensorNumber.touched"
-        />
+          [invalid]="controls.sensorNumber.invalid && controls.sensorNumber.touched" />
       </div>
 
       <div class="mb-3">
-        <app-input
-          [formControl]="controls.name"
-          formControlName="name"
-          [placeholder]="'USER.SENSORS.MANAGE.SENSOR_NAME' | translate"
-          [errorMessage]="getErrorMessage(controls.name)"
-          [invalid]="controls.name.invalid && controls.name.touched"
-        />
+        <app-input [formControl]="controls.name" formControlName="name"
+          [placeholder]="'USER.SENSORS.MANAGE.SENSOR_NAME' | translate" [errorMessage]="getErrorMessage(controls.name)"
+          [invalid]="controls.name.invalid && controls.name.touched" />
       </div>
 
       <div class="mb-3">
-        <app-input
-          [formControl]="controls.street"
-          formControlName="street"
-          [placeholder]="'USER.SENSORS.MANAGE.STREET' | translate"
-          [errorMessage]="getErrorMessage(controls.street)"
-          [invalid]="controls.street.invalid && controls.street.touched"
-        />
+        <app-input [formControl]="controls.street" formControlName="street"
+          [placeholder]="'USER.SENSORS.MANAGE.STREET' | translate" [errorMessage]="getErrorMessage(controls.street)"
+          [invalid]="controls.street.invalid && controls.street.touched" />
       </div>
 
       <div class="grid grid-cols-2 gap-4 mb-3">
         <div>
-          <app-input
-            [formControl]="controls.city"
-            formControlName="city"
-            [placeholder]="'USER.SENSORS.MANAGE.CITY' | translate"
-            [errorMessage]="getErrorMessage(controls.city)"
-            [invalid]="controls.city.invalid && controls.city.touched"
-          />
+          <app-input [formControl]="controls.city" formControlName="city"
+            [placeholder]="'USER.SENSORS.MANAGE.CITY' | translate" [errorMessage]="getErrorMessage(controls.city)"
+            [invalid]="controls.city.invalid && controls.city.touched" />
         </div>
       </div>
       <div class="grid grid-cols-2 gap-4 mb-3">
         <div>
-          <app-input
-            [formControl]="controls.postalCode"
-            formControlName="postalCode"
+          <app-input [formControl]="controls.postalCode" formControlName="postalCode"
             [placeholder]="'USER.SENSORS.MANAGE.POSTAL_CODE' | translate"
             [errorMessage]="getErrorMessage(controls.postalCode)"
             [invalid]="controls.postalCode.invalid && controls.postalCode.touched"
-            pTooltip="{{ 'USER.SENSORS.MANAGE.POSTAL_CODE_FORMAT' | translate }}"
-            tooltipPosition="top"
-          />
+            pTooltip="{{ 'USER.SENSORS.MANAGE.POSTAL_CODE_FORMAT' | translate }}" tooltipPosition="top" />
         </div>
       </div>
 
       <div class="flex justify-start mb-3">
-        <app-button
-          (onClick)="cancelAddSensor()"
-          type="button"
-          [label]="'UTILS.CANCEL' | translate"
-          [icon]="'pi pi-times'"
-          [severity]="'secondary'"
-          class="mr-2"
-        />
-        <app-button
-          (onClick)="addSensor()"
-          type="submit"
-          [label]="'USER.SENSORS.MANAGE.ADD' | translate"
-          [icon]="'pi pi-plus'"
-          [loading]="isLoading"
-          [disabled]="userSensorsForm.invalid"
-        />
+        <app-button (onClick)="cancelAddSensor()" type="button" [label]="'UTILS.CANCEL' | translate"
+          [icon]="'pi pi-times'" [severity]="'secondary'" class="mr-2" />
+        <app-button (onClick)="addSensor()" type="submit" [label]="'USER.SENSORS.MANAGE.ADD' | translate"
+          [icon]="'pi pi-plus'" [loading]="isLoading" [disabled]="userSensorsForm.invalid" />
       </div>
     </form>
   </div>
