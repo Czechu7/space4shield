@@ -1,5 +1,5 @@
 <div class="sensor-filters">
-  <h3>Filtry sensorów</h3>
+  <h3>{{ 'SENSORS.FILTERS.TITLE' | translate }}</h3>
 
   <div class="filter-metrics">
     <div class="filter-metric-item" *ngFor="let metricType of sensorMetricTypes">
@@ -9,15 +9,15 @@
         <span class="checkmark"></span>
         <span class="metric-label">
           <i *ngIf="sensorMetricsConfig[metricType].icon" [class]="sensorMetricsConfig[metricType].icon"></i>
-          {{ sensorMetricsConfig[metricType].label }} ({{ sensorMetricsConfig[metricType].unit }})
+          {{ sensorMetricsConfig[metricType].label | translate }} ({{ sensorMetricsConfig[metricType].unit }})
         </span>
       </label>
     </div>
   </div>
 
   <div class="filter-actions">
-    <button (click)="applyFilters()">Zastosuj filtry</button>
-    <button (click)="onResetFilters()">Resetuj</button>
-    <button (click)="onUseCurrentLocation()">Użyj mojej lokalizacji</button>
+    <button (click)="applyFilters()">{{ 'SENSORS.FILTERS.APPLY' | translate }}</button>
+    <button (click)="onResetFilters()">{{ 'SENSORS.FILTERS.RESET' | translate }}</button>
+    <button (click)="onUseCurrentLocation()">{{ 'SENSORS.FILTERS.USE_MY_LOCATION' | translate }}</button>
   </div>
 </div>

@@ -1,13 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { SensorFilter } from '../../../core/_models/sensor-filter.model';
 import { SENSOR_METRICS_CONFIG, SensorMetricType } from '../../../core/_models/sensor-types.enum';
 
 @Component({
   selector: 'app-sensor-filters',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslateModule],
   templateUrl: './sensor-filters.component.html',
   styleUrls: ['./sensor-filters.component.scss'],
 })
