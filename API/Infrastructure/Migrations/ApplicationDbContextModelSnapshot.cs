@@ -127,6 +127,219 @@ namespace Infrastructure.Migrations
                     b.ToTable("RefreshTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.Sensor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double?>("AirPressure")
+                        .HasPrecision(6, 2)
+                        .HasColumnType("float(6)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<double?>("Humidity")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("float(5)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastMeasurement")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Latitude")
+                        .HasPrecision(10, 8)
+                        .HasColumnType("float(10)");
+
+                    b.Property<double>("Longitude")
+                        .HasPrecision(11, 8)
+                        .HasColumnType("float(11)");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("PM10")
+                        .HasPrecision(6, 2)
+                        .HasColumnType("float(6)");
+
+                    b.Property<double?>("PM1_0")
+                        .HasPrecision(6, 2)
+                        .HasColumnType("float(6)");
+
+                    b.Property<double?>("PM2_5")
+                        .HasPrecision(6, 2)
+                        .HasColumnType("float(6)");
+
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<double?>("Precipitation")
+                        .HasPrecision(6, 2)
+                        .HasColumnType("float(6)");
+
+                    b.Property<string>("SerialNumber")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasDefaultValue("Active");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<double?>("Temperature")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("float(5)");
+
+                    b.Property<double?>("UVRadiation")
+                        .HasPrecision(4, 2)
+                        .HasColumnType("float(4)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double?>("WaterLevel")
+                        .HasPrecision(8, 2)
+                        .HasColumnType("float(8)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("City")
+                        .HasDatabaseName("IX_Sensors_City");
+
+                    b.HasIndex("SerialNumber")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Sensors_SerialNumber");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_Sensors_Status");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("IX_Sensors_UserId");
+
+                    b.HasIndex("Latitude", "Longitude")
+                        .HasDatabaseName("IX_Sensors_Coordinates");
+
+                    b.ToTable("Sensors");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SensorReading", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double?>("AirPressure")
+                        .HasPrecision(6, 2)
+                        .HasColumnType("float(6)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("Humidity")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("float(5)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsValid")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("PM10")
+                        .HasPrecision(6, 2)
+                        .HasColumnType("float(6)");
+
+                    b.Property<double?>("PM1_0")
+                        .HasPrecision(6, 2)
+                        .HasColumnType("float(6)");
+
+                    b.Property<double?>("PM2_5")
+                        .HasPrecision(6, 2)
+                        .HasColumnType("float(6)");
+
+                    b.Property<double?>("Precipitation")
+                        .HasPrecision(6, 2)
+                        .HasColumnType("float(6)");
+
+                    b.Property<DateTime>("ReadingDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ReadingSource")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasDefaultValue("Automatic");
+
+                    b.Property<Guid>("SensorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double?>("Temperature")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("float(5)");
+
+                    b.Property<double?>("UVRadiation")
+                        .HasPrecision(4, 2)
+                        .HasColumnType("float(4)");
+
+                    b.Property<double?>("WaterLevel")
+                        .HasPrecision(8, 2)
+                        .HasColumnType("float(8)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsValid")
+                        .HasDatabaseName("IX_SensorReadings_IsValid");
+
+                    b.HasIndex("ReadingDateTime")
+                        .HasDatabaseName("IX_SensorReadings_ReadingDateTime");
+
+                    b.HasIndex("SensorId")
+                        .HasDatabaseName("IX_SensorReadings_SensorId");
+
+                    b.HasIndex("SensorId", "ReadingDateTime")
+                        .HasDatabaseName("IX_SensorReadings_SensorId_ReadingDateTime");
+
+                    b.ToTable("SensorReadings");
+                });
+
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -213,11 +426,40 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Sensor", b =>
+                {
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany("Sensors")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SensorReading", b =>
+                {
+                    b.HasOne("Domain.Entities.Sensor", "Sensor")
+                        .WithMany("SensorReadings")
+                        .HasForeignKey("SensorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Sensor");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Sensor", b =>
+                {
+                    b.Navigation("SensorReadings");
+                });
+
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Navigation("Karmelki");
 
                     b.Navigation("RefreshTokens");
+
+                    b.Navigation("Sensors");
                 });
 #pragma warning restore 612, 618
         }

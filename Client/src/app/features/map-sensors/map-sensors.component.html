@@ -1,0 +1,27 @@
+<div class="sensor-map-container">
+  <div class="filter-panel">
+    <app-sensor-filters [filter]="sensorFilter" (filterChange)="onFilterChange($event)"
+      (resetFilters)="onResetFilters()" (useCurrentLocation)="useCurrentLocation()"></app-sensor-filters>
+  </div>
+
+  <div class="map-wrapper">
+    <app-map [options]="mapOptions">
+    </app-map>
+
+    <ng-container *ngFor="let marker of markerOptions">
+      <app-map-marker [options]="marker"></app-map-marker>
+    </ng-container>
+
+    <ng-container *ngFor="let arrow of arrowOptions">
+      <app-map-arrow [options]="arrow"></app-map-arrow>
+    </ng-container>
+
+    <ng-container *ngFor="let area of areaOptions">
+      <app-map-area [options]="area"></app-map-area>
+    </ng-container>
+
+    <ng-container *ngFor="let line of lineOptions">
+      <app-map-line [options]="line"></app-map-line>
+    </ng-container>
+  </div>
+</div>

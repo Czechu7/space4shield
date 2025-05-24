@@ -22,4 +22,6 @@ export enum RouterEnum {
 
   user = 'user',
   sensors = 'sensors',
+
+  map = 'map',
 }
