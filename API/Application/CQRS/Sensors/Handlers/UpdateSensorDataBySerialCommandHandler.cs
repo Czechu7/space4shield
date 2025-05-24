@@ -42,25 +42,36 @@ public class UpdateSensorDataBySerialCommandHandler : IRequestHandler<UpdateSens
                 return Response<SensorDto>.ErrorResponse(404, $"Sensor with serial number '{request.SerialNumber}' not found");
             }
 
-            await SaveSensorHistoryAsync(sensor, request.Data, cancellationToken);
 
-            var hasChanges = UpdateSensorData(sensor, request.Data);
+            var hasAnyData = HasAnyDataToPersist(request.Data);
 
-            if (hasChanges)
+            if (hasAnyData)
             {
+
+                await SaveSensorHistoryAsync(sensor, request.Data, cancellationToken);
+
+
+                UpdateSensorData(sensor, request.Data);
+
                 sensor.LastMeasurement = DateTime.UtcNow;
                 _dbContext.Sensors.Update(sensor);
                 await _dbContext.SaveChangesAsync(cancellationToken);
 
- 
-                await _notificationService.SendDataUpdateNotificationAsync("SensorData", "Updated", new { SensorId = sensor.Id, SerialNumber = sensor.SerialNumber });
-                await _notificationService.SendNotificationToUserAsync(sensor.UserId.ToString(), $"Sensor {sensor.SerialNumber} data updated");
+
+                await _notificationService.SendDataUpdateNotificationAsync("SensorData", "Updated",
+                    new { SensorId = sensor.Id, SerialNumber = sensor.SerialNumber });
+                await _notificationService.SendNotificationToUserAsync(sensor.UserId.ToString(),
+                    $"Sensor {sensor.SerialNumber} data updated");
 
                 _logger.LogInformation("Sensor data updated for serial number {SerialNumber}", request.SerialNumber);
             }
+            else
+            {
+                _logger.LogInformation("No data provided for sensor {SerialNumber}", request.SerialNumber);
+            }
 
             var result = _mapper.Map<SensorDto>(sensor);
-            return Response<SensorDto>.SuccessWithData(result, "Sensor data updated successfully");
+            return Response<SensorDto>.SuccessWithData(result, "Sensor data processed successfully");
         }
         catch (Exception ex)
         {
@@ -71,96 +82,89 @@ public class UpdateSensorDataBySerialCommandHandler : IRequestHandler<UpdateSens
 
     private async Task SaveSensorHistoryAsync(Sensor sensor, UpdateSensorDataDto data, CancellationToken cancellationToken)
     {
-
-        var hasDataChanges = HasSensorDataChanges(sensor, data);
-
-        if (hasDataChanges)
+        var sensorReading = new SensorReading
         {
-            var sensorReading = new SensorReading
-            {
-                SensorId = sensor.Id,
-                ReadingDateTime = DateTime.UtcNow,
-                Temperature = data.Temperature ?? sensor.Temperature,
-                Humidity = data.Humidity ?? sensor.Humidity,
-                AirPressure = data.AirPressure ?? sensor.AirPressure,
-                PM1_0 = data.PM1_0 ?? sensor.PM1_0,
-                PM2_5 = data.PM2_5 ?? sensor.PM2_5,
-                PM10 = data.PM10 ?? sensor.PM10,
-                WaterLevel = data.WaterLevel ?? sensor.WaterLevel,
-                Precipitation = data.Precipitation ?? sensor.Precipitation,
-                UVRadiation = data.UVRadiation ?? sensor.UVRadiation,
-                ReadingSource = data.ReadingSource,
-                IsValid = true
-            };
+            SensorId = sensor.Id,
+            ReadingDateTime = DateTime.UtcNow,
 
-            await _dbContext.SensorReadings.AddAsync(sensorReading, cancellationToken);
-        }
+            Temperature = data.Temperature ?? sensor.Temperature,
+            Humidity = data.Humidity ?? sensor.Humidity,
+            AirPressure = data.AirPressure ?? sensor.AirPressure,
+            PM1_0 = data.PM1_0 ?? sensor.PM1_0,
+            PM2_5 = data.PM2_5 ?? sensor.PM2_5,
+            PM10 = data.PM10 ?? sensor.PM10,
+            WaterLevel = data.WaterLevel ?? sensor.WaterLevel,
+            Precipitation = data.Precipitation ?? sensor.Precipitation,
+            UVRadiation = data.UVRadiation ?? sensor.UVRadiation,
+            ReadingSource = data.ReadingSource ?? "API",
+            IsValid = true
+        };
+
+        await _dbContext.SensorReadings.AddAsync(sensorReading, cancellationToken);
+
+        _logger.LogInformation("Sensor reading saved to history for sensor {SerialNumber}", sensor.SerialNumber);
     }
 
-    private bool UpdateSensorData(Sensor sensor, UpdateSensorDataDto data)
+    private void UpdateSensorData(Sensor sensor, UpdateSensorDataDto data)
     {
-        bool hasChanges = false;
 
-        
         if (data.Temperature.HasValue)
         {
+            _logger.LogDebug("Updating Temperature: {Old} -> {New}", sensor.Temperature, data.Temperature.Value);
             sensor.Temperature = data.Temperature.Value;
-            hasChanges = true;
         }
 
         if (data.Humidity.HasValue)
         {
+            _logger.LogDebug("Updating Humidity: {Old} -> {New}", sensor.Humidity, data.Humidity.Value);
             sensor.Humidity = data.Humidity.Value;
-            hasChanges = true;
         }
 
         if (data.AirPressure.HasValue)
         {
+            _logger.LogDebug("Updating AirPressure: {Old} -> {New}", sensor.AirPressure, data.AirPressure.Value);
             sensor.AirPressure = data.AirPressure.Value;
-            hasChanges = true;
         }
 
         if (data.PM1_0.HasValue)
         {
+            _logger.LogDebug("Updating PM1_0: {Old} -> {New}", sensor.PM1_0, data.PM1_0.Value);
             sensor.PM1_0 = data.PM1_0.Value;
-            hasChanges = true;
         }
 
         if (data.PM2_5.HasValue)
         {
+            _logger.LogDebug("Updating PM2_5: {Old} -> {New}", sensor.PM2_5, data.PM2_5.Value);
             sensor.PM2_5 = data.PM2_5.Value;
-            hasChanges = true;
         }
 
         if (data.PM10.HasValue)
         {
+            _logger.LogDebug("Updating PM10: {Old} -> {New}", sensor.PM10, data.PM10.Value);
             sensor.PM10 = data.PM10.Value;
-            hasChanges = true;
         }
 
         if (data.WaterLevel.HasValue)
         {
+            _logger.LogDebug("Updating WaterLevel: {Old} -> {New}", sensor.WaterLevel, data.WaterLevel.Value);
             sensor.WaterLevel = data.WaterLevel.Value;
-            hasChanges = true;
         }
 
         if (data.Precipitation.HasValue)
         {
+            _logger.LogDebug("Updating Precipitation: {Old} -> {New}", sensor.Precipitation, data.Precipitation.Value);
             sensor.Precipitation = data.Precipitation.Value;
-            hasChanges = true;
         }
 
         if (data.UVRadiation.HasValue)
         {
+            _logger.LogDebug("Updating UVRadiation: {Old} -> {New}", sensor.UVRadiation, data.UVRadiation.Value);
             sensor.UVRadiation = data.UVRadiation.Value;
-            hasChanges = true;
         }
-
-        return hasChanges;
     }
 
-    // I odpowiednio dostosuj HasSensorDataChanges aby zawsze zapisywało historię gdy przesyłane są dane
-    private bool HasSensorDataChanges(Sensor sensor, UpdateSensorDataDto data)
+
+    private bool HasAnyDataToPersist(UpdateSensorDataDto data)
     {
         return data.Temperature.HasValue ||
                data.Humidity.HasValue ||
