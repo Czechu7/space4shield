@@ -171,7 +171,7 @@ export class UserSensorsComponent implements OnInit, OnDestroy {
       description: formValue.name,
     };
     this.userSensorsService.addSensor(sendData).subscribe({
-      next: response => {
+      next: _ => {
         this.isLoading = true;
         this.toastService.showSuccess(
           this.translateService.instant('USER.SENSORS.SUCCESS_TITLE'),

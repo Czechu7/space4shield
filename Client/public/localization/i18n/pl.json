@@ -177,6 +177,14 @@
       }
     },
     "SENSORS": {
+      "EDIT_NOT_IMPLEMENTED": "Funkcja edycji nie jest jeszcze zaimplementowana.",
+      "DELETE_NOT_IMPLEMENTED": "Funkcja usuwania nie jest jeszcze zaimplementowana.",
+      "INFO_TITLE": "Informacje o sensorze",
+      "INFO_DESCRIPTION": "Poniżej znajdują się szczegóły dotyczące sensora.",
+      "SUCCESS_TITLE": "Sukces",
+      "SUCCESS_MESSAGE": "Sensor został pomyślnie dodany.",
+      "DELETED_SUCCESS": "Sensor został pomyślnie usunięty.",
+      "ERROR_TITLE": "Błąd",
       "MANAGE": {
         "TITLE": "Sensory",
         "EDIT": "Edytuj",
@@ -192,36 +200,43 @@
         "POSTAL_CODE": "Kod pocztowy",
         "POSTAL_CODE_FORMAT": "Format kodu pocztowego: XX-XXX",
         "ADD": "Dodaj"
+      },
+      "FILTERS": {
+        "TITLE": "Filtry sensorów",
+        "APPLY": "Zastosuj filtry",
+        "RESET": "Resetuj",
+        "USE_MY_LOCATION": "Użyj mojej lokalizacji",
+        "STATUS": "Status sensora",
+        "STATUS_ALL": "Wszystkie",
+        "STATUS_ACTIVE": "Aktywne",
+        "STATUS_INACTIVE": "Nieaktywne"
+      },
+      "METRICS": {
+        "TEMPERATURE": "Temperatura",
+        "HUMIDITY": "Wilgotność",
+        "AIR_PRESSURE": "Ciśnienie powietrza",
+        "PM1_0": "PM 1.0",
+        "PM2_5": "PM 2.5",
+        "PM10": "PM 10",
+        "PRESSURE": "Ciśnienie",
+        "WIND_SPEED": "Prędkość wiatru",
+        "AIR_QUALITY": "Jakość powietrza",
+        "RADIATION": "Poziom promieniowania",
+        "LIGHT": "Oświetlenie",
+        "SOIL_MOISTURE": "Wilgotność gleby",
+        "WATER_LEVEL": "Poziom wody",
+        "PRECIPITATION": "Opady",
+        "UV_RADIATION": "Indeks UV"
+      },
+      "DETAILS": {
+        "SHOW_DETAILS": "Pokaż szczegóły",
+        "HIDE_DETAILS": "Ukryj szczegóły",
+        "ADDRESS": "Adres",
+        "COORDINATES": "Współrzędne",
+        "READINGS": "Odczyty",
+        "NO_READINGS": "Brak odczytów"
       }
-    },
-
-    "FILTERS": {
-      "TITLE": "Filtry sensorów",
-      "APPLY": "Zastosuj filtry",
-      "RESET": "Resetuj",
-      "USE_MY_LOCATION": "Użyj mojej lokalizacji",
-      "STATUS": "Status sensora",
-      "STATUS_ALL": "Wszystkie",
-      "STATUS_ACTIVE": "Aktywne",
-      "STATUS_INACTIVE": "Nieaktywne"
-    },
-    "METRICS": {
-      "TEMPERATURE": "Temperatura",
-      "HUMIDITY": "Wilgotność",
-      "AIR_PRESSURE": "Ciśnienie powietrza",
-      "PM2_5": "Pył zawieszony PM2.5",
-      "PM10": "Pył zawieszony PM10",
-      "PRESSURE": "Ciśnienie",
-      "WIND_SPEED": "Prędkość wiatru",
-      "AIR_QUALITY": "Jakość powietrza",
-      "RADIATION": "Poziom promieniowania",
-      "LIGHT": "Oświetlenie",
-      "SOIL_MOISTURE": "Wilgotność gleby"
     }
-  },
-  "THEME": {
-    "SWITCH_TO_DARK": "Tryb ciemny",
-    "SWITCH_TO_LIGHT": "Tryb jasny"
   },
   "MAP": {
     "ZOOM_IN": "Przybliż",
