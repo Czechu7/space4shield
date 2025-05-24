@@ -20,6 +20,9 @@ export enum RouterEnum {
   fileDetails = 'file-details',
   karmelki = 'karmelki',
 
+  user = 'user',
+  sensors = 'sensors',
+
   weatherLogs = 'weather-logs',
   weatherLogDetails = 'weather-log-details',
   map = 'map',
