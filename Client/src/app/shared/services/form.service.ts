@@ -4,6 +4,7 @@ import {
   AdminProfileForm,
   ExampleCrudForm,
   LoginForm,
+  MetricsForm,
   PasswdRecoveryForm,
   PasswordsForm,
   RegisterForm,
@@ -18,6 +19,7 @@ import { initThemeForm } from './forms/initThemeForm';
 import { initExampleCrudForm } from './forms/initExampleCrudForm';
 import { initAdminProfileForm } from './forms/initAdminProfileForm';
 import { initUserSensorsForm } from './forms/initUserSensorsForm';
+import { initMetricsForm } from './forms/initMetricsForm';
 
 @Injectable({
   providedIn: 'root',
@@ -53,5 +55,9 @@ export class FormService {
 
   public getExampleCrudForm(): FormGroup<ExampleCrudForm> {
     return initExampleCrudForm();
+  }
+
+  public getMetricsForm(): FormGroup<MetricsForm> {
+    return initMetricsForm();
   }
 }

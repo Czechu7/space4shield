@@ -1,0 +1,43 @@
+<div class="chart-container">
+  <form [formGroup]="metricsForm" class="metric-selection mb-4 grid grid-cols-3 gap-2">
+    <div class="flex items-center">
+      <input type="checkbox" id="temperature" class="mr-2" [formControl]="metricsControls.temperature">
+      <label for="temperature">Temperature</label>
+    </div>
+    <div class="flex items-center">
+      <input type="checkbox" id="humidity" class="mr-2" [formControl]="metricsControls.humidity">
+      <label for="humidity">Humidity</label>
+    </div>
+    <div class="flex items-center">
+      <input type="checkbox" id="airPressure" class="mr-2" [formControl]="metricsControls.airPressure">
+      <label for="airPressure">Air Pressure</label>
+    </div>
+    <div class="flex items-center">
+      <input type="checkbox" id="pM1_0" class="mr-2" [formControl]="metricsControls.pM1_0">
+      <label for="pM1_0">PM1.0</label>
+    </div>
+    <div class="flex items-center">
+      <input type="checkbox" id="pM2_5" class="mr-2" [formControl]="metricsControls.pM2_5">
+      <label for="pM2_5">PM2.5</label>
+    </div>
+    <div class="flex items-center">
+      <input type="checkbox" id="pM10" class="mr-2" [formControl]="metricsControls.pM10">
+      <label for="pM10">PM10</label>
+    </div>
+    <div class="flex items-center">
+      <input type="checkbox" id="waterLevel" class="mr-2" [formControl]="metricsControls.waterLevel">
+      <label for="waterLevel">Water Level</label>
+    </div>
+    <div class="flex items-center">
+      <input type="checkbox" id="precipitation" class="mr-2" [formControl]="metricsControls.precipitation">
+      <label for="precipitation">Precipitation</label>
+    </div>
+    <div class="flex items-center">
+      <input type="checkbox" id="uvRadiation" class="mr-2" [formControl]="metricsControls.uvRadiation">
+      <label for="uvRadiation">UV Radiation</label>
+    </div>
+  </form>
+  <div class="chart">
+    <app-line-chart [data]="data" [options]="options"></app-line-chart>
+  </div>
+</div>
