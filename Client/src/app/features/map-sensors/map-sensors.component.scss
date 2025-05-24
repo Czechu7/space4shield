@@ -1,0 +1,152 @@
+@import '../../../styles/utils/variables';
+
+.sensor-map-container {
+  display: flex;
+  height: calc(100vh - 64px);
+  min-height: 600px;
+  background-color: var(--background);
+  transition: all 0.3s ease;
+
+  .filter-panel {
+    width: 300px;
+    padding: 16px;
+    background-color: var(--background);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    color: var(--text-primary);
+    box-shadow: $global-box-shadow;
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .filter-group {
+      margin-bottom: 20px;
+
+      .filter-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+
+        label {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          cursor: pointer;
+          color: var(--text-primary);
+        }
+      }
+
+      .filter-range {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        input[type='range'] {
+          flex: 1;
+          accent-color: var(--primary);
+        }
+      }
+    }
+
+    .filter-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      button {
+        padding: 8px 12px;
+        border: none;
+        border-radius: $global-border-radius;
+        background-color: var(--primary);
+        color: white;
+        cursor: pointer;
+        transition:
+          background-color 0.2s,
+          transform 0.1s;
+        box-shadow: $global-box-shadow;
+
+        &:hover {
+          background-color: var(--primary-light);
+          transform: translateY(-1px);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+
+        &:nth-child(2) {
+          background-color: var(--secondary);
+          color: var(--text-primary);
+
+          &:hover {
+            background-color: var(--hover);
+          }
+        }
+
+        &:nth-child(3) {
+          background-color: var(--primary-dark);
+          color: white;
+
+          &:hover {
+            background-color: var(--primary);
+          }
+        }
+      }
+    }
+  }
+
+  .map-wrapper {
+    flex: 1;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background);
+
+    app-map {
+      display: block;
+      width: 100%;
+      height: 100%;
+      flex: 1;
+    }
+
+    // Add dark mode styles for leaflet
+    :global(.dark-theme) & {
+      .leaflet-tile {
+        filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3)
+          brightness(0.7);
+      }
+
+      .leaflet-container {
+        background: #303030;
+      }
+
+      .leaflet-control-zoom {
+        background-color: var(--secondary);
+        a {
+          color: var(--text-primary);
+          &:hover {
+            background-color: var(--hover);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .sensor-map-container {
+    flex-direction: column;
+
+    .filter-panel {
+      width: 100%;
+      max-height: 250px;
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+    }
+  }
+}

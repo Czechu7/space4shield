@@ -173,6 +173,33 @@
         "MEDIUM": "Medium",
         "HIGH": "High"
       }
+    },
+    "SENSORS": {
+      "FILTERS": {
+        "TITLE": "Sensor Filters",
+        "APPLY": "Apply Filters",
+        "RESET": "Reset",
+        "USE_MY_LOCATION": "Use My Location"
+      },
+      "METRICS": {
+        "TEMPERATURE": "Temperature",
+        "HUMIDITY": "Humidity",
+        "PRESSURE": "Pressure",
+        "WIND_SPEED": "Wind Speed",
+        "AIR_QUALITY": "Air Quality",
+        "RADIATION": "Radiation Level",
+        "LIGHT": "Light",
+        "SOIL_MOISTURE": "Soil Moisture"
+      }
+    },
+    "THEME": {
+      "SWITCH_TO_DARK": "Dark Mode",
+      "SWITCH_TO_LIGHT": "Light Mode"
+    },
+    "MAP": {
+      "ZOOM_IN": "Zoom In",
+      "ZOOM_OUT": "Zoom Out",
+      "RECENTER": "Center Map"
     }
   }
 }

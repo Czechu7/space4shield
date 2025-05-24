@@ -1,19 +1,20 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/_guards/auth.guard';
+import { roleGuard } from './core/_guards/role.guard';
+import { unAuthGuard } from './core/_guards/unauth.guard';
+import { RolesEnum } from './enums/roles.enum';
 import { RouterEnum } from './enums/router.enum';
+import { AdminLogsComponent } from './features/admin/admin-logs/admin-logs.component';
+import { AdminPanelComponent } from './features/admin/admin-panel/admin-panel.component';
+import { AdminUsersEditComponent } from './features/admin/admin-users-edit/admin-users-edit.component';
+import { AdminUsersComponent } from './features/admin/admin-users/admin-users.component';
 import { LoginComponent } from './features/auth/login/login.component';
 import { RegisterComponent } from './features/auth/register/register.component';
 import { DashboardComponent } from './features/dashboard/dashboard/dashboard.component';
-import { AdminPanelComponent } from './features/admin/admin-panel/admin-panel.component';
-import { AdminUsersComponent } from './features/admin/admin-users/admin-users.component';
-import { AdminLogsComponent } from './features/admin/admin-logs/admin-logs.component';
-import { NotFoundComponent } from './features/not-found/not-found.component';
-import { unAuthGuard } from './core/_guards/unauth.guard';
-import { authGuard } from './core/_guards/auth.guard';
-import { roleGuard } from './core/_guards/role.guard';
-import { RolesEnum } from './enums/roles.enum';
 import { ExampleCrudViewComponent } from './features/example-crud-view/example-crud-view.component';
-import { AdminUsersEditComponent } from './features/admin/admin-users-edit/admin-users-edit.component';
 import { UserWeatherAlertsComponent } from './features/user-weather-alerts/user-weather-alerts.component';
+import { MapSensorsComponent } from './features/map-sensors/map-sensors.component';
+import { NotFoundComponent } from './features/not-found/not-found.component';
 
 export const routes: Routes = [
   {
@@ -53,6 +54,10 @@ export const routes: Routes = [
   {
     path: RouterEnum.notFound,
     component: NotFoundComponent,
+  },
+  {
+    path: RouterEnum.map,
+    component: MapSensorsComponent,
   },
   {
     path: '**',
