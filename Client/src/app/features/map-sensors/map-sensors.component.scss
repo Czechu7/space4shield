@@ -1,0 +1,108 @@
+.sensor-map-container {
+  display: flex;
+  height: 100%;
+  min-height: 600px;
+
+  .filter-panel {
+    width: 300px;
+    padding: 16px;
+    background-color: #f5f5f5;
+    border-right: 1px solid #ddd;
+    overflow-y: auto;
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 18px;
+    }
+
+    .filter-group {
+      margin-bottom: 20px;
+
+      .filter-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+
+        label {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          cursor: pointer;
+        }
+      }
+
+      .filter-range {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        input[type='range'] {
+          flex: 1;
+        }
+      }
+    }
+
+    .filter-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      button {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        &:hover {
+          background-color: #0069d9;
+        }
+
+        &:nth-child(2) {
+          background-color: #6c757d;
+
+          &:hover {
+            background-color: #5a6268;
+          }
+        }
+
+        &:nth-child(3) {
+          background-color: #28a745;
+
+          &:hover {
+            background-color: #218838;
+          }
+        }
+      }
+    }
+  }
+
+  .map-wrapper {
+    flex: 1;
+    position: relative;
+    height: 100%;
+
+    app-map {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 600px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .sensor-map-container {
+    flex-direction: column;
+
+    .filter-panel {
+      width: 100%;
+      max-height: 250px;
+      border-right: none;
+      border-bottom: 1px solid #ddd;
+    }
+  }
+}

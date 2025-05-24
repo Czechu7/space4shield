@@ -1,0 +1,62 @@
+<div class="sensor-map-container">
+  <div class="filter-panel">
+    <h3>Filtry sensorów</h3>
+
+    <div class="filter-group">
+      <div class="filter-header">
+        <label>
+          <input type="checkbox" [(ngModel)]="sensorFilter.temperature.enabled">
+          Temperatura (°C)
+        </label>
+      </div>
+      <div class="filter-range" *ngIf="sensorFilter.temperature.enabled">
+        <span>{{ sensorFilter.temperature.min }}°C</span>
+        <input type="range" [(ngModel)]="sensorFilter.temperature.min" min="-20" max="50" step="1">
+        <input type="range" [(ngModel)]="sensorFilter.temperature.max" min="-20" max="50" step="1">
+        <span>{{ sensorFilter.temperature.max }}°C</span>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <div class="filter-header">
+        <label>
+          <input type="checkbox" [(ngModel)]="sensorFilter.humidity.enabled">
+          Wilgotność (%)
+        </label>
+      </div>
+      <div class="filter-range" *ngIf="sensorFilter.humidity.enabled">
+        <span>{{ sensorFilter.humidity.min }}%</span>
+        <input type="range" [(ngModel)]="sensorFilter.humidity.min" min="0" max="100" step="1">
+        <input type="range" [(ngModel)]="sensorFilter.humidity.max" min="0" max="100" step="1">
+        <span>{{ sensorFilter.humidity.max }}%</span>
+      </div>
+    </div>
+
+    <div class="filter-actions">
+      <button (click)="applyFilters()">Zastosuj filtry</button>
+      <button (click)="resetFilters()">Resetuj</button>
+      <button (click)="useCurrentLocation()">Użyj mojej lokalizacji</button>
+    </div>
+  </div>
+
+  <div class="map-wrapper">
+    <app-map [options]="mapOptions">
+    </app-map>
+
+    <ng-container *ngFor="let marker of markerOptions">
+      <app-map-marker [options]="marker"></app-map-marker>
+    </ng-container>
+
+    <ng-container *ngFor="let arrow of arrowOptions">
+      <app-map-arrow [options]="arrow"></app-map-arrow>
+    </ng-container>
+
+    <ng-container *ngFor="let area of areaOptions">
+      <app-map-area [options]="area"></app-map-area>
+    </ng-container>
+
+    <ng-container *ngFor="let line of lineOptions">
+      <app-map-line [options]="line"></app-map-line>
+    </ng-container>
+  </div>
+</div>
