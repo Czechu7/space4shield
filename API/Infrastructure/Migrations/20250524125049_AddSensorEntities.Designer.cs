@@ -4,6 +4,7 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250524125049_AddSensorEntities")]
+    partial class AddSensorEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -222,9 +225,6 @@ namespace Infrastructure.Migrations
                         .HasPrecision(4, 2)
                         .HasColumnType("float(4)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<double?>("WaterLevel")
                         .HasPrecision(8, 2)
                         .HasColumnType("float(8)");
@@ -240,9 +240,6 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("Status")
                         .HasDatabaseName("IX_Sensors_Status");
-
-                    b.HasIndex("UserId")
-                        .HasDatabaseName("IX_Sensors_UserId");
 
                     b.HasIndex("Latitude", "Longitude")
                         .HasDatabaseName("IX_Sensors_Coordinates");
@@ -426,17 +423,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Sensor", b =>
-                {
-                    b.HasOne("Domain.Entities.User", "User")
-                        .WithMany("Sensors")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Domain.Entities.SensorReading", b =>
                 {
                     b.HasOne("Domain.Entities.Sensor", "Sensor")
@@ -458,8 +444,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Karmelki");
 
                     b.Navigation("RefreshTokens");
-
-                    b.Navigation("Sensors");
                 });
 #pragma warning restore 612, 618
         }

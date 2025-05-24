@@ -14,4 +14,5 @@ public class User : BaseEntity
     public string Roles { get; set; } = "USER";
     public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
     public ICollection<Karmelki> Karmelki { get; set; } = new List<Karmelki>();
+    public ICollection<Sensor> Sensors { get; set; } = new List<Sensor>();
 }
