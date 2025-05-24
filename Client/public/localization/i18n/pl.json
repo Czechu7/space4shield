@@ -74,6 +74,35 @@
       "SUCCESS_RESET_PASSWORD_MESSAGE": "Email z instrukcjami resetowania hasła został wysłany na podany adres."
     }
   },
+  "USER": {
+    "SENSORS": {
+      "TITLE": "Moje czujniki",
+      "ADD_NEW": "Dodaj nowy czujnik",
+      "ADD_NEW_FORM": "Dodawanie nowego czujnika",
+      "EDIT": "Edytuj czujnik",
+      "DELETE": "Usuń czujnik",
+      "ADD": "Dodaj czujnik",
+      "SUCCESS_TITLE": "Sukces",
+      "ERROR_TITLE": "Błąd",
+      "INFO_TITLE": "Informacja",
+      "ADDED_SUCCESS": "Czujnik został pomyślnie dodany",
+      "DELETED_SUCCESS": "Czujnik został pomyślnie usunięty",
+      "MISSING_SERIAL": "Wprowadź numer seryjny czujnika",
+      "DUPLICATE_SERIAL": "Czujnik o takim numerze seryjnym już istnieje",
+      "EDIT_NOT_IMPLEMENTED": "Funkcja edycji czujnika nie jest jeszcze dostępna",
+      "NO_SENSORS": "Nie masz jeszcze żadnych czujników",
+      "FORM_DESCRIPTION": "Wprowadź numer seryjny czujnika, a pozostałe dane zostaną pobrane automatycznie",
+      "SERIAL_NUMBER": "Numer seryjny",
+      "SERIAL_TOOLTIP": "Wprowadź numer seryjny czujnika (min. 8 znaków, format: litery, cyfry i myślniki)",
+      "SENSOR_NAME": "Nazwa czujnika",
+      "STREET": "Ulica",
+      "CITY": "Miasto",
+      "POSTAL_CODE": "Kod pocztowy",
+      "POSTAL_CODE_FORMAT": "Format kodu pocztowego: 12-345",
+      "SHOW_DETAILS": "Pokaż szczegóły",
+      "HIDE_DETAILS": "Ukryj szczegóły"
+    }
+  },
   "EXAMPLE-CRUD": {
     "TITLE": "Lista Karmelków",
     "NAME": "Nazwa",
@@ -130,7 +159,8 @@
     "CONFIRM": "Potwierdź",
     "SAVE": "Zapisz",
     "EDIT": "Edytuj",
-    "BACK": "Wstecz"
+    "BACK": "Wstecz",
+    "LOADING": "Ładowanie..."
   },
   "NOT-FOUND": {
     "TITLE": "404 - Nie znaleziono strony",

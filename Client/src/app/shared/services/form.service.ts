@@ -8,6 +8,7 @@ import {
   PasswordsForm,
   RegisterForm,
   ThemeForm,
+  UserSensorsForm,
 } from '../models/form.model';
 import { initLoginForm } from './forms/initLoginForm';
 import { initPasswdRecoveryForm } from './forms/initPasswdRecoveryForm';
@@ -16,6 +17,7 @@ import { initRegisterForm } from './forms/initRegisterForm';
 import { initThemeForm } from './forms/initThemeForm';
 import { initExampleCrudForm } from './forms/initExampleCrudForm';
 import { initAdminProfileForm } from './forms/initAdminProfileForm';
+import { initUserSensorsForm } from './forms/initUserSensorsForm';
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +37,10 @@ export class FormService {
 
   public getAdminProfileForm(): FormGroup<AdminProfileForm> {
     return initAdminProfileForm();
+  }
+
+  public getUserSensorsForm(): FormGroup<UserSensorsForm> {
+    return initUserSensorsForm();
   }
 
   public getThemeForm(): FormGroup<ThemeForm> {

@@ -9,7 +9,7 @@ export const MenuConfig = {
     { label: 'MENU.ADMIN_PANEL', routerLink: `/${RouterEnum.admin}`, roles: [RolesEnum.ADMIN] },
     {
       label: 'MENU.PROFILE',
-      routerLink: `/${RouterEnum.settings}`,
+      routerLink: `/${RouterEnum.user}`,
     },
   ],
   nonAuthMenuItems: [

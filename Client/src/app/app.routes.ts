@@ -13,6 +13,8 @@ import { roleGuard } from './core/_guards/role.guard';
 import { RolesEnum } from './enums/roles.enum';
 import { ExampleCrudViewComponent } from './features/example-crud-view/example-crud-view.component';
 import { AdminUsersEditComponent } from './features/admin/admin-users-edit/admin-users-edit.component';
+import { UserPanelComponent } from './features/user/user-panel/user-panel.component';
+import { UserSensorsComponent } from './features/user/user-sensors/user-sensors.component';
 
 export const routes: Routes = [
   {
@@ -36,6 +38,12 @@ export const routes: Routes = [
       { path: `${RouterEnum.users}/:id`, component: AdminUsersEditComponent },
       { path: RouterEnum.logs, component: AdminLogsComponent },
     ],
+  },
+  {
+    path: RouterEnum.user,
+    component: UserPanelComponent,
+    canActivate: [authGuard],
+    children: [{ path: RouterEnum.sensors, component: UserSensorsComponent }],
   },
   {
     path: RouterEnum.login,
