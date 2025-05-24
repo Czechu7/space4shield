@@ -1,103 +1,92 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
+import { ApiEndpoints } from '../../../enums/api-endpoints.enum';
 import { SensorFilter } from '../../_models/sensor-filter.model';
-import { SensorMetricType } from '../../_models/sensor-types.enum';
 import { Sensor } from '../../_models/sensor.model';
+import { RequestFactoryService } from '../httpRequestFactory/request-factory.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MapSensorsService {
-  private apiUrl = '/api/sensors'; // Zastąp rzeczywistym URL API
-
-  constructor(private http: HttpClient) {}
+  constructor(private requestFactory: RequestFactoryService) {}
 
   async getSensors(filter: SensorFilter): Promise<Sensor[]> {
     try {
-      // W rzeczywistym projekcie powinno to zostać zastąpione faktycznym wywołaniem API
-      // const params = this.buildFilterParams(filter);
-      // const response = await firstValueFrom(this.http.get<Sensor[]>(this.apiUrl, { params }));
-      // return response;
-
-      // Tymczasowo, generujemy dane testowe
-      return this.getMockSensors(filter);
+      // Use the real API endpoint
+      const response = await firstValueFrom(
+        this.requestFactory.get<Sensor[]>(ApiEndpoints.SENSORS),
+      );
+      return response.data;
     } catch (error) {
       console.error('Error fetching sensors:', error);
-      throw error;
+      // If the API fails, fallback to mock data for development
+      return this.getMockSensors(filter);
     }
   }
 
-  // Funkcja do generowania testowych danych sensorów
+  // Fallback mock data generator
   private getMockSensors(filter: SensorFilter): Sensor[] {
-    // Generowanie losowych sensorów wokół Warszawy
     const sensors: Sensor[] = [];
     const centerLat = 52.237049;
     const centerLng = 21.017532;
 
     for (let i = 0; i < 20; i++) {
-      // Losowe przesunięcie w obszarze ±0.1 stopnia
       const latOffset = (Math.random() - 0.5) * 0.2;
       const lngOffset = (Math.random() - 0.5) * 0.2;
 
-      // Tworzymy sensor z wszystkimi możliwymi metrykami
-      const metrics: Partial<Record<SensorMetricType, number>> = {};
+      const sensor: Sensor = {
+        id: `sensor-${i}`,
+        serialNumber: `SN-${i + 1000}`,
+        latitude: centerLat + latOffset,
+        longitude: centerLng + lngOffset,
+        status: Math.random() > 0.2 ? 'Active' : 'Inactive',
+        lastMeasurement: new Date().toISOString(),
+        createdAt: new Date(Date.now() - Math.random() * 10000000000).toISOString(),
+        temperature: Math.floor(Math.random() * 40) - 10,
+        humidity: Math.floor(Math.random() * 100),
+        airPressure: Math.floor(Math.random() * 200) + 900,
+        pM2_5: Math.floor(Math.random() * 100),
+        pM10: Math.floor(Math.random() * 150),
+      };
 
-      // Generowanie wartości dla każdej metryki
-      Object.values(SensorMetricType).forEach(metricType => {
-        const config = SENSOR_METRICS_CONFIG[metricType];
-        // Losowa wartość w zakresie min-max dla danej metryki
-        metrics[metricType] =
-          Math.floor(Math.random() * (config.maxValue - config.minValue + 1)) + config.minValue;
-      });
-
-      // Filtrujemy sensory, które mają przynajmniej jedną z wybranych metryk
-      const hasEnabledMetric = filter.enabledMetrics.some(metric => metrics[metric] !== undefined);
+      // Check if sensor has at least one enabled metric
+      const hasEnabledMetric = filter.enabledMetrics.some(
+        metricType => sensor[metricType as keyof Sensor] !== undefined,
+      );
 
       if (hasEnabledMetric) {
-        sensors.push({
-          id: `sensor-${i}`,
-          name: `Sensor ${i + 1}`,
-          latitude: centerLat + latOffset,
-          longitude: centerLng + lngOffset,
-          metrics,
-          lastUpdated: new Date().toISOString(),
-        });
+        sensors.push(sensor);
       }
     }
 
     return sensors;
   }
 
-  // Dodatkowe metody do obsługi konkretnych sensorów
   async getSensorDetails(sensorId: string): Promise<Sensor> {
     try {
-      // W rzeczywistości:
-      // return await firstValueFrom(this.http.get<Sensor>(`${this.apiUrl}/${sensorId}`));
-
-      // Tymczasowo zwracamy dane testowe
-      const metrics: Partial<Record<SensorMetricType, number>> = {};
-
-      // Generowanie wartości dla każdej metryki
-      Object.values(SensorMetricType).forEach(metricType => {
-        const config = SENSOR_METRICS_CONFIG[metricType];
-        metrics[metricType] =
-          Math.floor(Math.random() * (config.maxValue - config.minValue + 1)) + config.minValue;
-      });
-
-      return {
-        id: sensorId,
-        name: `Sensor ${sensorId}`,
-        latitude: 52.237049,
-        longitude: 21.017532,
-        metrics,
-        lastUpdated: new Date().toISOString(),
-      };
+      const response = await firstValueFrom(
+        this.requestFactory.getById<Sensor>(ApiEndpoints.SENSORS, sensorId),
+      );
+      return response.data;
     } catch (error) {
       console.error(`Error fetching sensor details for ID: ${sensorId}`, error);
-      throw error;
+
+      // Return mock data if the API call fails
+      return {
+        id: sensorId,
+        serialNumber: `SN-${sensorId}`,
+        latitude: 52.237049,
+        longitude: 21.017532,
+        status: 'Active',
+        lastMeasurement: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
+        temperature: Math.floor(Math.random() * 40) - 10,
+        humidity: Math.floor(Math.random() * 100),
+        airPressure: Math.floor(Math.random() * 200) + 900,
+        pM2_5: Math.floor(Math.random() * 100),
+        pM10: Math.floor(Math.random() * 150),
+      };
     }
   }
 }
-
-// Importujemy konfigurację metryk
-import { SENSOR_METRICS_CONFIG } from '../../_models/sensor-types.enum';

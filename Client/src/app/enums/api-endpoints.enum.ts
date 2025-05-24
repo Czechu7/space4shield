@@ -26,4 +26,6 @@ export enum ApiEndpoints {
   // LOGS
   LOGS = 'api/Logs/security',
   LOGS_ERRORS = 'api/Logs/errors',
+  // SENSORS
+  SENSORS = 'api/sensors/all-info',
 }

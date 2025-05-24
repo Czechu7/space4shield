@@ -8,4 +8,5 @@ export interface RangeFilter {
 
 export interface SensorFilter {
   enabledMetrics: SensorMetricType[];
+  status?: 'all' | 'active' | 'inactive';
 }
