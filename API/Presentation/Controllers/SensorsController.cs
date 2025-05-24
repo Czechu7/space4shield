@@ -120,7 +120,7 @@ public class SensorsController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<ActionResult<Response<SensorDto>>> UpdateSensor(Guid id, [FromBody] UpdateSensorDto updateSensorDto)
+    public async Task<ActionResult<Response<SensorDto>>> UpdateSensor(Guid id, [FromBody] UpdateSensorDataDto updateSensorDto)
     {
         var command = new UpdateSensorCommand(id, updateSensorDto);
         var response = await Mediator.Send(command);

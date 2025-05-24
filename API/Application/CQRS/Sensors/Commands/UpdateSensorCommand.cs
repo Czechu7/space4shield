@@ -3,6 +3,6 @@ using Application.CQRS.Sensors.DTOs;
 
 namespace Application.CQRS.Sensors.Commands;
 
-public class UpdateSensorCommand(Guid id, UpdateSensorDto data) : UpdateCommand<UpdateSensorDto, SensorDto>(id, data)
+public class UpdateSensorCommand(Guid id, UpdateSensorDataDto data) : UpdateCommand<UpdateSensorDataDto, SensorDto>(id, data)
 {
 }

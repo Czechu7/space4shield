@@ -6,9 +6,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.CQRS.Sensors.Handlers;
 
-public class UpdateSensorCommandHandler : UpdateCommandHandler<UpdateSensorCommand, SensorDto, UpdateSensorDto, Sensor>
+public class UpdateSensorCommandHandler : UpdateCommandHandler<UpdateSensorCommand, SensorDto, UpdateSensorDataDto, Sensor>
 {
-    protected override async Task ValidateUpdateAsync(Sensor entity, UpdateSensorDto dto, CancellationToken cancellationToken)
+    protected override async Task ValidateUpdateAsync(Sensor entity, UpdateSensorDataDto dto, CancellationToken cancellationToken)
     {
         if (!string.IsNullOrEmpty(CurrentUserService.UserId) && 
             Guid.TryParse(CurrentUserService.UserId, out Guid userId))
@@ -24,7 +24,7 @@ public class UpdateSensorCommandHandler : UpdateCommandHandler<UpdateSensorComma
         await base.ValidateUpdateAsync(entity, dto, cancellationToken);
     }
 
-    protected override async Task<SensorDto> CreateResponseFromEntityAsync(Sensor entity, UpdateSensorDto dto, CancellationToken cancellationToken)
+    protected override async Task<SensorDto> CreateResponseFromEntityAsync(Sensor entity, UpdateSensorDataDto dto, CancellationToken cancellationToken)
     {
         var response = Mapper.Map<SensorDto>(entity);
         return await Task.FromResult(response);

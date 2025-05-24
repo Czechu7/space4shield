@@ -3,6 +3,7 @@ using Application.CQRS.AdminPanel.DTOs;
 using Application.CQRS.AdminPanel.Queries;
 using Application.CQRS.Base.Queries;
 using Domain.Entities;
+using Microsoft.Extensions.Logging;
 
 
 namespace Application.CQRS.AdminPanel.Handlers;
