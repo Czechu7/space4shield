@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
@@ -11,36 +11,13 @@ import { SensorType } from '../../../enums/sensor-type.enum';
 import { UserSensorsForm } from '../../../shared/models/form.model';
 import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
 import { FormService } from '../../../shared/services/form.service';
-
-interface Sensor {
-  id: string;
-  serialNumber: string;
-  name: string;
-  type: SensorType;
-  value: number;
-  unit: string;
-  status: string;
-  location: string;
-  description?: string;
-  lastUpdate: Date;
-
-  street?: string;
-  city?: string;
-  postalCode?: string;
-
-  latitude?: number;
-  longitude?: number;
-
-  humidity?: number;
-  airPressure?: number;
-  pm1_0?: number;
-  pm2_5?: number;
-  pm10?: number;
-  waterLevel?: number;
-  precipitation?: number;
-  uvRadiation?: number;
-  lastMeasurement?: Date;
-}
+import { UserSensorsService } from '../../../core/_services/user-sensors/user-sensors.service';
+import {
+  PaginationService,
+  PaginationState,
+} from '../../../core/_services/pagination/pagination.service';
+import { Subscription } from 'rxjs';
+import { INewSensorRequest, IUserSensor } from '../../../core/_models/sensor.model';
 
 @Component({
   selector: 'app-user-sensors',
@@ -57,12 +34,15 @@ interface Sensor {
   templateUrl: './user-sensors.component.html',
   styleUrl: './user-sensors.component.scss',
 })
-export class UserSensorsComponent implements OnInit {
-  sensors: Sensor[] = [];
+export class UserSensorsComponent implements OnInit, OnDestroy {
+  sensors: IUserSensor[] = [];
   showForm = false;
   isLoading = false;
   userSensorsForm!: FormGroup<UserSensorsForm>;
   sensorType = SensorType;
+
+  paginationState: PaginationState | null = null;
+  private paginationSubscription!: Subscription;
 
   sensorUnitMap = {
     [SensorType.Temperature]: '°C',
@@ -80,53 +60,59 @@ export class UserSensorsComponent implements OnInit {
   private toastService = inject(ToastService);
   private translateService = inject(TranslateService);
   private formService = inject(FormService);
+  private userSensorsService = inject(UserSensorsService);
+  private paginationService = inject(PaginationService);
 
   ngOnInit() {
-    this.loadSensors();
+    this.fetchSensors();
     this.userSensorsForm = this.formService.getUserSensorsForm();
   }
 
-  loadSensors() {
-    this.isLoading = true;
+  ngOnDestroy() {
+    if (this.paginationSubscription) {
+      this.paginationSubscription.unsubscribe();
+    }
+  }
 
-    setTimeout(() => {
-      this.sensors = [
-        {
-          id: '1',
-          serialNumber: 'TEMP-12345',
-          name: 'Czujnik temperatury',
-          type: SensorType.Temperature,
-          value: 22.5,
-          unit: '°C',
-          status: 'Aktywny',
-          location: 'Salon',
-          lastUpdate: new Date(),
-        },
-        {
-          id: '2',
-          serialNumber: 'HUM-54321',
-          name: 'Czujnik wilgotności',
-          type: SensorType.Humidity,
-          value: 45,
-          unit: '%',
-          status: 'Aktywny',
-          location: 'Łazienka',
-          lastUpdate: new Date(),
-        },
-        {
-          id: '3',
-          serialNumber: 'PM-98765',
-          name: 'Czujnik PM2.5',
-          type: SensorType.PM25,
-          value: 15.2,
-          unit: 'μg/m³',
-          status: 'Ostrzeżenie',
-          location: 'Zewnętrzny',
-          lastUpdate: new Date(),
-        },
-      ];
-      this.isLoading = false;
-    }, 500);
+  fetchSensors() {
+    this.isLoading = true;
+    this.userSensorsService.getUserSensors().subscribe({
+      next: response => {
+        console.log('Pobrane czujniki:', response.data);
+
+        this.sensors = response.data.items.map(sensor => this.prepareSensorForDisplay(sensor));
+
+        console.log('Czujniki po przetworzeniu:', this.sensors);
+      },
+      error: error => {
+        this.toastService.showError(
+          this.translateService.instant('USER.SENSORS.ERROR_TITLE'),
+          this.errorService.getErrorMessage(error),
+        );
+      },
+      complete: () => {
+        this.isLoading = false;
+      },
+    });
+  }
+
+  prepareSensorForDisplay(sensor: IUserSensor): IUserSensor {
+    return {
+      ...sensor,
+      name: sensor.description || `Czujnik ${sensor.serialNumber}`,
+      type: this.determineSensorType(sensor),
+      value: sensor.temperature || 0,
+      unit: '°C',
+      location: `${sensor.street}, ${sensor.city}`,
+      lastUpdated: new Date(sensor.lastMeasurement || sensor.createdAt),
+    };
+  }
+
+  determineSensorType(sensor: IUserSensor): SensorType {
+    if (sensor.pM2_5 || sensor.pM10) return SensorType.PM25;
+    if (sensor.humidity !== undefined && sensor.humidity > 0) return SensorType.Humidity;
+    if (sensor.waterLevel) return SensorType.Other;
+    return SensorType.Temperature;
   }
 
   showAddSensorForm() {
@@ -139,6 +125,8 @@ export class UserSensorsComponent implements OnInit {
   }
 
   addSensor() {
+    console.log('Dodawanie czujnika:', this.userSensorsForm.value);
+
     if (this.userSensorsForm.invalid || this.isLoading) {
       Object.keys(this.userSensorsForm.controls).forEach(key => {
         this.userSensorsForm.get(key)?.markAsTouched();
@@ -165,6 +153,48 @@ export class UserSensorsComponent implements OnInit {
     }
 
     this.isLoading = true;
+
+    const formValue = this.userSensorsForm.value;
+    if (
+      !formValue.sensorNumber ||
+      !formValue.street ||
+      !formValue.city ||
+      !formValue.postalCode ||
+      !formValue.name
+    )
+      return;
+    const sendData: INewSensorRequest = {
+      serialNumber: formValue.sensorNumber,
+      street: formValue.street,
+      city: formValue.city,
+      postalCode: formValue.postalCode,
+      description: formValue.name,
+    };
+    this.userSensorsService.addSensor(sendData).subscribe({
+      next: response => {
+        this.isLoading = true;
+        this.toastService.showSuccess(
+          this.translateService.instant('USER.SENSORS.SUCCESS_TITLE'),
+          this.translateService.instant('USER.SENSORS.ADDED_SUCCESS', { name: formValue.name }),
+        );
+      },
+      error: error => {
+        this.toastService.showError(
+          this.translateService.instant('USER.SENSORS.ERROR_TITLE'),
+          this.errorService.getErrorMessage(error),
+        );
+      },
+      complete: () => {
+        this.isLoading = false;
+        this.showForm = false;
+        this.userSensorsForm.reset();
+        this.fetchSensors();
+        this.toastService.showSuccess(
+          this.translateService.instant('USER.SENSORS.SUCCESS_TITLE'),
+          this.translateService.instant('USER.SENSORS.ADDED_SUCCESS', { name: formValue.name }),
+        );
+      },
+    });
   }
 
   editSensor(id: string) {
@@ -184,13 +214,32 @@ export class UserSensorsComponent implements OnInit {
 
     this.sensors = this.sensors.filter(sensor => sensor.id !== id);
 
-    this.toastService.showSuccess(
-      this.translateService.instant('USER.SENSORS.SUCCESS_TITLE'),
-      this.translateService.instant('USER.SENSORS.DELETED_SUCCESS', { name: sensorToDelete.name }),
-    );
+    this.userSensorsService.deleteSensor(id).subscribe({
+      next: _ => {
+        this.toastService.showSuccess(
+          this.translateService.instant('USER.SENSORS.SUCCESS_TITLE'),
+          this.translateService.instant('USER.SENSORS.DELETED_SUCCESS', {
+            name: sensorToDelete.name,
+          }),
+        );
+        this.fetchSensors();
+      },
+      error: error => {
+        this.toastService.showError(
+          this.translateService.instant('USER.SENSORS.ERROR_TITLE'),
+          this.errorService.getErrorMessage(error),
+        );
+        this.sensors.push(sensorToDelete);
+      },
+      complete: () => {
+        this.isLoading = false;
+        this.showForm = false;
+        this.userSensorsForm.reset();
+      },
+    });
   }
 
-  getSensorIcon(type: SensorType): string {
+  getSensorIcon(type: SensorType | undefined): string {
     switch (type) {
       case SensorType.Temperature:
         return 'pi pi-thermometer text-red-500';
@@ -213,14 +262,16 @@ export class UserSensorsComponent implements OnInit {
   }
 
   getSensorStatusClass(status: string): string {
-    switch (status) {
-      case 'Aktywny':
+    if (!status) return '';
+
+    switch (status.toLowerCase()) {
+      case 'active':
         return 'text-green-500';
-      case 'Nieaktywny':
+      case 'inactive':
         return 'text-gray-500';
-      case 'Ostrzeżenie':
+      case 'warning':
         return 'text-yellow-500';
-      case 'Błąd':
+      case 'error':
         return 'text-red-500';
       default:
         return '';
@@ -251,5 +302,19 @@ export class UserSensorsComponent implements OnInit {
 
   toggleDetails(sensorId: string) {
     this.showDetailsMap[sensorId] = !this.showDetailsMap[sensorId];
+  }
+
+  hasAnyReadings(sensor: IUserSensor): boolean {
+    return (
+      sensor.temperature !== undefined ||
+      sensor.humidity !== undefined ||
+      sensor.airPressure !== undefined ||
+      sensor.pM1_0 !== undefined ||
+      sensor.pM2_5 !== undefined ||
+      sensor.pM10 !== undefined ||
+      sensor.waterLevel !== undefined ||
+      sensor.precipitation !== undefined ||
+      sensor.uvRadiation !== undefined
+    );
   }
 }
