@@ -5,7 +5,7 @@ import os
 from datetime import datetime
 
 # --- Konfiguracja ---
-WEATHERSTACK_API_KEY = "8ae75ad302dae6ef342a10f9e64c10d3"
+WEATHERSTACK_API_KEY =  os.getenv("WEATHERSTACK_API_KEY")
 WEATHERSTACK_BASE_URL = "http://api.weatherstack.com"
 CITY = "Kielce"
 
