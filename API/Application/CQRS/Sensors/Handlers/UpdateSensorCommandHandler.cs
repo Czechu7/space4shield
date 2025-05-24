@@ -20,13 +20,58 @@ public class UpdateSensorCommandHandler : UpdateCommandHandler<UpdateSensorComma
                 throw new Common.Exceptions.ApplicationException("You do not have permission to update this sensor");
             }
         }
+    }
 
-        await base.ValidateUpdateAsync(entity, dto, cancellationToken);
+    protected override async Task HandleUpdateAsync(Sensor entity, UpdateSensorDataDto dto, CancellationToken cancellationToken)
+    {
+        // Zapisz poprzednie dane do historii jeśli istnieją jakiekolwiek dane pomiarowe
+        if (HasSensorData(entity))
+        {
+            await SaveCurrentDataToHistory(entity, cancellationToken);
+        }
     }
 
     protected override async Task<SensorDto> CreateResponseFromEntityAsync(Sensor entity, UpdateSensorDataDto dto, CancellationToken cancellationToken)
     {
         var response = Mapper.Map<SensorDto>(entity);
         return await Task.FromResult(response);
+    }
+
+    private bool HasSensorData(Sensor entity)
+    {
+        return entity.Temperature.HasValue ||
+               entity.Humidity.HasValue ||
+               entity.AirPressure.HasValue ||
+               entity.PM1_0.HasValue ||
+               entity.PM2_5.HasValue ||
+               entity.PM10.HasValue ||
+               entity.WaterLevel.HasValue ||
+               entity.Precipitation.HasValue ||
+               entity.UVRadiation.HasValue;
+    }
+
+    private async Task SaveCurrentDataToHistory(Sensor entity, CancellationToken cancellationToken)
+    {
+        var sensorReading = new SensorReading
+        {
+            SensorId = entity.Id,
+            ReadingDateTime = entity.LastMeasurement ?? DateTime.UtcNow,
+            Temperature = entity.Temperature,
+            Humidity = entity.Humidity,
+            AirPressure = entity.AirPressure,
+            PM1_0 = entity.PM1_0,
+            PM2_5 = entity.PM2_5,
+            PM10 = entity.PM10,
+            WaterLevel = entity.WaterLevel,
+            Precipitation = entity.Precipitation,
+            UVRadiation = entity.UVRadiation,
+            ReadingSource = "Manual",
+            IsValid = true
+        };
+
+        await DbContext.Set<SensorReading>().AddAsync(sensorReading, cancellationToken);
+        await DbContext.SaveChangesAsync(cancellationToken);
+
+        Logger.LogInformation("Saved sensor data to history for Sensor {SensorId} before update", entity.Id);
     }
 }
