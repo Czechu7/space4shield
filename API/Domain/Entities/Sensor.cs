@@ -64,7 +64,7 @@ public class Sensor : BaseEntity
     [Range(0.0, 20.0)]
     public double? UVRadiation { get; set; } // UV Index
 
-    // Metadane
+
     public DateTime? LastMeasurement { get; set; }
 
     [StringLength(50)]
