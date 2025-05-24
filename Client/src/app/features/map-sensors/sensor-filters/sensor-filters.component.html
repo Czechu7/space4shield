@@ -1,0 +1,22 @@
+<div class="sensor-filters">
+  <h3>Filtry sensorów</h3>
+
+  <div class="filter-metrics">
+    <div class="filter-metric-item" *ngFor="let metricType of sensorMetricTypes">
+      <label class="checkbox-container">
+        <input type="checkbox" [checked]="isMetricEnabled(metricType)">
+        <span class="checkmark"></span>
+        <span class="metric-label">
+          <i *ngIf="sensorMetricsConfig[metricType].icon" [class]="sensorMetricsConfig[metricType].icon"></i>
+          {{ sensorMetricsConfig[metricType].label }} ({{ sensorMetricsConfig[metricType].unit }})
+        </span>
+      </label>
+    </div>
+  </div>
+
+  <div class="filter-actions">
+    <button (click)="applyFilters()">Zastosuj filtry</button>
+    <button (click)="onResetFilters()">Resetuj</button>
+    <button (click)="onUseCurrentLocation()">Użyj mojej lokalizacji</button>
+  </div>
+</div>

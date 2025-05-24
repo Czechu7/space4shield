@@ -17,6 +17,8 @@ import { MapConfigService } from '../../core/_services/map-config/map-config.ser
 import { SensorFilter } from '../../core/_models/sensor-filter.model';
 import { MapSensorsService } from '../../core/_services/map-sensor/map-sensors.service';
 import { Sensor } from '../../core/_models/sensor.model';
+import { SensorFiltersComponent } from './sensor-filters/sensor-filters.component';
+import { SENSOR_METRICS_CONFIG, SensorMetricType } from '../../core/_models/sensor-types.enum';
 
 @Component({
   selector: 'app-map-sensors',
@@ -29,6 +31,7 @@ import { Sensor } from '../../core/_models/sensor.model';
     MapArrowComponent,
     MapAreaComponent,
     MapLineComponent,
+    SensorFiltersComponent,
   ],
   templateUrl: './map-sensors.component.html',
   styleUrls: ['./map-sensors.component.scss'],
@@ -40,17 +43,9 @@ export class MapSensorsComponent implements OnInit {
   areaOptions: AreaOptions[] = [];
   lineOptions: LineOptions[] = [];
 
+  // Aktualizacja modelu filtrów
   sensorFilter: SensorFilter = {
-    temperature: {
-      min: -20,
-      max: 50,
-      enabled: true,
-    },
-    humidity: {
-      min: 0,
-      max: 100,
-      enabled: true,
-    },
+    enabledMetrics: Object.values(SensorMetricType),
   };
 
   constructor(
@@ -74,33 +69,42 @@ export class MapSensorsComponent implements OnInit {
   }
 
   updateMapElements(sensors: Sensor[]): void {
-    this.markerOptions = sensors.map(sensor => ({
-      position: [sensor.latitude, sensor.longitude],
-      title: `${sensor.name}: ${sensor.temperature}°C, ${sensor.humidity}%`,
-      onClick: () => this.handleSensorClick(sensor),
-    }));
+    // Konwersja danych sensorów na elementy mapy (markery)
+    this.markerOptions = sensors.map(sensor => {
+      // Tworzymy opis sensora na podstawie dostępnych metryk
+      const tooltipParts: string[] = [];
+
+      // Dodajemy informacje o każdej dostępnej metryce
+      this.sensorFilter.enabledMetrics.forEach(metricType => {
+        if (sensor.metrics[metricType] !== undefined) {
+          const config = SENSOR_METRICS_CONFIG[metricType];
+          tooltipParts.push(`${config.label}: ${sensor.metrics[metricType]}${config.unit}`);
+        }
+      });
+
+      const tooltipContent = tooltipParts.join(', ');
+
+      return {
+        position: [sensor.latitude, sensor.longitude],
+        title: `${sensor.name}: ${tooltipContent}`,
+        onClick: () => this.handleSensorClick(sensor),
+      };
+    });
   }
 
   handleSensorClick(sensor: Sensor): void {
     console.log('Sensor clicked:', sensor);
+    // Tutaj możesz dodać kod do wyświetlania szczegółów sensora
   }
 
-  applyFilters(): void {
+  onFilterChange(filter: SensorFilter): void {
+    this.sensorFilter = filter;
     this.loadSensorData();
   }
 
-  resetFilters(): void {
+  onResetFilters(): void {
     this.sensorFilter = {
-      temperature: {
-        min: -20,
-        max: 50,
-        enabled: true,
-      },
-      humidity: {
-        min: 0,
-        max: 100,
-        enabled: true,
-      },
+      enabledMetrics: Object.values(SensorMetricType),
     };
     this.loadSensorData();
   }

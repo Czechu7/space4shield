@@ -1,3 +1,5 @@
+import { SensorMetricType } from './sensor-types.enum';
+
 export interface RangeFilter {
   min: number;
   max: number;
@@ -5,9 +7,5 @@ export interface RangeFilter {
 }
 
 export interface SensorFilter {
-  temperature: RangeFilter;
-  humidity: RangeFilter;
-
-  // windSpeed?: RangeFilter;
-  // pressure?: RangeFilter;
+  enabledMetrics: SensorMetricType[];
 }
