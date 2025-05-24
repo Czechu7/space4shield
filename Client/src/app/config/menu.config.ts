@@ -11,6 +11,8 @@ export const MenuConfig = {
       label: 'MENU.PROFILE',
       routerLink: `/${RouterEnum.settings}`,
     },
+    { label: 'MENU.WEATHER_LOGS', routerLink: `/${RouterEnum.weatherLogs}` },
+    { label: 'MENU.MAP', routerLink: `/${RouterEnum.map}` },
   ],
   nonAuthMenuItems: [
     { label: 'MENU.LOGIN', routerLink: `/${RouterEnum.login}` },

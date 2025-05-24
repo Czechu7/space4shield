@@ -10,7 +10,9 @@
     "ADMIN_PANEL": "Panel administracyjny",
     "LOGOUT": "Wyloguj się",
     "LOGIN": "Zaloguj się",
-    "REGISTER": "Zarejestruj się"
+    "REGISTER": "Zarejestruj się",
+    "MAP": "Mapa",
+    "WEATHER_LOGS": "Logi pogodowe"
   },
   "AUTH": {
     "LOGIN_TITLE": "Zaloguj się",
@@ -172,33 +174,33 @@
         "MEDIUM": "Średni",
         "HIGH": "Wysoki"
       }
-    },
-    "SENSORS": {
-      "FILTERS": {
-        "TITLE": "Filtry sensorów",
-        "APPLY": "Zastosuj filtry",
-        "RESET": "Resetuj",
-        "USE_MY_LOCATION": "Użyj mojej lokalizacji"
-      },
-      "METRICS": {
-        "TEMPERATURE": "Temperatura",
-        "HUMIDITY": "Wilgotność",
-        "PRESSURE": "Ciśnienie",
-        "WIND_SPEED": "Prędkość wiatru",
-        "AIR_QUALITY": "Jakość powietrza",
-        "RADIATION": "Poziom promieniowania",
-        "LIGHT": "Oświetlenie",
-        "SOIL_MOISTURE": "Wilgotność gleby"
-      }
-    },
-    "THEME": {
-      "SWITCH_TO_DARK": "Tryb ciemny",
-      "SWITCH_TO_LIGHT": "Tryb jasny"
-    },
-    "MAP": {
-      "ZOOM_IN": "Przybliż",
-      "ZOOM_OUT": "Oddal",
-      "RECENTER": "Centruj mapę"
     }
+  },
+  "SENSORS": {
+    "FILTERS": {
+      "TITLE": "Filtry sensorów",
+      "APPLY": "Zastosuj filtry",
+      "RESET": "Resetuj",
+      "USE_MY_LOCATION": "Użyj mojej lokalizacji"
+    },
+    "METRICS": {
+      "TEMPERATURE": "Temperatura",
+      "HUMIDITY": "Wilgotność",
+      "PRESSURE": "Ciśnienie",
+      "WIND_SPEED": "Prędkość wiatru",
+      "AIR_QUALITY": "Jakość powietrza",
+      "RADIATION": "Poziom promieniowania",
+      "LIGHT": "Oświetlenie",
+      "SOIL_MOISTURE": "Wilgotność gleby"
+    }
+  },
+  "THEME": {
+    "SWITCH_TO_DARK": "Tryb ciemny",
+    "SWITCH_TO_LIGHT": "Tryb jasny"
+  },
+  "MAP": {
+    "ZOOM_IN": "Przybliż",
+    "ZOOM_OUT": "Oddal",
+    "RECENTER": "Centruj mapę"
   }
 }
