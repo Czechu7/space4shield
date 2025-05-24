@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { RequestFactoryService } from '../httpRequestFactory/request-factory.service';
 import { Observable } from 'rxjs';
-import { IBaseResponse } from '../../_models/base-response.model';
+import { IBaseResponse, IBaseResponseWithoutData } from '../../_models/base-response.model';
 import {
   INewSensorRequest,
   INewSensorResponse,
@@ -23,6 +23,13 @@ export class UserSensorsService {
     return this.requestFactory.post<INewSensorRequest, INewSensorResponse>(
       ApiEndpoints.ADD_SENSOR,
       sensorData,
+    );
+  }
+
+  deleteSensor(sensorId: string): Observable<IBaseResponseWithoutData> {
+    return this.requestFactory.delete<IBaseResponseWithoutData>(
+      ApiEndpoints.DELETE_SENSOR,
+      sensorId,
     );
   }
 }

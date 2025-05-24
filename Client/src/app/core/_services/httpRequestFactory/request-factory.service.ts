@@ -106,7 +106,7 @@ export class RequestFactoryService {
     options?: IQueryParams,
   ): Observable<IBaseResponse<T>> {
     return this.request<T, { isDeleted: number }>(
-      'PATCH',
+      'DELETE',
       `${endpoint}/${id}`,
       { isDeleted: 1 },
       options,

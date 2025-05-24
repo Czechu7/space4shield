@@ -214,10 +214,29 @@ export class UserSensorsComponent implements OnInit, OnDestroy {
 
     this.sensors = this.sensors.filter(sensor => sensor.id !== id);
 
-    this.toastService.showSuccess(
-      this.translateService.instant('USER.SENSORS.SUCCESS_TITLE'),
-      this.translateService.instant('USER.SENSORS.DELETED_SUCCESS', { name: sensorToDelete.name }),
-    );
+    this.userSensorsService.deleteSensor(id).subscribe({
+      next: _ => {
+        this.toastService.showSuccess(
+          this.translateService.instant('USER.SENSORS.SUCCESS_TITLE'),
+          this.translateService.instant('USER.SENSORS.DELETED_SUCCESS', {
+            name: sensorToDelete.name,
+          }),
+        );
+        this.fetchSensors();
+      },
+      error: error => {
+        this.toastService.showError(
+          this.translateService.instant('USER.SENSORS.ERROR_TITLE'),
+          this.errorService.getErrorMessage(error),
+        );
+        this.sensors.push(sensorToDelete);
+      },
+      complete: () => {
+        this.isLoading = false;
+        this.showForm = false;
+        this.userSensorsForm.reset();
+      },
+    });
   }
 
   getSensorIcon(type: SensorType | undefined): string {
