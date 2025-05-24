@@ -31,7 +31,9 @@ export class WeatherLogsListComponent implements OnInit, OnDestroy {
   private paginationService = inject(PaginationService);
 
   ngOnInit() {
+    this.logs = [];
     this.paginationService.resetPagination();
+
     this.paginationSubscription = this.paginationService.getPaginationState().subscribe(state => {
       this.paginationState = state;
       if (state.isLoading && !state.reachedEnd) {
@@ -39,7 +41,39 @@ export class WeatherLogsListComponent implements OnInit, OnDestroy {
       }
     });
 
-    setTimeout(() => this.paginationService.nextPage(), 0);
+    this.directlyLoadInitialData();
+  }
+
+  directlyLoadInitialData() {
+    if (this.logType === LogEnum.WeatherGeneral) {
+      this.logsService.getGeneralWeatherAlerts(100, 0).subscribe({
+        next: response => {
+          console.log('Initial general logs load:', response);
+          if (response && response.data) {
+            this.logs = response.data;
+          }
+          this.paginationService.setLoading(false);
+        },
+        error: err => {
+          console.error('Error loading initial general logs:', err);
+          this.paginationService.setLoading(false);
+        },
+      });
+    } else {
+      this.logsService.getUserWeatherAlerts(100, 0).subscribe({
+        next: response => {
+          console.log('Initial user logs load:', response);
+          if (response && response.data) {
+            this.logs = response.data;
+          }
+          this.paginationService.setLoading(false);
+        },
+        error: err => {
+          console.error('Error loading initial user logs:', err);
+          this.paginationService.setLoading(false);
+        },
+      });
+    }
   }
 
   ngOnDestroy() {
@@ -52,6 +86,7 @@ export class WeatherLogsListComponent implements OnInit, OnDestroy {
     if (!this.paginationState) return;
 
     const { limit, offset } = this.paginationState;
+    console.log(`Loading logs with limit=${limit}, offset=${offset}, logType=${this.logType}`);
 
     if (this.logType === LogEnum.WeatherGeneral) {
       this.logsService.getGeneralWeatherAlerts(limit, offset).subscribe({
@@ -68,7 +103,7 @@ export class WeatherLogsListComponent implements OnInit, OnDestroy {
           }
           this.paginationService.setLoading(false);
         },
-        error: () => {
+        error: _ => {
           this.paginationService.setLoading(false);
         },
       });
@@ -87,7 +122,7 @@ export class WeatherLogsListComponent implements OnInit, OnDestroy {
           }
           this.paginationService.setLoading(false);
         },
-        error: () => {
+        error: _ => {
           this.paginationService.setLoading(false);
         },
       });
@@ -107,6 +142,6 @@ export class WeatherLogsListComponent implements OnInit, OnDestroy {
   reset() {
     this.logs = [];
     this.paginationService.resetPagination();
-    this.paginationService.nextPage();
+    this.directlyLoadInitialData();
   }
 }
