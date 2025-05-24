@@ -1,0 +1,143 @@
+@import '../../../../styles/utils/variables';
+
+.sensor-filters {
+  padding: 10px;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 18px;
+    color: var(--text-primary);
+  }
+
+  .filter-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .filter-metric-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .checkbox-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    user-select: none;
+    width: 100%;
+    color: var(--text-primary);
+  }
+
+  .checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  .checkmark {
+    position: absolute;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: var(--secondary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+
+  .checkbox-container:hover input ~ .checkmark {
+    background-color: var(--hover);
+  }
+
+  .checkbox-container input:checked ~ .checkmark {
+    background-color: var(--primary);
+    border-color: var(--primary);
+  }
+
+  .checkmark:after {
+    content: '';
+    position: absolute;
+    display: none;
+  }
+
+  .checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+  }
+
+  .checkbox-container .checkmark:after {
+    left: 7px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  .metric-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: var(--text-primary);
+
+    i {
+      font-size: 16px;
+      color: var(--primary);
+    }
+  }
+
+  .filter-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: $global-border-radius;
+      background-color: var(--primary);
+      color: white;
+      cursor: pointer;
+      transition:
+        background-color 0.2s,
+        transform 0.1s;
+      box-shadow: $global-box-shadow;
+
+      &:hover {
+        background-color: var(--primary-light);
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+
+      &:nth-child(2) {
+        background-color: var(--secondary);
+        color: var(--text-primary);
+
+        &:hover {
+          background-color: var(--hover);
+        }
+      }
+
+      &:nth-child(3) {
+        background-color: var(--primary-dark);
+
+        &:hover {
+          background-color: var(--primary);
+        }
+      }
+    }
+  }
+}

@@ -19,4 +19,6 @@ export enum RouterEnum {
 
   fileDetails = 'file-details',
   karmelki = 'karmelki',
+
+  map = 'map',
 }
