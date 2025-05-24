@@ -17,7 +17,7 @@ import {
   PaginationState,
 } from '../../../core/_services/pagination/pagination.service';
 import { Subscription } from 'rxjs';
-import { IUserSensor } from '../../../core/_models/sensor.model';
+import { INewSensorRequest, IUserSensor } from '../../../core/_models/sensor.model';
 
 @Component({
   selector: 'app-user-sensors',
@@ -125,6 +125,8 @@ export class UserSensorsComponent implements OnInit, OnDestroy {
   }
 
   addSensor() {
+    console.log('Dodawanie czujnika:', this.userSensorsForm.value);
+
     if (this.userSensorsForm.invalid || this.isLoading) {
       Object.keys(this.userSensorsForm.controls).forEach(key => {
         this.userSensorsForm.get(key)?.markAsTouched();
@@ -151,6 +153,48 @@ export class UserSensorsComponent implements OnInit, OnDestroy {
     }
 
     this.isLoading = true;
+
+    const formValue = this.userSensorsForm.value;
+    if (
+      !formValue.sensorNumber ||
+      !formValue.street ||
+      !formValue.city ||
+      !formValue.postalCode ||
+      !formValue.name
+    )
+      return;
+    const sendData: INewSensorRequest = {
+      serialNumber: formValue.sensorNumber,
+      street: formValue.street,
+      city: formValue.city,
+      postalCode: formValue.postalCode,
+      description: formValue.name,
+    };
+    this.userSensorsService.addSensor(sendData).subscribe({
+      next: response => {
+        this.isLoading = true;
+        this.toastService.showSuccess(
+          this.translateService.instant('USER.SENSORS.SUCCESS_TITLE'),
+          this.translateService.instant('USER.SENSORS.ADDED_SUCCESS', { name: formValue.name }),
+        );
+      },
+      error: error => {
+        this.toastService.showError(
+          this.translateService.instant('USER.SENSORS.ERROR_TITLE'),
+          this.errorService.getErrorMessage(error),
+        );
+      },
+      complete: () => {
+        this.isLoading = false;
+        this.showForm = false;
+        this.userSensorsForm.reset();
+        this.fetchSensors();
+        this.toastService.showSuccess(
+          this.translateService.instant('USER.SENSORS.SUCCESS_TITLE'),
+          this.translateService.instant('USER.SENSORS.ADDED_SUCCESS', { name: formValue.name }),
+        );
+      },
+    });
   }
 
   editSensor(id: string) {

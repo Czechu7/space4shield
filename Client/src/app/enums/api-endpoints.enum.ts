@@ -28,4 +28,5 @@ export enum ApiEndpoints {
   LOGS_ERRORS = 'api/Logs/errors',
   // SENSORS
   GET_USER_SENSORS = 'api/Sensors/my-sensors',
+  ADD_SENSOR = 'api/Sensors',
 }

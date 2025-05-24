@@ -2,7 +2,11 @@ import { inject, Injectable } from '@angular/core';
 import { RequestFactoryService } from '../httpRequestFactory/request-factory.service';
 import { Observable } from 'rxjs';
 import { IBaseResponse } from '../../_models/base-response.model';
-import { IUserSensor, IUserSensorResponse, Sensor } from '../../_models/sensor.model';
+import {
+  INewSensorRequest,
+  INewSensorResponse,
+  IUserSensorResponse,
+} from '../../_models/sensor.model';
 import { ApiEndpoints } from '../../../enums/api-endpoints.enum';
 
 @Injectable({
@@ -13,5 +17,12 @@ export class UserSensorsService {
 
   getUserSensors(): Observable<IBaseResponse<IUserSensorResponse>> {
     return this.requestFactory.getAll<IUserSensorResponse>(ApiEndpoints.GET_USER_SENSORS);
+  }
+
+  addSensor(sensorData: INewSensorRequest): Observable<IBaseResponse<INewSensorResponse>> {
+    return this.requestFactory.post<INewSensorRequest, INewSensorResponse>(
+      ApiEndpoints.ADD_SENSOR,
+      sensorData,
+    );
   }
 }

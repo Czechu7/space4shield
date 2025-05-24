@@ -14,6 +14,16 @@ export interface IUserSensorResponse {
   items: IUserSensor[];
 }
 
+export interface INewSensorRequest {
+  serialNumber: string;
+  street: string;
+  city: string;
+  description: string;
+  postalCode: string;
+}
+
+export interface INewSensorResponse {}
+
 export interface IUserSensor {
   id: string;
   serialNumber: string;
