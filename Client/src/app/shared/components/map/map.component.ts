@@ -38,7 +38,20 @@ export class MapComponent implements AfterViewInit, OnDestroy {
   constructor(
     private el: ElementRef,
     private mapService: MapService,
-  ) {}
+  ) {
+    const iconUrl = 'public/leaflet/marker-icon.png';
+    const shadowUrl = '/Client/public/leaflet/marker-shadow.png';
+    const iconDefault = L.icon({
+      iconUrl,
+      shadowUrl,
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      tooltipAnchor: [16, -28],
+      shadowSize: [41, 41],
+    });
+    L.Marker.prototype.options.icon = iconDefault;
+  }
 
   ngAfterViewInit(): void {
     this.initMap();

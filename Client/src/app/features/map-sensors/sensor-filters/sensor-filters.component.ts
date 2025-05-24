@@ -30,18 +30,22 @@ export class SensorFiltersComponent implements OnInit {
     return this.filter.enabledMetrics.includes(metricType);
   }
 
-  toggleMetric(metricType: SensorMetricType, isEnabled: boolean): void {
-    if (isEnabled) {
+  toggleMetric(metricType: SensorMetricType, isChecked: boolean): void {
+    console.log('Toggle metric:', metricType, 'isChecked:', isChecked);
+
+    if (isChecked) {
       if (!this.isMetricEnabled(metricType)) {
-        this.filter.enabledMetrics.push(metricType);
+        this.filter.enabledMetrics = [...this.filter.enabledMetrics, metricType];
       }
     } else {
       this.filter.enabledMetrics = this.filter.enabledMetrics.filter(m => m !== metricType);
     }
-    this.filterChange.emit(this.filter);
+
+    this.applyFilters();
   }
 
   applyFilters(): void {
+    console.log('Applying filters:', this.filter);
     this.filterChange.emit(this.filter);
   }
 
