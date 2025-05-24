@@ -51,3 +51,15 @@ export interface ExampleCrudForm {
   isZiemniak: FormControl<boolean>;
   arrivalDate: FormControl<Date>;
 }
+
+export interface MetricsForm {
+  temperature: FormControl<boolean>;
+  humidity: FormControl<boolean>;
+  airPressure: FormControl<boolean>;
+  pM1_0: FormControl<boolean>;
+  pM2_5: FormControl<boolean>;
+  pM10: FormControl<boolean>;
+  waterLevel: FormControl<boolean>;
+  precipitation: FormControl<boolean>;
+  uvRadiation: FormControl<boolean>;
+}

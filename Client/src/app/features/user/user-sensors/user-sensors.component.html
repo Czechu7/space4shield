@@ -121,19 +121,7 @@
             </div>
 
             <div class="chart-container mt-4" *ngIf="showDetailsMap[sensor.id]">
-              <div class="metric-selection mb-4 grid grid-cols-3 gap-2">
-                <div *ngFor="let metric of availableMetrics">
-                  <app-checkbox
-                    [label]="metric.label"
-                    [checked]="selectedMetrics.includes(metric.value)"
-                    [value]="metric.value"
-                    (change)="onMetricChange($event, metric.value)"
-                  />
-                </div>
-              </div>
-              <div class="chart">
-                <app-line-chart [data]="data" [options]="options"></app-line-chart>
-              </div>
+              <app-user-sensors-chart [sensorHistory]="sensorHistory" [sensorId]="sensor.id"></app-user-sensors-chart>
             </div>
           </div>
         </div>
