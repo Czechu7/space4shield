@@ -132,7 +132,8 @@
     "CONFIRM": "Potwierdź",
     "SAVE": "Zapisz",
     "EDIT": "Edytuj",
-    "BACK": "Wstecz"
+    "BACK": "Wstecz",
+    "LOADING": "Ładowanie..."
   },
   "NOT-FOUND": {
     "TITLE": "404 - Nie znaleziono strony",
@@ -177,6 +178,22 @@
     }
   },
   "SENSORS": {
+    "MANAGE": {
+      "TITLE": "Sensory",
+      "EDIT": "Edytuj",
+      "DELETE": "Usuń",
+      "ADD_NEW": "Dodaj nowy",
+      "NO_SENSORS": "Brak sensorów do wyświetlenia",
+      "ADD_NEW_FORM": "Dodaj nowy sensor",
+      "FORM_DESCRIPTION": "Wprowadź opis sensora",
+      "SERIAL_NUMBER": "Numer seryjny",
+      "SENSOR_NAME": "Nazwa sensora",
+      "STREET": "Ulica",
+      "CITY": "Miasto",
+      "POSTAL_CODE": "Kod pocztowy",
+      "POSTAL_CODE_FORMAT": "Format kodu pocztowego: XX-XXX",
+      "ADD": "Dodaj"
+    },
     "FILTERS": {
       "TITLE": "Filtry sensorów",
       "APPLY": "Zastosuj filtry",

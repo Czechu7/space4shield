@@ -35,6 +35,14 @@ export interface ThemeForm {
   theme: FormControl<boolean>;
 }
 
+export interface UserSensorsForm {
+  sensorNumber: FormControl<string>;
+  name: FormControl<string>;
+  street: FormControl<string>;
+  city: FormControl<string>;
+  postalCode: FormControl<string>;
+}
+
 export interface ExampleCrudForm {
   id: FormControl<string>;
   name: FormControl<string>;

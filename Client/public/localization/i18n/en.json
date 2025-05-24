@@ -133,7 +133,8 @@
     "CONFIRM": "Confirm",
     "SAVE": "Save",
     "EDIT": "Edit",
-    "BACK": "Back"
+    "BACK": "Back",
+    "LOADING": "Loading..."
   },
   "NOT-FOUND": {
     "TITLE": "404 - Page Not Found",
@@ -178,6 +179,23 @@
     }
   },
     "SENSORS": {
+      "MANAGE": {
+        "TITLE": "Sensors",
+        "EDIT": "Edit",
+        "DELETE": "Delete",
+        "ADD_NEW": "Add new",
+        "NO_SENSORS": "No sensors to display",
+        "ADD_NEW_FORM": "Add new sensor",
+        "FORM_DESCRIPTION": "Enter sensor description",
+        "SERIAL_NUMBER": "Serial number",
+        "SENSOR_NAME": "Sensor name",
+        "STREET": "Street",
+        "CITY": "City",
+        "POSTAL_CODE": "Postal code",
+        "POSTAL_CODE_FORMAT": "Postal code format: XX-XXX",
+        "ADD": "Add"
+      },
+
       "FILTERS": {
         "TITLE": "Sensor Filters",
         "APPLY": "Apply Filters",
