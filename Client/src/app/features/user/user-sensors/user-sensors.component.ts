@@ -18,6 +18,9 @@ import {
 } from '../../../core/_services/pagination/pagination.service';
 import { Subscription } from 'rxjs';
 import { INewSensorRequest, IUserSensor } from '../../../core/_models/sensor.model';
+import { MapComponent } from '../../../shared/components/map/map.component';
+import { MapMarkerComponent } from '../../../shared/components/map/map-marker.component';
+import { MapOptions, MarkerOptions } from '../../../shared/models/leaflet.model';
 
 @Component({
   selector: 'app-user-sensors',
@@ -30,6 +33,8 @@ import { INewSensorRequest, IUserSensor } from '../../../core/_models/sensor.mod
     InputComponent,
     TooltipModule,
     LoadingSpinnerComponent,
+    MapComponent,
+    MapMarkerComponent,
   ],
   templateUrl: './user-sensors.component.html',
   styleUrl: './user-sensors.component.scss',
@@ -316,5 +321,33 @@ export class UserSensorsComponent implements OnInit, OnDestroy {
       sensor.precipitation !== undefined ||
       sensor.uvRadiation !== undefined
     );
+  }
+
+  getSensorMapOptions(sensor: IUserSensor): MapOptions {
+    if (!sensor.latitude || !sensor.longitude) {
+      return {
+        center: [52.237049, 21.017532],
+        zoom: 10,
+        zoomControl: false,
+      };
+    }
+
+    return {
+      center: [sensor.latitude - 0.0005, sensor.longitude],
+      zoom: 14,
+      zoomControl: false,
+    };
+  }
+
+  getSensorMarkerOptions(sensor: IUserSensor): MarkerOptions | null {
+    if (!sensor.latitude || !sensor.longitude) {
+      return null;
+    }
+
+    return {
+      position: [sensor.latitude, sensor.longitude],
+      title: sensor.name || sensor.serialNumber,
+      draggable: false,
+    };
   }
 }

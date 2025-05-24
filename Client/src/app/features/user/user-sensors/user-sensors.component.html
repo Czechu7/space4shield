@@ -61,6 +61,13 @@
                 {{ sensor.latitude | number: '1.6-6' }}°N,
                 {{ sensor.longitude | number: '1.6-6' }}°E
               </div>
+
+              <div class="mt-2 h-32 border rounded overflow-hidden sensor-map-container">
+                <app-map [options]="getSensorMapOptions(sensor)"></app-map>
+                <ng-container *ngIf="getSensorMarkerOptions(sensor) as markerOptions">
+                  <app-map-marker [options]="markerOptions"></app-map-marker>
+                </ng-container>
+              </div>
             </div>
 
             <div class="font-semibold mt-3">{{ 'USER.SENSORS.DETAILS.READINGS' | translate }}:</div>

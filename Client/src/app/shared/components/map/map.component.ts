@@ -21,7 +21,7 @@ import { MapService } from '../../services/map.service';
       .map-container {
         width: 100%;
         height: 100%;
-        min-height: 400px;
+        min-height: 150px;
       }
     `,
   ],
@@ -39,7 +39,6 @@ export class MapComponent implements AfterViewInit, OnDestroy {
     private el: ElementRef,
     private mapService: MapService,
   ) {
-    
     const iconRetinaUrl = 'assets/leaflet/marker-icon-2x.png';
     const iconUrl = 'assets/leaflet/marker-icon.png';
     const shadowUrl = 'assets/leaflet/marker-shadow.png';
