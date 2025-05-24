@@ -186,7 +186,7 @@ public class SensorsController : ApiControllerBase
         return Ok(response);
     }
 
-    [HttpGet("/history/{id}")]
+    [HttpGet("history/{id}")]
     [ProducesResponseType(typeof(Response<PagedResult<SensorReadingDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
