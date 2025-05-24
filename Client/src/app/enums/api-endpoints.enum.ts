@@ -30,4 +30,5 @@ export enum ApiEndpoints {
   GET_USER_SENSORS = 'api/Sensors/my-sensors',
   ADD_SENSOR = 'api/Sensors',
   DELETE_SENSOR = 'api/Sensors',
+  SENSORS = 'api/sensors/all-info',
 }

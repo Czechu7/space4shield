@@ -204,7 +204,26 @@
     },
     "METRICS": {
       "TEMPERATURE": "Temperature",
+      "HUMIDITY": "Humidity"
+    }
+  },
+  "SENSORS": {
+    "FILTERS": {
+      "TITLE": "Sensor Filters",
+      "APPLY": "Apply Filters",
+      "RESET": "Reset",
+      "USE_MY_LOCATION": "Use My Location",
+      "STATUS": "Sensor Status",
+      "STATUS_ALL": "All",
+      "STATUS_ACTIVE": "Active",
+      "STATUS_INACTIVE": "Inactive"
+    },
+    "METRICS": {
+      "TEMPERATURE": "Temperature",
       "HUMIDITY": "Humidity",
+      "AIR_PRESSURE": "Air Pressure",
+      "PM2_5": "Particulate Matter PM2.5",
+      "PM10": "Particulate Matter PM10",
       "PRESSURE": "Pressure",
       "WIND_SPEED": "Wind Speed",
       "AIR_QUALITY": "Air Quality",
