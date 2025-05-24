@@ -1,8 +1,14 @@
 using Application.Common.Models;
-using Application.CQRS.Base.Commands;
+using MediatR;
 
 namespace Application.CQRS.Sensors.Commands;
 
-public class DeleteSensorCommand(Guid id) : DeleteCommand<ResponseBase>(id)
+public class DeleteSensorCommand : IRequest<Response<bool>>
 {
+    public Guid SensorId { get; set; }
+
+    public DeleteSensorCommand(Guid sensorId)
+    {
+        SensorId = sensorId;
+    }
 }
