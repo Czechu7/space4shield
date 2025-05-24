@@ -15,9 +15,15 @@
     </div>
   </div>
 
+
   <div class="filter-actions">
-    <button (click)="applyFilters()">{{ 'SENSORS.FILTERS.APPLY' | translate }}</button>
-    <button (click)="onResetFilters()">{{ 'SENSORS.FILTERS.RESET' | translate }}</button>
-    <button (click)="onUseCurrentLocation()">{{ 'SENSORS.FILTERS.USE_MY_LOCATION' | translate }}</button>
+    <app-button [label]="'SENSORS.FILTERS.APPLY' | translate" (onClick)="applyFilters()" severity="primary">
+    </app-button>
+
+    <app-button [label]="'SENSORS.FILTERS.RESET' | translate" (onClick)="onResetFilters()" severity="secondary">
+    </app-button>
+
+    <app-button [label]="'SENSORS.FILTERS.USE_MY_LOCATION' | translate" (onClick)="onUseCurrentLocation()"
+      severity="success" icon="pi pi-map-marker"></app-button>
   </div>
 </div>
