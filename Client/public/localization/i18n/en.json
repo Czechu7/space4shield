@@ -1,0 +1,164 @@
+{
+  "APP": {
+    "TITLE": "My Application",
+    "WELCOME": "Welcome to my application!"
+  },
+  "MENU": {
+    "TITLE": "Angular Template",
+    "FOOTER_TITLE": "Karmelki",
+    "PROFILE": "Profile",
+    "ADMIN_PANEL": "Admin panel",
+    "LOGOUT": "Logout",
+    "LOGIN": "Login",
+    "REGISTER": "Register"
+  },
+  "AUTH": {
+    "LOGIN_TITLE": "Log in",
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "LOGIN_BUTTON": "Log in",
+    "FORGOT_PASSWORD_TEXT": "Forgot your password?",
+    "RECOVER_PASSWORD": "Recover password",
+    "NO_ACCOUNT_TEXT": "Don't have an account?",
+    "REGISTER": "Register",
+    "REGISTER_TITLE": "Register",
+    "USERNAME": "Username",
+    "FIRST_NAME": "First name",
+    "LAST_NAME": "Last name",
+
+    "CONFIRM_PASSWORD": "Confirm password",
+    "PASSWORD_PROMPT": "Choose a password",
+    "PASSWORD_WEAK": "Too simple password",
+    "PASSWORD_MEDIUM": "Average complexity",
+    "PASSWORD_STRONG": "Complex password",
+    "REGISTER_BUTTON": "Register",
+    "HAS_ACCOUNT_TEXT": "Already have an account?",
+    "LOGIN": "Log in"
+  },
+  "ADMIN": {
+    "USERS": {
+      "TITLE": "Users",
+      "USERNAME": "Username",
+      "FIRST_NAME": "First Name",
+      "LAST_NAME": "Last Name",
+      "EMAIL": "Email",
+      "ROLE": "Role",
+      "CREATED_AT": "Created At",
+      "STATUS": "Status",
+      "ACTIONS": "Actions",
+      "DELETE_CONFIRMATION": "Delete Confirmation",
+      "DELETE_CONFIRMATION_MESSAGE": "Are you sure you want to delete this user?",
+      "SUCCESS_DELETE_ACCOUNT_MESSAGE": "Account has been successfully deleted."
+    },
+    "PROFILE_EDIT": {
+      "TITLE": "Edit user profile",
+      "USERNAME": "Username",
+      "FIRST_NAME": "First name",
+      "LAST_NAME": "Last name",
+      "EMAIL": "Email",
+      "PASSWORD": "Password",
+      "ROLE": "Role",
+      "STATUS": "Status",
+      "SAVE_BUTTON": "Save",
+      "CANCEL_BUTTON": "Cancel",
+      "RESET_PASSWORD": "Reset password"
+    },
+    "LOGS": {
+      "SHOW_MORE": "Show more",
+      "NO_LOGS": "No logs available",
+      "REGULAR_LOGS": "Logs",
+      "ERROR_LOGS": "Error logs",
+      "NO_FOUND_LOGS": "No logs found",
+      "LOADING_LOGS": "Loading logs...",
+      "RESET_PASSWORD": "Reset password",
+      "SUCCESS_MESSAGE": "Profile has been successfully updated.",
+      "SUCCESS_RESET_PASSWORD_MESSAGE": "Email with password reset link has been sent."
+    }
+  },
+  "EXAMPLE-CRUD": {
+    "TITLE": "Karmelek List",
+    "NAME": "Name",
+    "COUNT": "Quantity",
+    "PRICE": "Price",
+    "ZIEMNIAK": "Ziemniak",
+    "SAVE": "Save",
+    "ARRIVAL_DATE": "Arrival Date",
+    "IS_ZIEMNIAK": "Is it a Ziemniak?",
+    "ACTIONS": "Actions",
+    "ADD_NEW": "Add new",
+    "NO_DATA_TO_DISPLAY": "No Karmelki to display",
+    "EDIT": "Edit",
+    "INPUT_NAME": "Enter Karmelek name",
+    "INPUT_COUNT": "Enter Karmelek quantity",
+    "INPUT_PRICE": "Enter Karmelek price",
+    "INPUT_ZIEMNIAK": "Is it a Ziemniak?",
+    "CONFIRM_DELETE_TITLE": "Delete confirmation",
+    "CONFIRM_DELETE_MESSAGE": "Are you sure you want to delete this Karmelek?"
+  },
+  "FILE_TABLE": {
+    "SEARCH_PLACEHOLDER": "Search...",
+    "REFRESH": "Refresh",
+    "DOWNLOAD": "Download",
+    "PREVIEW": "Preview",
+    "DELETE": "Delete",
+    "NO_FILES": "No files to display",
+    "CONTEXT_MENU": {
+      "DOWNLOAD": "Download",
+      "PREVIEW": "Preview",
+      "DELETE": "Delete",
+      "PROPERTIES": "Properties"
+    }
+  },
+  "TABLE": {
+    "SEARCH_PLACEHOLDER": "Search...",
+    "REFRESH": "Refresh",
+    "DOWNLOAD": "Download",
+    "PREVIEW": "Preview",
+    "DELETE": "Delete",
+    "NO_ITEMS": "No items to display",
+    "ACTIONS": "Actions",
+    "CONTEXT_MENU": {
+      "DOWNLOAD": "Download",
+      "PREVIEW": "Preview",
+      "DELETE": "Delete",
+      "PROPERTIES": "Properties"
+    }
+  },
+  "UTILS": {
+    "YES": "Yes",
+    "NO": "No",
+    "CANCEL": "Cancel",
+    "CONFIRM": "Confirm",
+    "SAVE": "Save",
+    "EDIT": "Edit",
+    "BACK": "Back"
+  },
+  "NOT-FOUND": {
+    "TITLE": "404 - Page Not Found",
+    "DESCRIPTION": "The page you are looking for does not exist."
+  },
+  "ERRORS": {
+    "TITLE": "An error occurred",
+    "REQUIRED": "This field is required.",
+    "POSTAL_CODE_FORMAT": "Invalid postal code format.",
+    "MIN_LENGTH": "Minimum length: {{minLength}} characters.",
+    "MAX_LENGTH": "Maximum length: {{maxLength}} characters.",
+    "INVALID_EMAIL": "Invalid email address.",
+    "PASSWORDS_NOT_EQUAL": "Passwords must match.",
+    "USER_ALREADY_EXISTS": "User already exists.",
+    "EMAIL_OR_USER_ALREADY_EXISTS": "The provided email or username already exists.",
+    "UNKNOWN": "An unknown error occurred.",
+    "UNAUTHORIZED": "Unauthorized access.",
+    "FORBIDDEN": "Access forbidden.",
+    "INVALID_CREDENTIALS": "Invalid email or password",
+    "NOT_FOUND": "Resource not found.",
+    "INTERNAL_SERVER_ERROR": "Internal server error.",
+    "BAD_REQUEST": "Bad request.",
+    "SERVICE_UNAVAILABLE": "Service unavailable.",
+    "GATEWAY_TIMEOUT": "Gateway timeout."
+  },
+  "FOOTER": {
+    "TITLE": "Karmelki",
+    "COPYRIGHT": "All rights reserved."
+  }
+}

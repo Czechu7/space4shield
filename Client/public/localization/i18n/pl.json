@@ -1,0 +1,163 @@
+{
+  "APP": {
+    "TITLE": "Moja Aplikacja",
+    "WELCOME": "Witaj w mojej aplikacji!"
+  },
+  "MENU": {
+    "TITLE": "Angular Template",
+    "FOOTER_TITLE": "Karmelki",
+    "PROFILE": "Profil",
+    "ADMIN_PANEL": "Panel administracyjny",
+    "LOGOUT": "Wyloguj się",
+    "LOGIN": "Zaloguj się",
+    "REGISTER": "Zarejestruj się"
+  },
+  "AUTH": {
+    "LOGIN_TITLE": "Zaloguj się",
+    "EMAIL": "Email",
+    "PASSWORD": "Hasło",
+    "LOGIN_BUTTON": "Zaloguj się",
+    "FORGOT_PASSWORD_TEXT": "Zapomniałeś hasła?",
+    "RECOVER_PASSWORD": "Odzyskaj hasło",
+    "NO_ACCOUNT_TEXT": "Nie masz konta?",
+    "REGISTER": "Zarejestruj się",
+    "REGISTER_TITLE": "Zarejestruj się",
+    "USERNAME": "Nazwa użytkownika",
+    "FIRST_NAME": "Imię",
+    "LAST_NAME": "Nazwisko",
+    "CONFIRM_PASSWORD": "Powtórz hasło",
+    "PASSWORD_PROMPT": "Wybierz hasło",
+    "PASSWORD_WEAK": "Zbyt proste hasło",
+    "PASSWORD_MEDIUM": "Średnia złożoność",
+    "PASSWORD_STRONG": "Złożone hasło",
+    "REGISTER_BUTTON": "Zarejestruj się",
+    "HAS_ACCOUNT_TEXT": "Masz konto?",
+    "LOGIN": "Zaloguj się"
+  },
+  "ADMIN": {
+    "USERS": {
+      "TITLE": "Użytkownicy",
+      "USERNAME": "Nazwa użytkownika",
+      "FIRST_NAME": "Imię",
+      "LAST_NAME": "Nazwisko",
+      "EMAIL": "Email",
+      "ROLE": "Rola",
+      "CREATED_AT": "Utworzono",
+      "STATUS": "Status",
+      "ACTIONS": "Akcje",
+      "DELETE_CONFIRMATION": "Potwierdzenie usunięcia",
+      "DELETE_CONFIRMATION_MESSAGE": "Czy na pewno chcesz usunąć tego użytkownika?",
+      "SUCCESS_DELETE_ACCOUNT_MESSAGE": "Konto zostało pomyślnie usunięte."
+    },
+    "PROFILE_EDIT": {
+      "TITLE": "Edytuj profil",
+      "USERNAME": "Nazwa użytkownika",
+      "FIRST_NAME": "Imię",
+      "LAST_NAME": "Nazwisko",
+      "EMAIL": "Email",
+      "PASSWORD": "Hasło",
+      "ROLE": "Rola",
+      "STATUS": "Status",
+      "SAVE_BUTTON": "Zapisz zmiany",
+      "CANCEL_BUTTON": "Anuluj",
+      "RESET_PASSWORD": "Zresetuj hasło"
+    },
+    "LOGS": {
+      "SHOW_MORE": "Pokaż więcej",
+      "NO_LOGS": "Brak logów do wyświetlenia",
+      "REGULAR_LOGS": "Logi",
+      "ERROR_LOGS": "Logi błędów",
+      "NO_FOUND_LOGS": "Nie znaleziono logów",
+      "LOADING_LOGS": "Ładowanie logów...",
+      "RESET_PASSWORD": "Zresetuj hasło",
+      "SUCCESS_MESSAGE": "Profil został pomyślnie zaktualizowany.",
+      "SUCCESS_RESET_PASSWORD_MESSAGE": "Email z instrukcjami resetowania hasła został wysłany na podany adres."
+    }
+  },
+  "EXAMPLE-CRUD": {
+    "TITLE": "Lista Karmelków",
+    "NAME": "Nazwa",
+    "COUNT": "Ilość",
+    "PRICE": "Cena",
+    "ZIEMNIAK": "Ziemniak",
+    "SAVE": "Zapisz",
+    "ARRIVAL_DATE": "Data przybycia",
+    "IS_ZIEMNIAK": "Czy to ziemniak?",
+    "ACTIONS": "Akcje",
+    "ADD_NEW": "Dodaj nowy",
+    "NO_DATA_TO_DISPLAY": "Brak karmelków do wyświetlenia",
+    "EDIT": "Edytuj",
+    "INPUT_NAME": "Wprowadź nazwę karmelka",
+    "INPUT_COUNT": "Wprowadź ilość karmelka",
+    "INPUT_PRICE": "Wprowadź cenę karmelka",
+    "INPUT_ZIEMNIAK": "Czy to ziemniak?",
+    "CONFIRM_DELETE_TITLE": "Potwierdzenie usunięcia",
+    "CONFIRM_DELETE_MESSAGE": "Czy na pewno chcesz usunąć ten karmelek?"
+  },
+  "FILE_TABLE": {
+    "SEARCH_PLACEHOLDER": "Szukaj...",
+    "REFRESH": "Odśwież",
+    "DOWNLOAD": "Pobierz",
+    "PREVIEW": "Podgląd",
+    "DELETE": "Usuń",
+    "NO_FILES": "Brak plików do wyświetlenia",
+    "CONTEXT_MENU": {
+      "DOWNLOAD": "Pobierz",
+      "PREVIEW": "Podgląd",
+      "DELETE": "Usuń",
+      "PROPERTIES": "Właściwości"
+    }
+  },
+  "TABLE": {
+    "SEARCH_PLACEHOLDER": "Szukaj...",
+    "REFRESH": "Odśwież",
+    "DOWNLOAD": "Pobierz",
+    "PREVIEW": "Podgląd",
+    "DELETE": "Usuń",
+    "NO_ITEMS": "Brak elementów do wyświetlenia",
+    "ACTIONS": "Akcje",
+    "CONTEXT_MENU": {
+      "DOWNLOAD": "Pobierz",
+      "PREVIEW": "Podgląd",
+      "DELETE": "Usuń",
+      "PROPERTIES": "Właściwości"
+    }
+  },
+  "UTILS": {
+    "YES": "Tak",
+    "NO": "Nie",
+    "CANCEL": "Anuluj",
+    "CONFIRM": "Potwierdź",
+    "SAVE": "Zapisz",
+    "EDIT": "Edytuj",
+    "BACK": "Wstecz"
+  },
+  "NOT-FOUND": {
+    "TITLE": "404 - Nie znaleziono strony",
+    "DESCRIPTION": "Strona, której szukasz, nie istnieje."
+  },
+  "ERRORS": {
+    "TITLE": "Wystąpił błąd",
+    "REQUIRED": "To pole jest wymagane.",
+    "POSTAL_CODE_FORMAT": "Podano kod pocztowy w niepoprawnym formacie.",
+    "MIN_LENGTH": "Minimalna ilość znaków: {{minLength}}.",
+    "MAX_LENGTH": "Maksymalna ilość znaków: {{maxLength}}.",
+    "INVALID_EMAIL": "Niepoprawny adres e-mail.",
+    "PASSWORDS_NOT_EQUAL": "Hasła muszą być takie same.",
+    "USER_ALREADY_EXISTS": "Taki użytkownik już istnieje.",
+    "EMAIL_OR_USER_ALREADY_EXISTS": "Podany adres e-mail lub nazwa użytkownika już istnieje.",
+    "UNKNOWN": "Wystąpił nieznany błąd.",
+    "UNAUTHORIZED": "Brak autoryzacji.",
+    "FORBIDDEN": "Brak dostępu.",
+    "INVALID_CREDENTIALS": "Nieprawidłowe dane logowania.",
+    "NOT_FOUND": "Nie znaleziono zasobu.",
+    "INTERNAL_SERVER_ERROR": "Wewnętrzny błąd serwera.",
+    "BAD_REQUEST": "Nieprawidłowe żądanie.",
+    "SERVICE_UNAVAILABLE": "Usługa niedostępna.",
+    "GATEWAY_TIMEOUT": "Przekroczono limit czasu."
+  },
+  "FOOTER": {
+    "TITLE": "Karmelki",
+    "COPYRIGHT": "Wszelkie prawa zastrzeżone."
+  }
+}
