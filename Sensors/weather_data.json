@@ -12,12 +12,12 @@
         "lat": "50.833",
         "lon": "20.667",
         "timezone_id": "Europe/Warsaw",
-        "localtime": "2025-05-24 17:30",
-        "localtime_epoch": 1748107800,
+        "localtime": "2025-05-24 17:37",
+        "localtime_epoch": 1748108220,
         "utc_offset": "2.0"
     },
     "current": {
-        "observation_time": "03:30 PM",
+        "observation_time": "03:37 PM",
         "temperature": 14,
         "weather_code": 116,
         "weather_icons": [
