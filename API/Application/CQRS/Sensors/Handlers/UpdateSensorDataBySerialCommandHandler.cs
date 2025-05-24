@@ -97,23 +97,11 @@ public class UpdateSensorDataBySerialCommandHandler : IRequestHandler<UpdateSens
         }
     }
 
-    private bool HasSensorDataChanges(Sensor sensor, UpdateSensorDataDto data)
-    {
-        return (data.Temperature.HasValue && data.Temperature != sensor.Temperature) ||
-               (data.Humidity.HasValue && data.Humidity != sensor.Humidity) ||
-               (data.AirPressure.HasValue && data.AirPressure != sensor.AirPressure) ||
-               (data.PM1_0.HasValue && data.PM1_0 != sensor.PM1_0) ||
-               (data.PM2_5.HasValue && data.PM2_5 != sensor.PM2_5) ||
-               (data.PM10.HasValue && data.PM10 != sensor.PM10) ||
-               (data.WaterLevel.HasValue && data.WaterLevel != sensor.WaterLevel) ||
-               (data.Precipitation.HasValue && data.Precipitation != sensor.Precipitation) ||
-               (data.UVRadiation.HasValue && data.UVRadiation != sensor.UVRadiation);
-    }
-
     private bool UpdateSensorData(Sensor sensor, UpdateSensorDataDto data)
     {
         bool hasChanges = false;
 
+        
         if (data.Temperature.HasValue)
         {
             sensor.Temperature = data.Temperature.Value;
@@ -169,5 +157,19 @@ public class UpdateSensorDataBySerialCommandHandler : IRequestHandler<UpdateSens
         }
 
         return hasChanges;
+    }
+
+    // I odpowiednio dostosuj HasSensorDataChanges aby zawsze zapisywało historię gdy przesyłane są dane
+    private bool HasSensorDataChanges(Sensor sensor, UpdateSensorDataDto data)
+    {
+        return data.Temperature.HasValue ||
+               data.Humidity.HasValue ||
+               data.AirPressure.HasValue ||
+               data.PM1_0.HasValue ||
+               data.PM2_5.HasValue ||
+               data.PM10.HasValue ||
+               data.WaterLevel.HasValue ||
+               data.Precipitation.HasValue ||
+               data.UVRadiation.HasValue;
     }
 }
