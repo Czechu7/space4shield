@@ -1,0 +1,16 @@
+<div class="weather-alerts-container">
+  <div class="alerts-tabs">
+    <button [class.active]="currentTab === LogType.WeatherGeneral"
+      (click)="switchTab(LogType.WeatherGeneral)">{{'USER.WEATHER.GENERAL_ALERTS' | translate}}</button>
+    <button [class.active]="currentTab === LogType.WeatherUser"
+      (click)="switchTab(LogType.WeatherUser)">{{'USER.WEATHER.USER_ALERTS' | translate}}</button>
+  </div>
+
+  @if (currentTab === LogType.WeatherGeneral) {
+  <app-weather-logs-list [logType]="LogType.WeatherGeneral"></app-weather-logs-list>
+  }
+
+  @if (currentTab === LogType.WeatherUser) {
+  <app-weather-logs-list [logType]="LogType.WeatherUser"></app-weather-logs-list>
+  }
+</div>

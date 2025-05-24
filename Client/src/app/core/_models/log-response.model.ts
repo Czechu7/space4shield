@@ -1,7 +1,8 @@
 import { ILog, IErrorLog } from './log.model';
 import { Observable, map } from 'rxjs';
+import { WeatherLog } from './weather-log.model';
 
-export interface ILogResponse<T extends ILog[] | IErrorLog[]> {
+export interface ILogResponse<T extends ILog[] | IErrorLog[] | WeatherLog[]> {
   data: T;
 }
 
