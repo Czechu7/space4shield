@@ -67,3 +67,33 @@ export interface IUserSensor {
   lastUpdate?: Date;
   lastUpdated?: string | Date;
 }
+
+export interface ISensorHistoryResponse {
+  items: ISensorHistoryItem[];
+  pagination: {
+    pageNumber: number;
+    pageSize: number;
+    totalCount: number;
+    totalPages: number;
+    hasPreviousPage: boolean;
+    hasNextPage: boolean;
+  };
+}
+
+export interface ISensorHistoryItem {
+  id: string;
+  sensorId: string;
+  readingDateTime: string;
+  temperature: number;
+  humidity: number;
+  airPressure: number;
+  pM1_0: number;
+  pM2_5: number;
+  pM10: number;
+  waterLevel: number;
+  precipitation: number;
+  uvRadiation: number;
+  readingSource: string;
+  isValid: boolean;
+  createdAt: string;
+}

@@ -17,10 +17,13 @@ import {
   PaginationState,
 } from '../../../core/_services/pagination/pagination.service';
 import { Subscription } from 'rxjs';
-import { INewSensorRequest, IUserSensor } from '../../../core/_models/sensor.model';
+import { INewSensorRequest, IUserSensor, ISensorHistoryItem } from '../../../core/_models/sensor.model';
 import { MapComponent } from '../../../shared/components/map/map.component';
 import { MapMarkerComponent } from '../../../shared/components/map/map-marker.component';
 import { MapOptions, MarkerOptions } from '../../../shared/models/leaflet.model';
+import { LineChartComponent, CustomChartData } from '../../../shared/components/line-chart/line-chart.component';
+import { ChartOptions } from 'chart.js';
+import { CheckboxComponent } from '../../../shared/components/checkbox/checkbox.component';
 
 @Component({
   selector: 'app-user-sensors',
@@ -35,6 +38,8 @@ import { MapOptions, MarkerOptions } from '../../../shared/models/leaflet.model'
     LoadingSpinnerComponent,
     MapComponent,
     MapMarkerComponent,
+    LineChartComponent,
+    CheckboxComponent
   ],
   templateUrl: './user-sensors.component.html',
   styleUrl: './user-sensors.component.scss',
@@ -244,6 +249,55 @@ export class UserSensorsComponent implements OnInit, OnDestroy {
     });
   }
 
+  availableMetrics = [
+    { label: 'Temperature', value: 'temperature', color: '#FF6384' },
+    { label: 'Humidity', value: 'humidity', color: '#36A2EB' },
+    { label: 'Air Pressure', value: 'airPressure', color: '#FFCE56' },
+    { label: 'PM1.0', value: 'pM1_0', color: '#4BC0C0' },
+    { label: 'PM2.5', value: 'pM2_5', color: '#9966FF' },
+    { label: 'PM10', value: 'pM10', color: '#FF9F40' },
+    { label: 'Water Level', value: 'waterLevel', color: '#33CC99' },
+    { label: 'Precipitation', value: 'precipitation', color: '#6699FF' },
+    { label: 'UV Radiation', value: 'uvRadiation', color: '#FF99CC' }
+  ];
+
+  selectedMetrics: string[] = ['temperature'];
+  sensorHistory: ISensorHistoryItem[] = [];
+
+  updateChartData() {
+    const labels = this.sensorHistory.map(item => 
+      new Date(item.readingDateTime).toLocaleString()
+    );
+
+    const datasets = this.selectedMetrics.map(metric => {
+      const metricConfig = this.availableMetrics.find(m => m.value === metric);
+      return {
+        label: metricConfig?.label || metric,
+        data: this.sensorHistory.map(item => item[metric as keyof ISensorHistoryItem] as number),
+        fill: false,
+        borderColor: metricConfig?.color || '#000000',
+        tension: 0.1
+      };
+    });
+
+    this.data = { labels, datasets };
+  }
+
+  onMetricSelectionChange() {
+    this.updateChartData();
+  }
+
+  onMetricChange(event: any, metricValue: string) {
+    if (event) {
+      if (!this.selectedMetrics.includes(metricValue)) {
+        this.selectedMetrics.push(metricValue);
+      }
+    } else {
+      this.selectedMetrics = this.selectedMetrics.filter(m => m !== metricValue);
+    }
+    this.updateChartData();
+  }
+
   getSensorIcon(type: SensorType | undefined): string {
     switch (type) {
       case SensorType.Temperature:
@@ -307,6 +361,29 @@ export class UserSensorsComponent implements OnInit, OnDestroy {
 
   toggleDetails(sensorId: string) {
     this.showDetailsMap[sensorId] = !this.showDetailsMap[sensorId];
+    if (this.showDetailsMap[sensorId]) {
+      this.loadSensorHistory(sensorId);
+    }
+  }
+
+  loadSensorHistory(sensorId: string) {
+    this.isLoading = true;
+    this.selectedMetrics = ['temperature']; // Reset to default selection
+    this.userSensorsService.getSensorHistory(sensorId).subscribe({
+      next: (response) => {
+        this.sensorHistory = response.data.items;
+        this.updateChartData();
+      },
+      error: (error) => {
+        this.toastService.showError(
+          this.translateService.instant('USER.SENSORS.ERROR_TITLE'),
+          this.errorService.getErrorMessage(error)
+        );
+      },
+      complete: () => {
+        this.isLoading = false;
+      }
+    });
   }
 
   hasAnyReadings(sensor: IUserSensor): boolean {
@@ -339,10 +416,28 @@ export class UserSensorsComponent implements OnInit, OnDestroy {
     };
   }
 
+  handleSiema() {
+    const newDataset = {
+      label: 'Dataset 1',
+      data: [65, 59, 80, 81, 56, 55, 40],
+      fill: false,
+      borderColor: '#42A5F5',
+      tension: 0.1
+    };
+    
+    
+    this.data = {
+      labels: [...this.data.labels],
+      datasets: [...this.data.datasets, newDataset]
+    };
+  }
+
   getSensorMarkerOptions(sensor: IUserSensor): MarkerOptions | null {
     if (!sensor.latitude || !sensor.longitude) {
       return null;
     }
+
+
 
     return {
       position: [sensor.latitude, sensor.longitude],
@@ -350,4 +445,53 @@ export class UserSensorsComponent implements OnInit, OnDestroy {
       draggable: false,
     };
   }
+
+  data : CustomChartData = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [
+        {
+        label: 'Dataset 2',
+        data: [28, 48, 40, 19, 86, 27, 90],
+        fill: false,
+        borderColor: '#FFA726',
+        tension: 0.1
+        }
+    ]
+
+    
+} 
+
+  options : ChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+        legend: {
+            display: true,
+            position: 'top',
+        },
+        tooltip: {
+            enabled: true,
+            mode: 'index',
+            intersect: false
+        }
+    },
+    scales: {
+        x: {
+            display: true,
+            grid: {
+                display: false
+            }
+        },
+        y: {
+            display: true,
+            beginAtZero: true,
+            grid: {
+                display: true
+            }
+        }
+    }
+}
+
+
+
 }
