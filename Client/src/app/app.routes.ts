@@ -12,6 +12,7 @@ import { LoginComponent } from './features/auth/login/login.component';
 import { RegisterComponent } from './features/auth/register/register.component';
 import { DashboardComponent } from './features/dashboard/dashboard/dashboard.component';
 import { ExampleCrudViewComponent } from './features/example-crud-view/example-crud-view.component';
+import { UserWeatherAlertsComponent } from './features/user-weather-alerts/user-weather-alerts.component';
 import { MapSensorsComponent } from './features/map-sensors/map-sensors.component';
 import { NotFoundComponent } from './features/not-found/not-found.component';
 
@@ -49,6 +50,7 @@ export const routes: Routes = [
     canActivate: [unAuthGuard],
   },
   { path: RouterEnum.karmelki, component: ExampleCrudViewComponent },
+  { path: RouterEnum.weatherLogs, component: UserWeatherAlertsComponent },
   {
     path: RouterEnum.notFound,
     component: NotFoundComponent,

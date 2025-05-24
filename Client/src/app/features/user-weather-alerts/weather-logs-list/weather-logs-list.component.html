@@ -1,0 +1,18 @@
+<div class="logs-list" appInfiniteScroll [disabled]="paginationState?.isLoading || paginationState?.reachedEnd || false"
+  (scrolled)="onScroll()">
+  @for (log of logs; track log) {
+  <app-weather-log-item [log]="log" [isUserSpecific]="logType === LogType.WeatherUser"></app-weather-log-item>
+  }
+
+  @if (logs.length === 0 && !paginationState?.isLoading) {
+  <div class="no-logs-message">
+    {{'USER.WEATHER.NO_ALERTS_FOUND' | translate}}
+  </div>
+  }
+
+  @if (paginationState?.isLoading) {
+  <div class="loading-indicator">
+    {{'USER.WEATHER.LOADING_ALERTS' | translate}}
+  </div>
+  }
+</div>
