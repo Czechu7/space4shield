@@ -218,4 +218,26 @@ public class SensorsController : ApiControllerBase
 
         return Ok(response);
     }
+
+    [HttpGet("all-info")]
+    [AllowAnonymous] 
+    [ProducesResponseType(typeof(Response<List<SensorInfoDto>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<Response<List<SensorInfoDto>>>> GetAllSensorsInfo(
+        [FromQuery] string? searchTerm = null,
+        [FromQuery] string? sortBy = null,
+        [FromQuery] bool sortDescending = false,
+        [FromQuery] bool includeInactive = false,
+        [FromQuery] bool onlyPublic = true)
+    {
+        var query = new GetAllSensorsInfoQuery(searchTerm, sortBy, sortDescending, includeInactive, onlyPublic);
+        var response = await Mediator.Send(query);
+
+        if (!response.Success)
+        {
+            return BadRequest(response);
+        }
+
+        return Ok(response);
+    }
 }

@@ -36,7 +36,7 @@ public class Sensor : BaseEntity
     [Range(-180.0, 180.0)]
     public double Longitude { get; set; }
 
-    // Dane sensorowe - wartości nullable bo mogą być czasowo niedostępne
+
     [Range(-100.0, 100.0)]
     public double? Temperature { get; set; } // °C
 
@@ -64,7 +64,7 @@ public class Sensor : BaseEntity
     [Range(0.0, 20.0)]
     public double? UVRadiation { get; set; } // UV Index
 
-    // Metadane
+
     public DateTime? LastMeasurement { get; set; }
 
     [StringLength(50)]
