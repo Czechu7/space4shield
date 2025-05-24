@@ -34,7 +34,7 @@ export class WeatherLogsListComponent implements OnInit, OnDestroy {
     this.paginationService.resetPagination();
     this.paginationSubscription = this.paginationService.getPaginationState().subscribe(state => {
       this.paginationState = state;
-      if (state.isLoading) {
+      if (state.isLoading && !state.reachedEnd) {
         this.loadLogs();
       }
     });

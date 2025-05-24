@@ -86,8 +86,6 @@ export class UserSensorsComponent implements OnInit {
     this.userSensorsForm = this.formService.getUserSensorsForm();
   }
 
-  initForm() {}
-
   loadSensors() {
     this.isLoading = true;
 
@@ -133,7 +131,6 @@ export class UserSensorsComponent implements OnInit {
 
   showAddSensorForm() {
     this.showForm = true;
-    this.initForm();
   }
 
   cancelAddSensor() {
@@ -250,7 +247,7 @@ export class UserSensorsComponent implements OnInit {
     return this.userSensorsForm.controls;
   }
 
-  showDetailsMap: { [key: string]: boolean } = {};
+  showDetailsMap: Record<string, boolean> = {};
 
   toggleDetails(sensorId: string) {
     this.showDetailsMap[sensorId] = !this.showDetailsMap[sensorId];
