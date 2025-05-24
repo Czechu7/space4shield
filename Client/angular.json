@@ -25,9 +25,15 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               {
-                "glob": "**/*",
-                "input": "public"
-              }
+            "glob": "**/*",
+            "input": "src/assets",
+            "output": "assets"
+        },  
+         {
+           "glob": "**/*",
+           "input": "public",
+           "output": "/"
+  }
             ],
             "styles": ["src/styles/styles.scss", "node_modules/leaflet/dist/leaflet.css"],
             "scripts": []

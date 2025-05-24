@@ -39,7 +39,7 @@ export class MapComponent implements AfterViewInit, OnDestroy {
     private el: ElementRef,
     private mapService: MapService,
   ) {
-    // Fix for marker icons
+    
     const iconRetinaUrl = 'assets/leaflet/marker-icon-2x.png';
     const iconUrl = 'assets/leaflet/marker-icon.png';
     const shadowUrl = 'assets/leaflet/marker-shadow.png';
