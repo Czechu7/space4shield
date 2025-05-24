@@ -3,6 +3,7 @@ using Infrastructure.Persistence;
 using Infrastructure.Repositories;
 using Infrastructure.Security;
 using Infrastructure.Services;
+using Infrastructure.Hubs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +17,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        // Database configuration
+       
         var connectionString = configuration.GetConnectionString("DefaultConnection");
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(
@@ -43,10 +44,22 @@ public static class DependencyInjection
 
         // Cassandra API integration
         services.AddSingleton<ICassandraLogService, CassandraLogService>();
-
+        services.AddHttpClient<IGeocodingService, NominatimGeocodingService>(client =>
+        {
+            client.Timeout = TimeSpan.FromSeconds(30);
+        });
         // JWT Authentication configuration
         ConfigureJwtAuthentication(services, configuration);
         SecurityExtensions.AddRateLimitingServices(services);
+
+        // SignalR configuration
+        services.AddSignalR(options =>
+        {
+            options.EnableDetailedErrors = true;
+        });
+
+        // Register notification service
+        services.AddScoped<INotificationService, NotificationService>();
 
         return services;
     }

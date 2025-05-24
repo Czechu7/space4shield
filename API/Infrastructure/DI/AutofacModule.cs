@@ -12,6 +12,7 @@ using Autofac.Extras.DynamicProxy;
 using Castle.DynamicProxy;
 using Infrastructure.Persistence;
 using Infrastructure.Services;
+using Infrastructure.Hubs;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Reflection;
@@ -33,6 +34,14 @@ namespace Infrastructure.DI
             RegisterGenericHandlers(builder);
 
             RegisterMediatRHandlers(builder, applicationAssembly);
+
+
+            builder.RegisterType<NotificationHub>().ExternallyOwned();
+
+
+            builder.RegisterType<NominatimGeocodingService>()
+                .As<IGeocodingService>()
+                .InstancePerLifetimeScope();
         }
 
         private void RegisterCoreServices(ContainerBuilder builder)

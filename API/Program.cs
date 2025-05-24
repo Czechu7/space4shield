@@ -4,6 +4,8 @@ using Microsoft.OpenApi.Models;
 using Infrastructure.Middleware;
 using Microsoft.AspNetCore.Mvc;
 using Prometheus;
+using Infrastructure.Hubs;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -82,7 +84,8 @@ builder.Services.AddCors(options =>
         builder => builder
             .WithOrigins("http://localhost:4200")
             .AllowAnyHeader()
-            .AllowAnyMethod());
+            .AllowAnyMethod()
+            .AllowCredentials());
 });
 
 var app = builder.Build();
@@ -101,6 +104,10 @@ app.UseCors("AllowSpecificOrigin");
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+
+// Add SignalR hub mapping
+app.MapHub<NotificationHub>("/notificationHub");
+
 app.MapControllers();
 app.MapMetrics();
 app.Run();
