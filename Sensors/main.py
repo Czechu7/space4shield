@@ -5,11 +5,11 @@ import os
 from datetime import datetime
 
 # --- Konfiguracja ---
-WEATHERSTACK_API_KEY =  os.getenv("WEATHERSTACK_API_KEY")
+WEATHERSTACK_API_KEY =  "8ae75ad302dae6ef342a10f9e64c10d3"
 WEATHERSTACK_BASE_URL = "http://api.weatherstack.com"
 CITY = "Kielce"
 
-LOCAL_API_BASE_URL = "https://c4e5-217-75-53-226.ngrok-free.app/api/sensors"
+LOCAL_API_BASE_URL = "http://localhost:5238/api/sensors"
 OUTPUT_FILE_NAME = "weather_data.json"
 
 # Procentowe odchyłki
@@ -93,10 +93,10 @@ def get_sensor_list(api_url):
     return None
 
 # --- Krok 4: Dla każdego serialnumbera wykonaj POST z danymi pogodowymi ---
-def post_sensor_data(api_url, serial_number, weather_data_raw, 
+def post_sensor_data(api_url, id, weather_data_raw, 
                      temp_deviation_percent, other_param_deviation_percent):
     if not weather_data_raw or 'current' not in weather_data_raw:
-        print(f"Brak danych pogodowych ('current') lub niekompletne dane dla {serial_number}. Pomijam POST.")
+        print(f"Brak danych pogodowych ('current') lub niekompletne dane dla {id}. Pomijam POST.")
         return False
 
     current_weather = weather_data_raw['current']
@@ -113,7 +113,7 @@ def post_sensor_data(api_url, serial_number, weather_data_raw,
             print(f"Wartość temperatury '{original_temp_api_val}' nie jest liczbą. Temperatura nie zostanie wysłana lub użyta zostanie oryginalna, jeśli API na to pozwala.")
             modified_temp = original_temp_api_val # Lub None, jeśli tak ma być obsługiwane
     else:
-        print(f"Brak wartości temperatury w danych pogodowych dla {serial_number}. Temperatura nie zostanie wysłana.")
+        print(f"Brak wartości temperatury w danych pogodowych dla {id}. Temperatura nie zostanie wysłana.")
 
     # --- Modyfikacja wilgotności ---
     original_humidity_api_val = current_weather.get('humidity')
@@ -129,7 +129,7 @@ def post_sensor_data(api_url, serial_number, weather_data_raw,
             print(f"Wartość wilgotności '{original_humidity_api_val}' nie jest liczbą. Wilgotność nie zostanie wysłana lub użyta zostanie oryginalna.")
             modified_humidity = original_humidity_api_val # Lub None
     else:
-        print(f"Brak wartości wilgotności w danych pogodowych dla {serial_number}. Wilgotność nie zostanie wysłana.")
+        print(f"Brak wartości wilgotności w danych pogodowych dla {id}. Wilgotność nie zostanie wysłana.")
         
     # --- Modyfikacja ciśnienia ---
     original_pressure_api_val = current_weather.get('pressure')
@@ -145,7 +145,7 @@ def post_sensor_data(api_url, serial_number, weather_data_raw,
             print(f"Wartość ciśnienia '{original_pressure_api_val}' nie jest liczbą. Ciśnienie nie zostanie wysłane lub użyte zostanie oryginalne.")
             modified_pressure = original_pressure_api_val # Lub None
     else:
-        print(f"Brak wartości ciśnienia w danych pogodowych dla {serial_number}. Ciśnienie nie zostanie wysłane.")
+        print(f"Brak wartości ciśnienia w danych pogodowych dla {id}. Ciśnienie nie zostanie wysłane.")
 
     # --- Tworzenie payloadu ---
     payload = {
@@ -161,7 +161,7 @@ def post_sensor_data(api_url, serial_number, weather_data_raw,
         try:
             payload["uvRadiation"] = float(uv_index)
         except (ValueError, TypeError):
-            print(f"Nie można przekonwertować UV index ('{uv_index}') na liczbę dla {serial_number}.")
+            print(f"Nie można przekonwertować UV index ('{uv_index}') na liczbę dla {id}.")
     
     # Dodawanie opadów
     precipitation = current_weather.get('precip')
@@ -169,7 +169,7 @@ def post_sensor_data(api_url, serial_number, weather_data_raw,
         try:
             payload["precipitation"] = float(precipitation)
         except (ValueError, TypeError):
-            print(f"Nie można przekonwertować opadów ('{precipitation}') na liczbę dla {serial_number}.")
+            print(f"Nie można przekonwertować opadów ('{precipitation}') na liczbę dla {id}.")
 
     # Dodawanie danych o jakości powietrza (PM2.5, PM10)
     air_quality_data = current_weather.get('air_quality', {})
@@ -181,37 +181,37 @@ def post_sensor_data(api_url, serial_number, weather_data_raw,
             try:
                 payload["pM2_5"] = float(pm2_5_str)
             except (ValueError, TypeError):
-                print(f"Nie można przekonwertować pm2_5 ('{pm2_5_str}') na liczbę dla {serial_number}.")
+                print(f"Nie można przekonwertować pm2_5 ('{pm2_5_str}') na liczbę dla {id}.")
         
         if pm10_str is not None:
             try:
                 payload["pM10"] = float(pm10_str)
             except (ValueError, TypeError):
-                print(f"Nie można przekonwertować pm10 ('{pm10_str}') na liczbę dla {serial_number}.")
+                print(f"Nie można przekonwertować pm10 ('{pm10_str}') na liczbę dla {id}.")
     else:
         print(f"Oczekiwano słownika dla 'air_quality', otrzymano: {type(air_quality_data)}. Dane PM nie zostaną dodane.")
     
     # Opcjonalnie: Usuń klucze z payloadu, jeśli ich wartość to None, jeśli API tego wymaga
     # payload = {k: v for k, v in payload.items() if v is not None}
 
-    full_url = f"{api_url}/data/{serial_number}"
-    print(f"Wysyłanie danych dla sensora {serial_number} na {full_url}...")
+    full_url = f"{api_url}/{id}"
+    print(f"Wysyłanie danych dla sensora {id} na {full_url}...")
     print(f"   Dane do wysłania: {json.dumps(payload, indent=2)}")
 
     try:
-        response = requests.post(full_url, json=payload)
+        response = requests.put(full_url, json=payload)
         response.raise_for_status()
-        print(f"Dane dla sensora {serial_number} wysłane pomyślnie. Status: {response.status_code}")
+        print(f"Dane dla sensora {id} wysłane pomyślnie. Status: {response.status_code}")
         try:
             print(f"   Odpowiedź serwera: {response.json()}")
         except json.JSONDecodeError:
             print(f"   Odpowiedź serwera (nie JSON): {response.text}")
         return True
     except requests.exceptions.HTTPError as http_err:
-        print(f"Błąd HTTP podczas wysyłania danych dla {serial_number}: {http_err}")
+        print(f"Błąd HTTP podczas wysyłania danych dla {id}: {http_err}")
         print(f"   Treść odpowiedzi: {response.text if response else 'Brak odpowiedzi'}")
     except requests.exceptions.RequestException as req_err:
-        print(f"Błąd połączenia podczas wysyłania danych dla {serial_number}: {req_err}")
+        print(f"Błąd połączenia podczas wysyłania danych dla {id}: {req_err}")
     return False
 
 # --- Główna logika skryptu ---
@@ -232,7 +232,7 @@ if __name__ == "__main__":
         print("Nie udało się pobrać listy sensorów lub lista jest pusta. Przerywam działanie.")
         exit()
 
-    if not all(isinstance(sensor, dict) and 'serialNumber' in sensor for sensor in sensors_list):
+    if not all(isinstance(sensor, dict) and 'id' in sensor for sensor in sensors_list):
         print("Lista sensorów ma nieprawidłowy format. Oczekiwano listy słowników, każdy z kluczem 'serialNumber'.")
         print(f"   Przykładowy element z listy: {sensors_list[0] if sensors_list else 'Lista jest pusta'}")
         exit()
@@ -244,11 +244,12 @@ if __name__ == "__main__":
     if weather_api_data and 'current' in weather_api_data:
         print(f"Rozpoczynam wysyłanie danych pogodowych do {len(sensors_list)} sensorów...")
         for sensor_item in sensors_list:
-            serial_number = sensor_item.get('serialNumber')
-            if serial_number:
+            sensor_id = sensor_item.get('id')
+            if sensor_id:
                 # Przekazujemy obie wartości procentowe odchyłek do funkcji
-                if post_sensor_data(LOCAL_API_BASE_URL, serial_number, weather_api_data, 
-                                      TEMPERATURE_DEVIATION_PERCENT, HUMIDITY_PRESSURE_DEVIATION_PERCENT):
+                if post_sensor_data(LOCAL_API_BASE_URL, sensor_id, weather_data_raw=weather_api_data, 
+                                      temp_deviation_percent=TEMPERATURE_DEVIATION_PERCENT, 
+                                      other_param_deviation_percent=HUMIDITY_PRESSURE_DEVIATION_PERCENT):
                     successful_posts += 1
                 else:
                     failed_posts +=1
