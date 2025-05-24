@@ -1,45 +1,88 @@
+using Application.Common.Interfaces;
 using Application.Common.Models;
-using Application.CQRS.Base.Commands;
 using Application.CQRS.Sensors.Commands;
 using Domain.Entities;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Application.CQRS.Sensors.Handlers;
 
-public class DeleteSensorCommandHandler : DeleteCommandHandler<DeleteSensorCommand, ResponseBase, Sensor>
+public class DeleteSensorCommandHandler : IRequestHandler<DeleteSensorCommand, Response<bool>>
 {
-    public override async Task<Response<ResponseBase>> Handle(DeleteSensorCommand request, CancellationToken cancellationToken)
+    private readonly IGenericRepository<Sensor> _sensorRepository;
+    private readonly IGenericRepository<SensorReading> _sensorReadingRepository;
+    private readonly ICurrentUserService _currentUserService;
+    private readonly ILogger<DeleteSensorCommandHandler> _logger;
+
+    public DeleteSensorCommandHandler(
+        IGenericRepository<Sensor> sensorRepository,
+        IGenericRepository<SensorReading> sensorReadingRepository,
+        ICurrentUserService currentUserService,
+        ILogger<DeleteSensorCommandHandler> logger)
+    {
+        _sensorRepository = sensorRepository;
+        _sensorReadingRepository = sensorReadingRepository;
+        _currentUserService = currentUserService;
+        _logger = logger;
+    }
+
+    public async Task<Response<bool>> Handle(DeleteSensorCommand request, CancellationToken cancellationToken)
     {
         try
         {
-            var entity = await DbContext.Sensors
-                .FirstOrDefaultAsync(s => s.Id == request.Id, cancellationToken);
+            _logger.LogInformation("Attempting to delete sensor {SensorId}", request.SensorId);
 
-            if (entity == null)
+            // Sprawdź czy sensor istnieje
+            var sensor = await _sensorRepository.GetByIdAsync(request.SensorId, includeInactive: true);
+
+            if (sensor == null)
             {
-                Logger.LogWarning("Sensor with ID {Id} not found", request.Id);
-                return Error(404, $"Sensor with ID {request.Id} not found");
+                _logger.LogWarning("Sensor with ID {SensorId} not found", request.SensorId);
+                return Response<bool>.ErrorResponse(404, $"Sensor with ID {request.SensorId} not found");
             }
 
-            if (!string.IsNullOrEmpty(CurrentUserService.UserId) && 
-                Guid.TryParse(CurrentUserService.UserId, out Guid userId) &&
-                entity.UserId != userId)
+            // Sprawdź autoryzację
+            if (!string.IsNullOrEmpty(_currentUserService.UserId) && 
+                Guid.TryParse(_currentUserService.UserId, out Guid userId))
             {
-                Logger.LogWarning("User {UserId} attempted to delete Sensor {SensorId} belonging to another user", 
-                    userId, entity.Id);
-                return Error(403, "You do not have permission to delete this sensor");
+                if (sensor.UserId != userId)
+                {
+                    _logger.LogWarning("User {UserId} attempted to delete Sensor {SensorId} belonging to another user", 
+                        userId, sensor.Id);
+                    return Response<bool>.ErrorResponse(403, "You do not have permission to delete this sensor");
+                }
+            }
+            else
+            {
+                return Response<bool>.ErrorResponse(401, "User authentication required");
             }
 
-            await ValidateDeleteAsync(request.Id, cancellationToken);
-            await Repository.DeleteAsync(request.Id);
+            // Znajdź wszystkie odczyty sensora
+            var sensorReadings = await _sensorReadingRepository.FindAsync(sr => sr.SensorId == request.SensorId);
             
-            return SuccessResponse("Sensor deleted successfully");
+            _logger.LogInformation("Sensor {SensorId} has {ReadingsCount} readings that will be deleted", 
+                request.SensorId, sensorReadings.Count);
+
+            // Hard delete wszystkich odczytów
+            foreach (var reading in sensorReadings)
+            {
+                await _sensorReadingRepository.HardDeleteAsync(reading);
+            }
+
+            // Hard delete sensora
+            await _sensorRepository.HardDeleteAsync(sensor);
+
+            _logger.LogInformation("Successfully deleted sensor {SensorId} with {ReadingsCount} readings", 
+                request.SensorId, sensorReadings.Count);
+
+            return Response<bool>.SuccessWithData(true, 
+                $"Sensor '{sensor.SerialNumber}' and {sensorReadings.Count} related readings have been permanently deleted");
         }
         catch (Exception ex)
         {
-            Logger.LogError(ex, "Error deleting Sensor with ID {Id}", request.Id);
-            return Error(500, $"Error deleting Sensor: {ex.Message}");
+            _logger.LogError(ex, "Error deleting sensor {SensorId}", request.SensorId);
+            return Response<bool>.ErrorResponse(500, $"Error deleting sensor: {ex.Message}");
         }
     }
 }

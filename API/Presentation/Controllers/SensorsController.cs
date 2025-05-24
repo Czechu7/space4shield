@@ -162,23 +162,25 @@ public class SensorsController : ApiControllerBase
     }
 
     [HttpDelete("{id}")]
-    [ProducesResponseType(typeof(Response<ResponseBase>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(Response<bool>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<ActionResult<Response<ResponseBase>>> DeleteSensor(Guid id)
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<Response<bool>>> DeleteSensor(Guid id)
     {
         var command = new DeleteSensorCommand(id);
         var response = await Mediator.Send(command);
 
         if (!response.Success)
         {
-            if (response.StatusCode == 404)
-                return NotFound(response);
-            if (response.StatusCode == 403)
-                return Forbid();
-
-            return BadRequest(response);
+            return response.StatusCode switch
+            {
+                404 => NotFound(response),
+                401 => Unauthorized(response),
+                403 => Forbid(),
+                _ => BadRequest(response)
+            };
         }
 
         return Ok(response);
