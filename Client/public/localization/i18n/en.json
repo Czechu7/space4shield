@@ -75,35 +75,6 @@
       "SUCCESS_RESET_PASSWORD_MESSAGE": "Email with password reset link has been sent."
     }
   },
-  "USER": {
-    "SENSORS": {
-      "TITLE": "My Sensors",
-      "ADD_NEW": "Add new sensor",
-      "ADD_NEW_FORM": "Add new sensor",
-      "EDIT": "Edit sensor",
-      "DELETE": "Delete sensor",
-      "ADD": "Add sensor",
-      "SUCCESS_TITLE": "Success",
-      "ERROR_TITLE": "Error",
-      "INFO_TITLE": "Information",
-      "ADDED_SUCCESS": "Sensor has been successfully added",
-      "DELETED_SUCCESS": "Sensor has been successfully deleted",
-      "MISSING_SERIAL": "Enter the sensor serial number",
-      "DUPLICATE_SERIAL": "A sensor with this serial number already exists",
-      "EDIT_NOT_IMPLEMENTED": "Sensor editing functionality is not yet available",
-      "NO_SENSORS": "You don't have any sensors yet",
-      "FORM_DESCRIPTION": "Enter the sensor serial number and the remaining data will be retrieved automatically",
-      "SERIAL_NUMBER": "Serial number",
-      "SERIAL_TOOLTIP": "Enter the sensor serial number (min. 8 characters, format: letters, numbers and hyphens)",
-      "SENSOR_NAME": "Sensor name",
-      "STREET": "Street",
-      "CITY": "City",
-      "POSTAL_CODE": "Postal code",
-      "POSTAL_CODE_FORMAT": "Postal code format: 12-345",
-      "SHOW_DETAILS": "Show details",
-      "HIDE_DETAILS": "Hide details"
-    }
-  },
   "EXAMPLE-CRUD": {
     "TITLE": "Karmelek List",
     "NAME": "Name",
@@ -205,6 +176,23 @@
       }
     },
     "SENSORS": {
+      "MANAGE": {
+        "TITLE": "Sensors",
+        "EDIT": "Edit",
+        "DELETE": "Delete",
+        "ADD_NEW": "Add new",
+        "NO_SENSORS": "No sensors to display",
+        "ADD_NEW_FORM": "Add new sensor",
+        "FORM_DESCRIPTION": "Enter sensor description",
+        "SERIAL_NUMBER": "Serial number",
+        "SENSOR_NAME": "Sensor name",
+        "STREET": "Street",
+        "CITY": "City",
+        "POSTAL_CODE": "Postal code",
+        "POSTAL_CODE_FORMAT": "Postal code format: XX-XXX",
+        "ADD": "Add"
+      },
+
       "FILTERS": {
         "TITLE": "Sensor Filters",
         "APPLY": "Apply Filters",

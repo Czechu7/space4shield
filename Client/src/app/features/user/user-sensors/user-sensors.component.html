@@ -1,6 +1,6 @@
 <div class="card w-3/4 max-w-7xl mx-auto">
   <div class="card-header">
-    <h2 class="text-2xl font-bold">{{ 'USER.SENSORS.TITLE' | translate }}</h2>
+    <h2 class="text-2xl font-bold">{{ 'USER.SENSORS.MANAGE.TITLE' | translate }}</h2>
   </div>
 
   <div *ngIf="isLoading" class="flex justify-center my-4">
@@ -34,14 +34,14 @@
             [severity]="'secondary'"
             class="mr-2"
             (click)="editSensor(sensor.id)"
-            pTooltip="{{ 'USER.SENSORS.EDIT' | translate }}"
+            pTooltip="{{ 'USER.SENSORS.MANAGE.EDIT' | translate }}"
             tooltipPosition="top"
           />
           <app-button
             [icon]="'pi pi-trash'"
             [severity]="'danger'"
             (click)="deleteSensor(sensor.id)"
-            pTooltip="{{ 'USER.SENSORS.DELETE' | translate }}"
+            pTooltip="{{ 'USER.SENSORS.MANAGE.DELETE' | translate }}"
             tooltipPosition="top"
           />
         </div>
@@ -111,27 +111,27 @@
         *ngIf="!showForm"
       >
         <i class="pi pi-plus-circle text-3xl text-gray-400 mb-2"></i>
-        <span>{{ 'USER.SENSORS.ADD_NEW' | translate }}</span>
+        <span>{{ 'USER.SENSORS.MANAGE.ADD_NEW' | translate }}</span>
       </div>
     </div>
   </div>
 
   <div *ngIf="!isLoading && sensors.length === 0" class="text-center my-8">
     <i class="pi pi-info-circle text-3xl text-gray-400 mb-4"></i>
-    <p class="text-lg text-gray-600">{{ 'USER.SENSORS.NO_SENSORS' | translate }}</p>
+    <p class="text-lg text-gray-600">{{ 'USER.SENSORS.MANAGE.NO_SENSORS' | translate }}</p>
     <app-button
       (onClick)="showAddSensorForm()"
-      [label]="'USER.SENSORS.ADD_NEW' | translate"
+      [label]="'USER.SENSORS.MANAGE.ADD_NEW' | translate"
       [icon]="'pi pi-plus'"
       class="mt-4"
     />
   </div>
 
   <div class="card p-4 mt-4 border border-gray-200 rounded-lg" *ngIf="showForm">
-    <h3 class="text-xl font-bold mb-4">{{ 'USER.SENSORS.ADD_NEW_FORM' | translate }}</h3>
+    <h3 class="text-xl font-bold mb-4">{{ 'USER.SENSORS.MANAGE.ADD_NEW_FORM' | translate }}</h3>
 
     <div class="mb-4 text-sm text-gray-600">
-      {{ 'USER.SENSORS.FORM_DESCRIPTION' | translate }}
+      {{ 'USER.SENSORS.MANAGE.FORM_DESCRIPTION' | translate }}
     </div>
 
     <form [formGroup]="userSensorsForm" class="grid grid-cols-1 gap-4">
@@ -139,7 +139,7 @@
         <app-input
           [formControl]="controls.sensorNumber"
           formControlName="sensorNumber"
-          [placeholder]="'USER.SENSORS.SERIAL_NUMBER' | translate"
+          [placeholder]="'USER.SENSORS.MANAGE.SERIAL_NUMBER' | translate"
           [errorMessage]="getErrorMessage(controls.sensorNumber)"
           [invalid]="controls.sensorNumber.invalid && controls.sensorNumber.touched"
         />
@@ -149,7 +149,7 @@
         <app-input
           [formControl]="controls.name"
           formControlName="name"
-          [placeholder]="'USER.SENSORS.SENSOR_NAME' | translate"
+          [placeholder]="'USER.SENSORS.MANAGE.SENSOR_NAME' | translate"
           [errorMessage]="getErrorMessage(controls.name)"
           [invalid]="controls.name.invalid && controls.name.touched"
         />
@@ -159,7 +159,7 @@
         <app-input
           [formControl]="controls.street"
           formControlName="street"
-          [placeholder]="'USER.SENSORS.STREET' | translate"
+          [placeholder]="'USER.SENSORS.MANAGE.STREET' | translate"
           [errorMessage]="getErrorMessage(controls.street)"
           [invalid]="controls.street.invalid && controls.street.touched"
         />
@@ -170,7 +170,7 @@
           <app-input
             [formControl]="controls.city"
             formControlName="city"
-            [placeholder]="'USER.SENSORS.CITY' | translate"
+            [placeholder]="'USER.SENSORS.MANAGE.CITY' | translate"
             [errorMessage]="getErrorMessage(controls.city)"
             [invalid]="controls.city.invalid && controls.city.touched"
           />
@@ -181,10 +181,10 @@
           <app-input
             [formControl]="controls.postalCode"
             formControlName="postalCode"
-            [placeholder]="'USER.SENSORS.POSTAL_CODE' | translate"
+            [placeholder]="'USER.SENSORS.MANAGE.POSTAL_CODE' | translate"
             [errorMessage]="getErrorMessage(controls.postalCode)"
             [invalid]="controls.postalCode.invalid && controls.postalCode.touched"
-            pTooltip="{{ 'USER.SENSORS.POSTAL_CODE_FORMAT' | translate }}"
+            pTooltip="{{ 'USER.SENSORS.MANAGE.POSTAL_CODE_FORMAT' | translate }}"
             tooltipPosition="top"
           />
         </div>
@@ -202,7 +202,7 @@
         <app-button
           (onClick)="addSensor()"
           type="submit"
-          [label]="'USER.SENSORS.ADD' | translate"
+          [label]="'USER.SENSORS.MANAGE.ADD' | translate"
           [icon]="'pi pi-plus'"
           [loading]="isLoading"
           [disabled]="userSensorsForm.invalid"
