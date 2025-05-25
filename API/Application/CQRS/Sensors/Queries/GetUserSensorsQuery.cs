@@ -6,7 +6,7 @@ namespace Application.CQRS.Sensors.Queries;
 
 public class GetUserSensorsQuery(
     int pageNumber = 1,
-    int pageSize = 10,
+    int pageSize = 100,
     string? searchTerm = null,
     string? sortBy = null,
     bool sortDescending = false) : IQuery<PagedResult<SensorDto>>

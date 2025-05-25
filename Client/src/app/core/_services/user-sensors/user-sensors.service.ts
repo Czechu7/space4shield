@@ -37,7 +37,7 @@ export class UserSensorsService {
   getSensorHistory(sensorId: string): Observable<IBaseResponse<ISensorHistoryResponse>> {
     return this.requestFactory.getById<ISensorHistoryResponse>(
       ApiEndpoints.SENSORS_HISTORY,
-      sensorId
+      sensorId,
     );
   }
 }
