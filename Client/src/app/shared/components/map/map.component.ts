@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as L from 'leaflet';
-import { MapOptions } from '../../models/leaflet.model';
+import { MapOptions, MapIconType, MapIcons } from '../../models/leaflet.model';
 import { MapService } from '../../services/map.service';
 
 @Component({
@@ -32,8 +32,10 @@ export class MapComponent implements AfterViewInit, OnDestroy {
     center: [52.237049, 21.017532],
     zoom: 10,
   };
+  @Input() icon: MapIconType = MapIconType.DEFAULT;
 
   private map: L.Map | null = null;
+  public mapIcons: MapIcons = {};
 
   constructor(
     private el: ElementRef,
@@ -43,9 +45,23 @@ export class MapComponent implements AfterViewInit, OnDestroy {
     const iconUrl = 'assets/leaflet/marker-icon.png';
     const shadowUrl = 'assets/leaflet/marker-shadow.png';
 
+    const normalIcon = 'assets/leaflet/normal_mark.png';
+    const waterIcon = 'assets/leaflet/water_mark.png';
+
+    let choosenIconURL = iconUrl;
+    let iconRetinaURL = iconRetinaUrl;
+
+    if (this.icon === MapIconType.NORMAL) {
+      choosenIconURL = normalIcon;
+      iconRetinaURL = normalIcon;
+    } else if (this.icon === MapIconType.WATER) {
+      choosenIconURL = waterIcon;
+      iconRetinaURL = waterIcon;
+    }
+
     const iconDefault = L.icon({
-      iconRetinaUrl,
-      iconUrl,
+      iconRetinaUrl: iconRetinaURL,
+      iconUrl: choosenIconURL,
       shadowUrl,
       iconSize: [25, 41],
       iconAnchor: [12, 41],
@@ -53,6 +69,7 @@ export class MapComponent implements AfterViewInit, OnDestroy {
       tooltipAnchor: [16, -28],
       shadowSize: [41, 41],
     });
+
     L.Marker.prototype.options.icon = iconDefault;
   }
 

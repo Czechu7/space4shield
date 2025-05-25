@@ -12,6 +12,7 @@ import {
   ArrowOptions,
   AreaOptions,
   LineOptions,
+  MapIconType,
 } from '../../shared/models/leaflet.model';
 import { MapConfigService } from '../../core/_services/map-config/map-config.service';
 import { SensorFilter } from '../../core/_models/sensor-filter.model';
@@ -91,10 +92,22 @@ export class MapSensorsComponent implements OnInit {
       const tooltipContent = tooltipParts.join(', ');
       const displayName = sensor.serialNumber || `Sensor ${sensor.id}`;
 
+      // Determine icon type based on sensor metrics
+      let iconType = MapIconType.DEFAULT;
+
+      if (sensor.humidity !== undefined && sensor.humidity > 80) {
+        iconType = MapIconType.WATER;
+      } else if (sensor.temperature !== undefined) {
+        iconType = MapIconType.TEMPERATURE;
+      } else {
+        iconType = MapIconType.NORMAL;
+      }
+
       return {
         position: [sensor.latitude, sensor.longitude],
         title: `${displayName}: ${tooltipContent}`,
         onClick: () => this.handleSensorClick(sensor),
+        iconType: iconType, // Add icon type to marker options
       };
     });
   }
