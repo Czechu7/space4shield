@@ -5,7 +5,7 @@ title: Wprowadzenie
 
 # EcoSense - Otwarty system monitoringu środowiskowego
 
-![EcoSense Logo](/img/logo.svg)
+![EcoSense Logo](/img/ecosense_logo_small.png)
 
 ## Czym jest EcoSense?
 
