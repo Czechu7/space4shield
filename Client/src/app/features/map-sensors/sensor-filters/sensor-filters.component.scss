@@ -140,4 +140,17 @@
       }
     }
   }
+
+  .status-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .radio-container {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 3px;
+    }
+  }
 }
