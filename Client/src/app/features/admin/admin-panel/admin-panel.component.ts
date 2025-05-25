@@ -1,18 +1,20 @@
 import { Component } from '@angular/core';
 import { SidebarComponent } from '../../../shared/components/sidebar/sidebar.component';
 import { ISidebarItem } from '../../../shared/types/sidebar.types';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterLink, Router, Event, NavigationEnd } from '@angular/router';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-admin-panel',
   standalone: true,
-  imports: [SidebarComponent, RouterOutlet],
+  imports: [SidebarComponent, RouterOutlet, RouterLink, NgIf],
   templateUrl: './admin-panel.component.html',
   styleUrl: './admin-panel.component.scss',
 })
 export class AdminPanelComponent {
   sidebarVisible = false;
   sidebarCollapsed = false;
+  showTiles = true;
 
   menuItems: ISidebarItem[] = [
     {
@@ -42,4 +44,12 @@ export class AdminPanelComponent {
       routerLink: '/admin/logs',
     },
   ];
+
+  constructor(private router: Router) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.showTiles = event.urlAfterRedirects === '/admin';
+      }
+    });
+  }
 }
