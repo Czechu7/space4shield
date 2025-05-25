@@ -41,10 +41,12 @@ export class MapComponent implements AfterViewInit, OnDestroy {
     private el: ElementRef,
     private mapService: MapService,
   ) {
-    const iconRetinaUrl = 'assets/leaflet/marker-icon-2x.png';
-    const iconUrl = 'assets/leaflet/marker-icon.png';
+    const iconRetinaUrl = 'assets/leaflet/normal_mark.png';
+    const iconUrl = 'assets/leaflet/normal_mark.png';
     const shadowUrl = 'assets/leaflet/marker-shadow.png';
 
+    // const iconRetinaUrl = 'assets/leaflet/marker-icon-2x.png';
+    // const iconUrl = 'assets/leaflet/marker-icon.png';
     const normalIcon = 'assets/leaflet/normal_mark.png';
     const waterIcon = 'assets/leaflet/water_mark.png';
 
@@ -63,7 +65,7 @@ export class MapComponent implements AfterViewInit, OnDestroy {
       iconRetinaUrl: iconRetinaURL,
       iconUrl: choosenIconURL,
       shadowUrl,
-      iconSize: [25, 41],
+      iconSize: [24, 24],
       iconAnchor: [12, 41],
       popupAnchor: [1, -34],
       tooltipAnchor: [16, -28],
