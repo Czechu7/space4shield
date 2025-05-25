@@ -119,6 +119,10 @@
                   {{ 'USER.SENSORS.DETAILS.NO_READINGS' | translate }}</div>
               </ng-template>
             </div>
+
+            <div class="chart-container mt-4" *ngIf="showDetailsMap[sensor.id]">
+              <app-user-sensors-chart [sensorHistory]="sensorHistory" [sensorId]="sensor.id"></app-user-sensors-chart>
+            </div>
           </div>
         </div>
       </div>

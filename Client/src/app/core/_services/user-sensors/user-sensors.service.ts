@@ -6,6 +6,7 @@ import {
   INewSensorRequest,
   INewSensorResponse,
   IUserSensorResponse,
+  ISensorHistoryResponse,
 } from '../../_models/sensor.model';
 import { ApiEndpoints } from '../../../enums/api-endpoints.enum';
 
@@ -29,6 +30,13 @@ export class UserSensorsService {
   deleteSensor(sensorId: string): Observable<IBaseResponseWithoutData> {
     return this.requestFactory.delete<IBaseResponseWithoutData>(
       ApiEndpoints.DELETE_SENSOR,
+      sensorId,
+    );
+  }
+
+  getSensorHistory(sensorId: string): Observable<IBaseResponse<ISensorHistoryResponse>> {
+    return this.requestFactory.getById<ISensorHistoryResponse>(
+      ApiEndpoints.SENSORS_HISTORY,
       sensorId,
     );
   }

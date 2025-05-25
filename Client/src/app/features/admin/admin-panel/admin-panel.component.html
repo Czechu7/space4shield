@@ -3,11 +3,25 @@
     [(visible)]="sidebarVisible"
     [(collapsed)]="sidebarCollapsed"
     [position]="'left'"
-    [title]="'Angular Template'"
     [menuItems]="menuItems"
   />
 
   <main>
+    <div class="tiles-wrapper" *ngIf="showTiles">
+      <a [routerLink]="'/admin/users'" class="no-underline">
+        <div class="tile-container">
+          <h2>Zarządzanie użytkownikami</h2>
+          <p>Zarządzaj użytkownikami i uprawnieniami</p>
+        </div>
+      </a>
+      
+      <a [routerLink]="'/admin/logs'" class="no-underline">
+        <div class="tile-container">
+          <h2>Logi systemowe</h2>
+          <p>Przeglądaj logi i analizy systemowe</p>
+        </div>
+      </a>
+    </div>
     <router-outlet></router-outlet>
   </main>
 </div>

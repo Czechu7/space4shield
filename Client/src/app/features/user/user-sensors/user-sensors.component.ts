@@ -2,25 +2,27 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TooltipModule } from 'primeng/tooltip';
+import { Subscription } from 'rxjs';
+import {
+  INewSensorRequest,
+  ISensorHistoryItem,
+  IUserSensor,
+} from '../../../core/_models/sensor.model';
+import { PaginationState } from '../../../core/_services/pagination/pagination.service';
+import { UserSensorsService } from '../../../core/_services/user-sensors/user-sensors.service';
+import { SensorType } from '../../../enums/sensor-type.enum';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { InputComponent } from '../../../shared/components/input/input.component';
-import { TooltipModule } from 'primeng/tooltip';
-import { ToastService } from '../../../shared/services/toast.service';
-import { ErrorService } from '../../../shared/services/error.service';
-import { SensorType } from '../../../enums/sensor-type.enum';
-import { UserSensorsForm } from '../../../shared/models/form.model';
 import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
-import { FormService } from '../../../shared/services/form.service';
-import { UserSensorsService } from '../../../core/_services/user-sensors/user-sensors.service';
-import {
-  PaginationService,
-  PaginationState,
-} from '../../../core/_services/pagination/pagination.service';
-import { Subscription } from 'rxjs';
-import { INewSensorRequest, IUserSensor } from '../../../core/_models/sensor.model';
-import { MapComponent } from '../../../shared/components/map/map.component';
 import { MapMarkerComponent } from '../../../shared/components/map/map-marker.component';
+import { MapComponent } from '../../../shared/components/map/map.component';
+import { UserSensorsForm } from '../../../shared/models/form.model';
 import { MapOptions, MarkerOptions } from '../../../shared/models/leaflet.model';
+import { ErrorService } from '../../../shared/services/error.service';
+import { FormService } from '../../../shared/services/form.service';
+import { ToastService } from '../../../shared/services/toast.service';
+import { UserSensorsChartComponent } from '../user-sensors-chart/user-sensors-chart.component';
 
 @Component({
   selector: 'app-user-sensors',
@@ -35,6 +37,7 @@ import { MapOptions, MarkerOptions } from '../../../shared/models/leaflet.model'
     LoadingSpinnerComponent,
     MapComponent,
     MapMarkerComponent,
+    UserSensorsChartComponent,
   ],
   templateUrl: './user-sensors.component.html',
   styleUrl: './user-sensors.component.scss',
@@ -66,7 +69,9 @@ export class UserSensorsComponent implements OnInit, OnDestroy {
   private translateService = inject(TranslateService);
   private formService = inject(FormService);
   private userSensorsService = inject(UserSensorsService);
-  private paginationService = inject(PaginationService);
+
+  // Add these missing properties
+  sensorHistory: ISensorHistoryItem[] = [];
 
   ngOnInit() {
     this.fetchSensors();
@@ -244,6 +249,24 @@ export class UserSensorsComponent implements OnInit, OnDestroy {
     });
   }
 
+  loadSensorHistory(sensorId: string) {
+    this.isLoading = true;
+    this.userSensorsService.getSensorHistory(sensorId).subscribe({
+      next: response => {
+        this.sensorHistory = response.data.items;
+      },
+      error: error => {
+        this.toastService.showError(
+          this.translateService.instant('USER.SENSORS.ERROR_TITLE'),
+          this.errorService.getErrorMessage(error),
+        );
+      },
+      complete: () => {
+        this.isLoading = false;
+      },
+    });
+  }
+
   getSensorIcon(type: SensorType | undefined): string {
     switch (type) {
       case SensorType.Temperature:
@@ -307,6 +330,10 @@ export class UserSensorsComponent implements OnInit, OnDestroy {
 
   toggleDetails(sensorId: string) {
     this.showDetailsMap[sensorId] = !this.showDetailsMap[sensorId];
+    if (this.showDetailsMap[sensorId]) {
+      // Reset the metrics form when opening details
+      this.loadSensorHistory(sensorId);
+    }
   }
 
   hasAnyReadings(sensor: IUserSensor): boolean {

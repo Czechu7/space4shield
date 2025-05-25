@@ -63,6 +63,7 @@ export class NavbarComponent implements OnInit, INavbarProps {
   }
 
   ngOnInit() {
+    this.logo = 'assets/logo/Logo.png'; 
     this.languages = this.languageService.languages;
 
     this.currentLang = this.languageService.currentLang;

@@ -3,11 +3,25 @@
     [(visible)]="sidebarVisible"
     [(collapsed)]="sidebarCollapsed"
     [position]="'left'"
-    [title]="'Angular Template'"
     [menuItems]="menuItems"
   />
 
   <main>
+    <div class="tiles-wrapper" *ngIf="showTiles">
+      <a [routerLink]="'/user/sensors'" class="no-underline">
+        <div class="tile-container">
+          <h2>Lista sensorów</h2>
+          <p>Przeglądaj i zarządzaj dostępnymi sensorami</p>
+        </div>
+      </a>
+      
+      <a [routerLink]="'/user/sensors'" class="no-underline">
+        <div class="tile-container">
+          <h2>Analiza sensorów</h2>
+          <p>Sprawdź wykresy i statystyki sensorów</p>
+        </div>
+      </a>
+    </div>
     <router-outlet></router-outlet>
   </main>
 </div>

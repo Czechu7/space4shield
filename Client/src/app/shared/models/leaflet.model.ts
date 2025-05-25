@@ -11,9 +11,9 @@ export interface MapOptions {
 export interface MarkerOptions {
   position: [number, number];
   title?: string;
-  icon?: L.Icon | L.DivIcon;
   draggable?: boolean;
-  onClick?: (event: L.LeafletMouseEvent) => void;
+  icon?: L.Icon; // Make sure this property exists
+  onClick?: () => void;
 }
 
 export interface ArrowOptions {
@@ -39,3 +39,16 @@ export interface LineOptions {
   opacity?: number;
   dashArray?: string;
 }
+
+export enum MapIconType {
+  DEFAULT = 'default',
+  NORMAL = 'normal',
+  WATER = 'water',
+  TEMPERATURE = 'temperature',
+  HUMIDITY = 'humidity',
+  AIR_PRESSURE = 'airPressure',
+  PM25 = 'pm25',
+  PM10 = 'pm10',
+}
+
+export type MapIcons = Record<string, L.Icon>;
