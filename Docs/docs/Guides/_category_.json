@@ -1,0 +1,8 @@
+{
+	"label": "Przewodnik",
+	"position": 3,
+	"link": {
+		"type": "generated-index",
+		"description": "Opis tej sekcji"
+	}
+}
