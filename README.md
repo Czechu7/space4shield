@@ -1,8 +1,3 @@
-# CSharp-Angular Template
-
-A modern, production-ready template for building full-stack applications with .NET Core 8 and Angular 18. This template provides a solid foundation for developing scalable web applications with clean architecture principles and scalability.
-
-
 ## Features
 
 - **📱 Responsive UI**: Built with Angular 18+ and PrimeNG components
@@ -18,6 +13,7 @@ A modern, production-ready template for building full-stack applications with .N
 ## Tech Stack
 
 ### Backend
+
 - .NET 8 Web API
 - Entity Framework Core
 - MediatR for CQRS pattern
@@ -30,6 +26,7 @@ A modern, production-ready template for building full-stack applications with .N
 - Implemented security
 
 ### Frontend
+
 - Angular 18+
 - PrimeNG for UI components
 - API Factory
@@ -53,8 +50,7 @@ A modern, production-ready template for building full-stack applications with .N
 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/CSharp-Angular-Template.git
-cd CSharp-Angular-Template
+cd SPACE4SHIELD
 ```
 
 2. Set up the backend
@@ -93,7 +89,7 @@ ng serve
 ```
 CSharp-Angular-Template/
 ├── API/                          # Backend API
-│   ├── Application/              # Business logic and application 
+│   ├── Application/              # Business logic and application
 │   ├── Domain/                   # Business entities and domain logic
 │   ├── Presentation/             # Controllers
 │   ├── Infrastructure/           # External frameworks and tools
@@ -125,6 +121,7 @@ Access the monitoring tools:
 - Grafana: [http://localhost:3000](http://localhost:3000) (default credentials: admin/admin)
 
 To set up custom dashboards in Grafana:
+
 1. Log in to Grafana
 2. Add Prometheus as a data source (URL: http://prometheus:9090)
 3. Import or create dashboards for visualizing your application metrics
@@ -147,17 +144,6 @@ Edit the `environment.ts` files in the Client project to configure:
 - Feature flags
 - Third-party service keys
 
-## Contributors
-
-Meet our team of developers who maintain this project:
-
-| ![Czechu7](https://avatars.githubusercontent.com/u/8471619?v=4) | ![Kkolcz](https://avatars.githubusercontent.com/u/76699027?v=4) | ![Michalrusak](https://avatars.githubusercontent.com/u/104869035?v=4) | ![Evivalarte](https://avatars.githubusercontent.com/u/152337751?v=4) |
-|:---:|:---:|:---:|:---:|
-| [Czechu7](https://github.com/Czechu7) | [Kkolcz](https://github.com/Kkolcz) | [Michalrusak](https://github.com/Michalrusak) | [Evivalarte](https://github.com/Evivalarte) |
-| Full-Stack Developer | Full-Stack Developer | Full-Stack Developer | Full-Stack Developer |
-
-## Addational Usage
-
 ### Storybook
 
 Explore and test UI components in isolation:
@@ -179,6 +165,7 @@ docker compose up -d prometheus grafana
 open http://localhost:9090  # Prometheus UI
 open http://localhost:3000  # Grafana UI (login: admin/admin)
 ```
+
 ### Running Tests
 
 ```bash
@@ -202,12 +189,3 @@ dotnet publish -c Release
 cd Client
 ng build --configuration production
 ```
-
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-Made with ❤️ by the CSharp-Angular-Template Team
