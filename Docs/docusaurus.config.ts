@@ -70,7 +70,7 @@ const config: Config = {
 			title: 'EcoSense',
 			logo: {
 				alt: 'EcoSense Logo',
-				src: 'img/logo.svg',
+				src: 'img/ecosense_logo.png',
 			},
 			items: [
 				{
